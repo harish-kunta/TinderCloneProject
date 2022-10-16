@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TinderClone.iml" filepath="$PROJECT_DIR$/.idea/modules/TinderClone.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TinderClone.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TinderClone.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TinderCloneProject.iml" filepath="$PROJECT_DIR$/.idea/modules/TinderCloneProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TinderCloneProject.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TinderCloneProject.app.iml" />
     </modules>
   </component>
 </project>

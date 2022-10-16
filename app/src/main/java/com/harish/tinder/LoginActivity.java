@@ -29,16 +29,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-        firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user !=null){
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return;
-                }
+        firebaseAuthStateListener = firebaseAuth -> {
+            final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user !=null){
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                return;
             }
         };
 
@@ -48,20 +45,14 @@ public class LoginActivity extends AppCompatActivity {
         mEmail = (EditText) findViewById(R.id.email);
         mPassword = (EditText) findViewById(R.id.password);
 
-        mLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String email = mEmail.getText().toString();
-                final String password = mPassword.getText().toString();
-                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(!task.isSuccessful()){
-                            Toast.makeText(LoginActivity.this, "sign in error", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
+        mLogin.setOnClickListener(view -> {
+            final String email = mEmail.getText().toString();
+            final String password = mPassword.getText().toString();
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, task -> {
+                if(!task.isSuccessful()){
+                    Toast.makeText(LoginActivity.this, "sign in error", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 

@@ -7,6 +7,9 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.harish.tinder.material_ui.LoginActivity;
+import com.harish.tinder.material_ui.RegistrationActivity;
+
 public class ChooseLoginRegistrationActivity extends AppCompatActivity {
 
     private Button mLogin, mRegister;

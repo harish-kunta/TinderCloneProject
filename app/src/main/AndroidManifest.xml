@@ -11,8 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.harish.tinder.MainActivity" />
-        <activity android:name="com.harish.tinder.ChooseLoginRegistrationActivity"
+        <activity android:name=".material_ui.RegistrationActivity"></activity>
+        <activity android:name=".material_ui.LoginActivity" />
+        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".ChooseLoginRegistrationActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,11 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.harish.tinder.RegistrationActivity" />
-        <activity android:name="com.harish.tinder.LoginActivity" />
-        <activity android:name="com.harish.tinder.SettingsActivity" />
-        <activity android:name="com.harish.tinder.Matches.MatchesActivity" />
-        <activity android:name="com.harish.tinder.Chat.ChatActivity"></activity>
+        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".Matches.MatchesActivity" />
+        <activity android:name=".Chat.ChatActivity" />
     </application>
 
 </manifest>
