@@ -4,11 +4,11 @@ package com.harish.tinder.Cards;
  * Created by manel on 9/5/2017.
  */
 
-public class cards {
+public class Card {
     private String userId;
     private String name;
     private String profileImageUrl;
-    public cards (String userId, String name, String profileImageUrl){
+    public Card(String userId, String name, String profileImageUrl){
         this.userId = userId;
         this.name = name;
         this.profileImageUrl = profileImageUrl;

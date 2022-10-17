@@ -19,14 +19,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.harish.tinder.Cards.arrayAdapter;
-import com.harish.tinder.Cards.cards;
+import com.harish.tinder.Cards.Card;
 import com.harish.tinder.Matches.MatchesActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private cards cards_data[];
+    private Card cards_data[];
     private com.harish.tinder.Cards.arrayAdapter arrayAdapter;
     private int i;
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     ListView listView;
-    List<cards> rowItems;
+    List<Card> rowItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         checkUserSex();
 
-        rowItems = new ArrayList<cards>();
+        rowItems = new ArrayList<Card>();
 
         arrayAdapter = new arrayAdapter(this, R.layout.item, rowItems );
 
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onLeftCardExit(Object dataObject) {
 
-                cards obj = (cards) dataObject;
+                Card obj = (Card) dataObject;
                 String userId = obj.getUserId();
                 usersDb.child(userId).child("connections").child("nope").child(currentUId).setValue(true);
                 Toast.makeText(MainActivity.this, "Left", Toast.LENGTH_SHORT).show();
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                cards obj = (cards) dataObject;
+                Card obj = (Card) dataObject;
                 String userId = obj.getUserId();
                 usersDb.child(userId).child("connections").child("yeps").child(currentUId).setValue(true);
                 isConnectionMatch(userId);
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                         if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
                             profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
                         }
-                        cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), profileImageUrl);
+                        Card item = new Card(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), profileImageUrl);
                         rowItems.add(item);
                         arrayAdapter.notifyDataSetChanged();
                     }

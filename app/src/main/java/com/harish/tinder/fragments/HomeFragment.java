@@ -18,8 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.harish.tinder.Cards.arrayAdapter;
-import com.harish.tinder.Cards.cards;
-import com.harish.tinder.MainActivity;
+import com.harish.tinder.Cards.Card;
 import com.harish.tinder.R;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -49,7 +48,7 @@ public class HomeFragment extends Fragment {
     private String currentUId;
 
     private DatabaseReference usersDb;
-    List<cards> rowItems;
+    List<Card> rowItems;
     private com.harish.tinder.Cards.arrayAdapter arrayAdapter;
 
     public HomeFragment() {
@@ -95,9 +94,9 @@ public class HomeFragment extends Fragment {
 
         checkUserSex();
 
-        rowItems = new ArrayList<cards>();
+        rowItems = new ArrayList<Card>();
 
-        arrayAdapter = new arrayAdapter(getContext(), R.layout.item, rowItems );
+        arrayAdapter = new arrayAdapter(getContext(), R.layout.item, rowItems);
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) mHomeView.findViewById(R.id.frame);
 
@@ -113,7 +112,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onLeftCardExit(Object dataObject) {
 
-                cards obj = (cards) dataObject;
+                Card obj = (Card) dataObject;
                 String userId = obj.getUserId();
                 usersDb.child(userId).child("connections").child("nope").child(currentUId).setValue(true);
                 Toast.makeText(getContext(), "Left", Toast.LENGTH_SHORT).show();
@@ -121,7 +120,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                cards obj = (cards) dataObject;
+                Card obj = (Card) dataObject;
                 String userId = obj.getUserId();
                 usersDb.child(userId).child("connections").child("yeps").child(currentUId).setValue(true);
                 isConnectionMatch(userId);
@@ -139,12 +138,7 @@ public class HomeFragment extends Fragment {
 
 
         // Optionally add an OnItemClickListener
-        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClicked(int itemPosition, Object dataObject) {
-                Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
+        flingContainer.setOnItemClickListener((itemPosition, dataObject) -> Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_SHORT).show());
         return mHomeView;
     }
 
@@ -153,7 +147,7 @@ public class HomeFragment extends Fragment {
         currentUserConnectionsDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     Toast.makeText(getContext(), "new Connection", Toast.LENGTH_LONG).show();
 
                     String key = FirebaseDatabase.getInstance().getReference().child("Chat").push().getKey();
@@ -168,16 +162,17 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-    public void checkUserSex(){
+
+    public void checkUserSex() {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference userDb = usersDb.child(user.getUid());
         userDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    if (dataSnapshot.child("sex").getValue() != null){
+                if (dataSnapshot.exists()) {
+                    if (dataSnapshot.child("sex").getValue() != null) {
                         userSex = dataSnapshot.child("sex").getValue().toString();
-                        switch (userSex){
+                        switch (userSex) {
                             case "Male":
                                 oppositeUserSex = "Female";
                                 break;
@@ -189,6 +184,7 @@ public class HomeFragment extends Fragment {
                     }
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -196,7 +192,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    public void getOppositeSexUsers(){
+    public void getOppositeSexUsers() {
         usersDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -206,15 +202,17 @@ public class HomeFragment extends Fragment {
                         if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
                             profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
                         }
-                        cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), profileImageUrl);
+                        Card item = new Card(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), profileImageUrl);
                         rowItems.add(item);
                         arrayAdapter.notifyDataSetChanged();
                     }
                 }
             }
+
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
             }
+
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
             }
@@ -222,6 +220,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }

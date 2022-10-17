@@ -8,7 +8,11 @@
         android:title="Likes"
         android:icon="@drawable/search"/>
 
-    <item android:id="@+id/profile"
+    <item android:id="@+id/matches"
         android:title="Matches"
+        android:icon="@drawable/profile"/>
+
+    <item android:id="@+id/profile"
+        android:title="Profile"
         android:icon="@drawable/profile"/>
 </menu>

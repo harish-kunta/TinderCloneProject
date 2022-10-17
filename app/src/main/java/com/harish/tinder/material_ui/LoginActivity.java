@@ -1,5 +1,6 @@
 package com.harish.tinder.material_ui;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -8,11 +9,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.harish.tinder.MainActivity;
 import com.harish.tinder.R;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -37,16 +36,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login2);
 
         mAuth = FirebaseAuth.getInstance();
-        firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user !=null){
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return;
-                }
+        firebaseAuthStateListener = firebaseAuth -> {
+            final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user !=null){
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+                return;
             }
         };
 
@@ -137,13 +133,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        sign_up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent signup = new Intent(getApplicationContext(), RegistrationActivity.class);
-                startActivity(signup);
-                finish();
-            }
+        sign_up.setOnClickListener(v -> {
+            Intent signup = new Intent(getApplicationContext(), RegistrationActivity.class);
+            startActivity(signup);
+            finish();
         });
     }
     @Override

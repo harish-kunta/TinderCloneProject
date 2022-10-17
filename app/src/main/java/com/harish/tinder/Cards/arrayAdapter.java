@@ -17,15 +17,15 @@ import java.util.List;
  * Created by manel on 9/5/2017.
  */
 
-public class arrayAdapter extends ArrayAdapter<cards>{
+public class arrayAdapter extends ArrayAdapter<Card>{
 
     Context context;
 
-    public arrayAdapter(Context context, int resourceId, List<cards> items){
+    public arrayAdapter(Context context, int resourceId, List<Card> items){
         super(context, resourceId, items);
     }
     public View getView(int position, View convertView, ViewGroup parent){
-        cards card_item = getItem(position);
+        Card card_item = getItem(position);
 
         if (convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, parent, false);

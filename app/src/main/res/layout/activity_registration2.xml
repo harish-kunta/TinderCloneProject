@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".material_ui.RegistrationActivity"
     android:orientation="vertical"
-    android:background="#092c5c"
+    android:background="@drawable/app_bk"
     android:layout_gravity="center"
     android:gravity="center"
     android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
