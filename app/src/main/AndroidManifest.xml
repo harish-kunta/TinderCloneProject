@@ -11,23 +11,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".material_ui.RegistrationActivity"></activity>
-        <activity android:name=".material_ui.LoginActivity" />
-        <activity android:name=".MainActivity" />
-        <activity
-            android:name=".ChooseLoginRegistrationActivity"
-            android:exported="true">
+        <activity android:name=".SplashScreenActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".material_ui.RegistrationActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
+        <activity
+            android:name=".material_ui.LoginActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
+        <activity
+            android:name=".ChooseLoginRegistrationActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        </activity>
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".Matches.MatchesActivity" />
-        <activity android:name=".Chat.ChatActivity" />
+        <activity android:name=".SettingsActivity"/>
+        <activity android:name=".Matches.MatchesActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"/>
+        <activity android:name=".Chat.ChatActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"/>
     </application>
 
 </manifest>

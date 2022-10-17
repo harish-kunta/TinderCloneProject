@@ -48,7 +48,7 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:hint="Username"
+                android:hint="Email"
                 app:boxCornerRadiusBottomStart="16dp"
                 app:boxCornerRadiusTopStart="16dp"
                 app:boxCornerRadiusBottomEnd="16dp"
@@ -65,17 +65,18 @@
             <RadioGroup
                 android:id="@+id/radioGroup"
                 android:layout_width="250dp"
+                android:orientation="horizontal"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/radioButtonMale"
-                    android:layout_width="wrap_content"
+                    android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:text="Male" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/radioButtonFemale"
-                    android:layout_width="wrap_content"
+                    android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:text="Female" />
             </RadioGroup>
@@ -123,10 +124,9 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:theme="@android:style/Theme.Material"
                 android:text="sign up"
                 android:id="@+id/signup_reg_button" />
         </LinearLayout>

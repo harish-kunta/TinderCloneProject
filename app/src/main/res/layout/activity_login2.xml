@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".material_ui.LoginActivity"
-    android:orientation="vertical"
-    android:background="#092c5c"
     android:layout_gravity="center"
+    android:background="#092c5c"
     android:gravity="center"
-    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+    android:orientation="vertical"
+    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+    tools:context=".material_ui.LoginActivity">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -32,13 +32,13 @@
             android:padding="5dp">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/username_field_input_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="250dp"
-                android:id="@+id/username_field_input_layout"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:hint="Enter username"
+                android:layout_marginBottom="10dp"
+                android:hint="Enter email"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -49,21 +49,21 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password_field_input_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="250dp"
-                android:id="@+id/password_field_input_layout"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:hint="Enter password"
-                app:errorEnabled="true"
                 app:endIconMode="password_toggle"
-                app:endIconTint="@color/colorAccent">
+                app:endIconTint="@color/colorAccent"
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,20 +73,18 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/sign_in_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sign In"
-                    android:theme="@android:style/Theme.Material"/>
+                    android:text="Sign In" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/sign_up_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sign Up"
                     android:layout_marginLeft="8dp"
-                    android:theme="@android:style/Theme.Material"/>
+                    android:text="Sign Up" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

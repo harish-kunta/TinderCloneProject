@@ -100,14 +100,6 @@ public class RegistrationActivity extends AppCompatActivity {
                     }
                 });
 
-//                SharedPreferences.Editor prefEditor = mSharedPreferences.edit();
-//                prefEditor.putString("name",name);
-//                prefEditor.putString("username",username);
-//                prefEditor.putString("password", password);
-//                prefEditor.putString("class",userClass);
-//                prefEditor.apply();
-//                prefEditor.commit();
-
                 Toast.makeText(getApplicationContext(), "Saved!!", Toast.LENGTH_LONG).show();
                 Intent signin = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(signin);
