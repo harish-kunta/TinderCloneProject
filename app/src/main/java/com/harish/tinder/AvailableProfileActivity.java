@@ -60,9 +60,11 @@ public class AvailableProfileActivity extends AppCompatActivity {
         GridLayoutManager layoutManager=new GridLayoutManager(this,2);
         // at last set adapter to recycler view.
         recyclerView.setLayoutManager(layoutManager);
+        progressDialog = new ProgressDialog(AvailableProfileActivity.this);
        // getWebServiceResponseData();
         getFirebaseResponseData();
         setUpProgressDialog();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -168,10 +170,10 @@ public class AvailableProfileActivity extends AppCompatActivity {
                         if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
                             profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
                         }
-                        Profile profile=getRandomProfile(profileList);
-                        if(profile!=null) {
-                            availableProfiles.add(new AvailableProfile(profile,textArray[i]));
-                        }
+//                        Profile profile=getRandomProfile(availableProfiles);
+//                        if(profile!=null) {
+//                            availableProfiles.add(new AvailableProfile(profile,textArray[i]));
+//                        }
                         adapter.notifyDataSetChanged();
                     }
                 }
@@ -203,7 +205,6 @@ public class AvailableProfileActivity extends AppCompatActivity {
     }
     // set up progress dialog
     private void setUpProgressDialog(){
-        progressDialog = new ProgressDialog(AvailableProfileActivity.this);
         progressDialog.setMessage("Fetching profiles data");
         progressDialog.setCancelable(false);
         progressDialog.show();
