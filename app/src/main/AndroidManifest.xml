@@ -40,6 +40,8 @@
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity" />
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".SettingsActivity" />
         <activity
             android:name=".Matches.MatchesActivity"

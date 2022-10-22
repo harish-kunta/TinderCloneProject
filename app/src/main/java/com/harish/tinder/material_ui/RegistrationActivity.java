@@ -91,8 +91,11 @@ public class RegistrationActivity extends AppCompatActivity {
                         DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
                         Map userInfo = new HashMap<>();
                         userInfo.put("name", name);
+                        userInfo.put("email", username);
                         userInfo.put("sex", radioButton.getText().toString());
+                        userInfo.put("online", true);
                         userInfo.put("profileImageUrl", "default");
+                        userInfo.put("uid", userId);
                         currentUserDb.updateChildren(userInfo);
                     } else {
                         Toast.makeText(getApplicationContext(), "sign up error", Toast.LENGTH_SHORT).show();

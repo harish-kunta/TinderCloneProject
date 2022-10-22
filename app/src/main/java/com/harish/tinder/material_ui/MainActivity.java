@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.harish.tinder.R;
+import com.harish.tinder.fragments.ChatThreadFragment;
 import com.harish.tinder.fragments.HomeFragment;
 import com.harish.tinder.fragments.MatchesFragment;
 import com.harish.tinder.fragments.LikesFragment;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                         replace(new LikesFragment());
                         break;
                     case 2:
-                        replace(new MatchesFragment());
+                        replace(new ChatThreadFragment());
                         break;
                     case 3:
                         replace(new ProfileFragment());
