@@ -152,7 +152,7 @@
         <item name="inputHintColor">@color/main_color_gray</item>
 
         <!--<item name="sendBtnElevation">4dp</item>-->
-        <item name="sendBtnIcon">@drawable/ic_launcher_foreground</item>
+        <item name="sendBtnIcon">@drawable/ic_send_white_24dp</item>
         <item name="sendBtnIconTint">@color/white</item>
         <item name="sendBtnBackgroundTint">?attr/colorAccent</item>
 

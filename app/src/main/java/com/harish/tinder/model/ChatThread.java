@@ -50,8 +50,8 @@ public class ChatThread {
         this.email = email;
         this.uid = uid;
     }
-    public ChatThread(String email, String threadID) {
-        this.email = email;
+    public ChatThread(String uid, String threadID) {
+        this.uid = uid;
         this.threadID = threadID;
     }
 }

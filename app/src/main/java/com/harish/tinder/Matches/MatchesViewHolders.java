@@ -30,10 +30,10 @@ public class MatchesViewHolders extends RecyclerView.ViewHolder implements View.
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(view.getContext(), ChatActivity.class);
-        Bundle b = new Bundle();
-        b.putString("matchId", mMatchId.getText().toString());
-        intent.putExtras(b);
-        view.getContext().startActivity(intent);
+//        Intent intent = new Intent(view.getContext(), ChatActivity.class);
+//        Bundle b = new Bundle();
+//        b.putString("matchId", mMatchId.getText().toString());
+//        intent.putExtras(b);
+//        view.getContext().startActivity(intent);
     }
 }

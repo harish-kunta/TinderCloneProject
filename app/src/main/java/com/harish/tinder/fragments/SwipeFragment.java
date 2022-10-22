@@ -40,6 +40,7 @@ import com.yuyakaido.android.cardstackview.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -267,6 +268,8 @@ public class SwipeFragment extends Fragment implements CardStackListener {
 
                     usersDb.child(dataSnapshot.getKey()).child("connections").child("matches").child(currentUId).child("ChatId").setValue(key);
                     usersDb.child(currentUId).child("connections").child("matches").child(dataSnapshot.getKey()).child("ChatId").setValue(key);
+
+                    appendThread(currentUId, userId);
                 }
             }
 
@@ -276,6 +279,16 @@ public class SwipeFragment extends Fragment implements CardStackListener {
         });
     }
 
+    private void appendThread(String currentUserId, String MatchUserId) {
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        ArrayList<String> members = new ArrayList<>();
+        members.add(MatchUserId);
+        members.add(currentUserId);
+        root = root.child("threads");
+        root.keepSynced(true);
+        String uniqueID = UUID.randomUUID().toString();
+        root.child(uniqueID).child("members").setValue(members);
+    }
     public void checkUserSex() {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference userDb = usersDb.child(user.getUid());

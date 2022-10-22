@@ -10,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".TinderClone">
         <activity android:name=".AvailableProfileActivity"></activity>
         <activity
             android:name=".material_ui.MainActivity"
@@ -42,6 +43,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".views.ProfileView" />
         <activity android:name=".SettingsActivity" />
         <activity
             android:name=".Matches.MatchesActivity"

@@ -1,17 +1,31 @@
 package com.harish.tinder.fragments;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.harish.tinder.ChooseLoginRegistrationActivity;
 import com.harish.tinder.MainActivity;
 import com.harish.tinder.R;
+import com.harish.tinder.fab.FloatingActionButton;
+import com.harish.tinder.utils.Imageutils;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +44,22 @@ public class ProfileFragment extends Fragment {
     private String mParam2;
     private View mProfileView;
     private FirebaseAuth mAuth;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    TextView profileName;
+    TextView profileEmail;
+    Imageutils imageutils;
+    TextView logOut;
+    CircleImageView profilePic;
+    FirebaseStorage storage;
+    RelativeLayout layout_logout;
+    StorageReference storageReference;
+    private Uri filePath;
+    private Bitmap bitmap;
+    private String file_name;
+    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
+    private final int PICK_IMAGE_REQUEST = 71;
+
     public ProfileFragment() {
         // Required empty public constructor
         mAuth = FirebaseAuth.getInstance();
@@ -77,6 +107,16 @@ public class ProfileFragment extends Fragment {
                 return;
             }
         });
+        profileName = (TextView) mProfileView.findViewById(R.id.profile_name);
+        profileEmail = (TextView) mProfileView.findViewById(R.id.email_text);
+        profilePic = (CircleImageView) mProfileView.findViewById(R.id.profile_image);
+        storageReference = FirebaseStorage.getInstance().getReference();
+        userRef.child(user.getUid()).child("online").setValue("true");
+        profileName.setText(user.getDisplayName());
+        profileEmail.setText(user.getEmail());
+
+        //Log.e("Photo URL", filePath.toString());
+        Picasso.get().load(user.getPhotoUrl()).into(profilePic);
         return mProfileView;
     }
 }

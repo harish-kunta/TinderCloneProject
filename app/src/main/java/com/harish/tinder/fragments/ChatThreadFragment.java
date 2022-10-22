@@ -138,8 +138,8 @@ public class ChatThreadFragment extends Fragment {
 
                     //Log.e("Record", record);
                     //{members=[tripathy.devi@yahoo.com, hello@helloworld.com]}
-                    if (record.contains(user.getEmail())) {
-                        if(ds.child("members").child("0").getValue().toString().equals(user.getEmail())){
+                    if (record.contains(user.getUid())) {
+                        if(ds.child("members").child("0").getValue().toString().equals(user.getUid())){
                             record = ds.child("members").child("1").getValue().toString();
                         }else {
                             record = ds.child("members").child("0").getValue().toString();
@@ -212,9 +212,10 @@ public class ChatThreadFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot each_user: dataSnapshot.getChildren()){
-                            if(each_user.child("email").getValue().toString().equals(item.getEmail())){
+                            if(each_user.child("uid").getValue().toString().equals(item.getUid())){
                                 holder.user_name.setText(each_user.child("name").getValue().toString());
                                 item.setName(each_user.child("name").getValue().toString());
+                                item.setEmail(each_user.child("email").getValue().toString());
                                 item.setUid(each_user.child("uid").getValue().toString());
                                 item.setImageUrl(each_user.child("profileImageUrl").getValue().toString());
                             }
