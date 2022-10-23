@@ -34,6 +34,7 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:id="@+id/linearLayout"
+                android:paddingTop="40dp"
                 android:background="@drawable/app_bk">
 
                 <de.hdodenhof.circleimageview.CircleImageView

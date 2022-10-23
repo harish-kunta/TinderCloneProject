@@ -1,5 +1,6 @@
 package com.harish.tinder.material_ui;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,6 +13,8 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
@@ -21,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.harish.tinder.MainActivity;
 import com.harish.tinder.R;
+import com.harish.tinder.UploadImageActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +52,7 @@ public class RegistrationActivity extends AppCompatActivity {
         firebaseAuthStateListener = firebaseAuth -> {
             final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if (user != null) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), UploadImageActivity.class);
                 startActivity(intent);
                 finish();
                 return;
@@ -96,16 +100,24 @@ public class RegistrationActivity extends AppCompatActivity {
                         userInfo.put("online", true);
                         userInfo.put("profileImageUrl", "default");
                         userInfo.put("uid", userId);
-                        currentUserDb.updateChildren(userInfo);
+                        currentUserDb.updateChildren(userInfo).addOnSuccessListener(new OnSuccessListener() {
+                            @Override
+                            public void onSuccess(Object o) {
+                                Toast.makeText(getApplicationContext(), "Saved!!", Toast.LENGTH_LONG).show();
+                                Intent signin = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(signin);
+                                finish();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getApplicationContext(), "Details were not saved", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     } else {
                         Toast.makeText(getApplicationContext(), "sign up error", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-                Toast.makeText(getApplicationContext(), "Saved!!", Toast.LENGTH_LONG).show();
-                Intent signin = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(signin);
-                finish();
             }
         });
     }

@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.harish.tinder.material_ui.MainActivity;
 import com.harish.tinder.utils.MyData;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -258,7 +259,7 @@ public class UploadImageActivity extends AppCompatActivity {
                                                         //String thumb_downloadUrl=thumb_task.getResult().getUploadSessionUri().toString();
                                                         if (task.isSuccessful()) {
                                                             Map update_hashmap = new HashMap();
-                                                            update_hashmap.put("image", download_url);
+                                                            update_hashmap.put("profileImageUrl", download_url);
                                                             update_hashmap.put("thumb_image", thumb_downloadUrl);
 
                                                             mUserDatabase.updateChildren(update_hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {

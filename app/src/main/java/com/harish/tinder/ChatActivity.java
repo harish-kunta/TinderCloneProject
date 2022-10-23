@@ -111,7 +111,7 @@ public class ChatActivity extends AppCompatActivity {
         }catch (Exception e){
             receiver_name = getIntent().getExtras().get("receiver_email").toString();
         }
-        imageUrl = getIntent().getExtras().get("photo_url").toString();
+        imageUrl = getIntent().getExtras().get("imageUrl").toString();
         receiver_email = getIntent().getExtras().get("receiver_email").toString();
         threadRef.child(threadID).addValueEventListener(new ValueEventListener() {
             @Override

@@ -219,8 +219,8 @@ public class ChatThreadFragment extends Fragment {
                                 item.setName(each_user.child("name").getValue().toString());
                                 item.setEmail(each_user.child("email").getValue().toString());
                                 item.setUid(each_user.child("uid").getValue().toString());
-                                item.setImageUrl(each_user.child("profileImageUrl").getValue().toString());
-                                holder.setUserImage(each_user.child("profileImageUrl").getValue().toString(), getContext());
+                                item.setImageUrl(each_user.child("thumb_image").getValue().toString());
+                                holder.setUserImage(each_user.child("thumb_image").getValue().toString(), getContext());
                             }
                         }
                     }
@@ -401,22 +401,23 @@ public class ChatThreadFragment extends Fragment {
             intent.putExtra("receiver_email", receiver_email);
             intent.putExtra("imageUrl", imageUrl);
             intent.putExtra("uid", uid);
-            StorageReference profileStorageRef = FirebaseStorage.getInstance().getReference();
-            profileStorageRef.child("images/"+uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    intent.putExtra("photo_url", uri);
-                    startActivity(intent);
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    intent.putExtra("photo_url", Uri.parse("https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png"));
-                    startActivity(intent);
-
-                }
-            });
+            startActivity(intent);
+//            StorageReference profileStorageRef = FirebaseStorage.getInstance().getReference();
+//            profileStorageRef.child("images/"+uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                @Override
+//                public void onSuccess(Uri uri) {
+//                    intent.putExtra("photo_url", uri);
+//                    startActivity(intent);
+//
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    intent.putExtra("photo_url", Uri.parse("https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png"));
+//                    startActivity(intent);
+//
+//                }
+//            });
         }
     }
 }

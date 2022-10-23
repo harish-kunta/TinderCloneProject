@@ -337,7 +337,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/account_circle/baseline_account_circle_24.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/people/baseline_people_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -347,7 +347,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_baseline_account_circle_24" />
+                            <entry key="color" value="ffffff" />
+                            <entry key="outputName" value="ic_baseline_people_24" />
                             <entry key="sourceFile" value="C:\Users\prava\Documents\GitHub\TinderCloneProject" />
                           </map>
                         </option>

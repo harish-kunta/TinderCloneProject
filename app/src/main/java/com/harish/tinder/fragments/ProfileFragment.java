@@ -129,7 +129,7 @@ public class ProfileFragment extends Fragment {
                 contentName.setText(display_name);
                 if (!image.equals("default")) {
                     Glide
-                            .with(getContext())
+                            .with(mProfileView.getContext())
                             .load(image)
                             .into(profilePic);
                 } else {
