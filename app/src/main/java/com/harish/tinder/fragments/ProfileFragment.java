@@ -10,20 +10,22 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.harish.tinder.ChooseLoginRegistrationActivity;
-import com.harish.tinder.MainActivity;
 import com.harish.tinder.R;
-import com.harish.tinder.fab.FloatingActionButton;
 import com.harish.tinder.utils.Imageutils;
-import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -46,7 +48,8 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     TextView profileName;
-    TextView profileEmail;
+    TextView contentEmail;
+    TextView contentName;
     Imageutils imageutils;
     TextView logOut;
     CircleImageView profilePic;
@@ -96,7 +99,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mProfileView =  inflater.inflate(R.layout.fragment_profile, container, false);
+        mProfileView = inflater.inflate(R.layout.fragment_profile, container, false);
         mProfileView.findViewById(R.id.sign_out).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,15 +111,40 @@ public class ProfileFragment extends Fragment {
             }
         });
         profileName = (TextView) mProfileView.findViewById(R.id.profile_name);
-        profileEmail = (TextView) mProfileView.findViewById(R.id.email_text);
+        contentEmail = (TextView) mProfileView.findViewById(R.id.email_text);
+
+        contentName = (TextView) mProfileView.findViewById(R.id.name_text);
         profilePic = (CircleImageView) mProfileView.findViewById(R.id.profile_image);
         storageReference = FirebaseStorage.getInstance().getReference();
         userRef.child(user.getUid()).child("online").setValue("true");
-        profileName.setText(user.getDisplayName());
-        profileEmail.setText(user.getEmail());
+        contentEmail.setText(user.getEmail());
+        userRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String display_name = dataSnapshot.child("name").getValue().toString();
 
+                String image = dataSnapshot.child("profileImageUrl").getValue().toString();
+
+                profileName.setText(display_name);
+                contentName.setText(display_name);
+                if (!image.equals("default")) {
+                    Glide
+                            .with(getContext())
+                            .load(image)
+                            .into(profilePic);
+                } else {
+                    profilePic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_baseline_account_circle_24));
+
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
         //Log.e("Photo URL", filePath.toString());
-        Picasso.get().load(user.getPhotoUrl()).into(profilePic);
+//        Picasso.get().load(user.getPhotoUrl()).into(profilePic);
         return mProfileView;
     }
 }

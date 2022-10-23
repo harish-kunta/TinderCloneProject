@@ -28,6 +28,10 @@
     <string name="admob_banner_ad_id" />
     <string name="title_activity_settings">SettingsActivity</string>
 
+    <string name="agree_n_continue">Tap \"Agree and continue\" to accept the Ping Me Terms of Service and Privacy Policy.</string>
+    <string name="url_terms">https://chatterboxappharish.blogspot.com/2018/11/terms-and-conditions.html</string>
+    <string name="url_privacy">https://chatterboxappharish.blogspot.com/2018/06/privacy-policy.html</string>
+
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
@@ -43,5 +47,6 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="default_input_hint">Type your message</string>
+    <string name="default_status">Hi there I am using Ping Me</string>
 
 </resources>

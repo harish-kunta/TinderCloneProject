@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ahamed.multiviewadapter.BaseViewHolder;
 import com.ahamed.multiviewadapter.ItemBinder;
 import com.ahamed.multiviewadapter.SimpleRecyclerAdapter;
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -218,6 +220,7 @@ public class ChatThreadFragment extends Fragment {
                                 item.setEmail(each_user.child("email").getValue().toString());
                                 item.setUid(each_user.child("uid").getValue().toString());
                                 item.setImageUrl(each_user.child("profileImageUrl").getValue().toString());
+                                holder.setUserImage(each_user.child("profileImageUrl").getValue().toString(), getContext());
                             }
                         }
                     }
@@ -231,43 +234,49 @@ public class ChatThreadFragment extends Fragment {
             }catch (Exception e){
                 //Log.e("Raise", "No email");
             }
-            holder.profileStorageRef.child("images/"+item.getEmail()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            holder.profileStorageRef.child(item.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    profilePath = uri;
-                    Picasso.get().load(uri).networkPolicy(NetworkPolicy.OFFLINE).into(holder.profile_image, new Callback() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-                            Picasso.get().load(uri).into(holder.profile_image);
-                        }
-                    });
-
-                }
-
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Picasso.get().load(Uri.parse("https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png"))
-                            .networkPolicy(NetworkPolicy.OFFLINE)
-                            .into(holder.profile_image, new Callback() {
-                                @Override
-                                public void onSuccess() {
-
-                                }
-
-                                @Override
-                                public void onError(Exception e) {
-                                    Picasso.get().load(Uri.parse("https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png"))
-                                            .into(holder.profile_image);
-                                }
-                            });
+                    System.out.println("Test");
                 }
             });
+//            holder.profileStorageRef.child("images/"+item.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                @Override
+//                public void onSuccess(Uri uri) {
+//                    profilePath = uri;
+//                    Picasso.get().load(uri).networkPolicy(NetworkPolicy.OFFLINE).into(holder.profile_image, new Callback() {
+//                        @Override
+//                        public void onSuccess() {
+//
+//                        }
+//
+//                        @Override
+//                        public void onError(Exception e) {
+//                            Picasso.get().load(uri).into(holder.profile_image);
+//                        }
+//                    });
+//
+//                }
+//
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Picasso.get().load(Uri.parse("https://firebasestorage.googleapis.com/v0/b/tinderclone-70879.appspot.com/o/images%2FVpCYOm0nYedGIqdq2jIisdFIbFC2.jpg?alt=media&token=4f6437de-d88a-4db1-86aa-00e828d4d2cd"))
+//                            .networkPolicy(NetworkPolicy.OFFLINE)
+//                            .into(holder.profile_image, new Callback() {
+//                                @Override
+//                                public void onSuccess() {
+//
+//                                }
+//
+//                                @Override
+//                                public void onError(Exception e) {
+//                                    Picasso.get().load(Uri.parse("https://firebasestorage.googleapis.com/v0/b/tinderclone-70879.appspot.com/o/images%2FVpCYOm0nYedGIqdq2jIisdFIbFC2.jpg?alt=media&token=4f6437de-d88a-4db1-86aa-00e828d4d2cd"))
+//                                            .into(holder.profile_image);
+//                                }
+//                            });
+//                }
+//            });
             holder.user_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -362,6 +371,19 @@ public class ChatThreadFragment extends Fragment {
 
             }
 
+            public void setUserImage(String thumb_image, Context ctx) {
+                if (!thumb_image.equals("default")) {
+                    Glide
+                            .with(ctx)
+                            .load(thumb_image)
+                            .into(profile_image);
+                } else {
+                    profile_image.setImageDrawable(ContextCompat.getDrawable(ctx, R.drawable.ic_black_person_24dp));
+
+                }
+
+            }
+
             // Normal ViewHolder code
         }
         public void openChatActivity(final String receiver_email,
@@ -380,7 +402,7 @@ public class ChatThreadFragment extends Fragment {
             intent.putExtra("imageUrl", imageUrl);
             intent.putExtra("uid", uid);
             StorageReference profileStorageRef = FirebaseStorage.getInstance().getReference();
-            profileStorageRef.child("images/"+receiver_email).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            profileStorageRef.child("images/"+uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
                     intent.putExtra("photo_url", uri);

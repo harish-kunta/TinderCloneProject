@@ -54,6 +54,8 @@ dependencies {
     implementation 'com.github.devahamed:multi-view-adapter:1.2.3'
     implementation 'pl.tajchert:waitingdots:0.2.0'
     implementation 'io.github.ponnamkarthik:richlinkpreview:1.0.8'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.1.1'
+    implementation 'id.zelory:compressor:2.1.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
