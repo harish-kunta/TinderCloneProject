@@ -13,6 +13,8 @@
         android:theme="@style/AppTheme"
         android:name=".TinderClone">
         <activity android:name=".AvailableProfileActivity"></activity>
+        <activity android:name=".MainPageActivity"></activity>
+
         <activity
             android:name=".material_ui.MainActivity"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
