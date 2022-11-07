@@ -13,7 +13,7 @@
 
     <TextView
         android:id="@+id/sign_out"
-        android:text="Tinder"
+        android:text="Dinder"
         style="@style/applogo" />
 
     <androidx.cardview.widget.CardView
