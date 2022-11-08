@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainPageActivity extends AppCompatActivity {
-   
+
     private Button iAgree;
 
     @Override

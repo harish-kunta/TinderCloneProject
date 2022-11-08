@@ -31,11 +31,14 @@ public class SplashScreenActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
             return;
-        } else {
-            Intent intent = new Intent(getApplicationContext(), MainPageActivity.class);
-            startActivity(intent);
-            finish();
         }
+        else
+        {
+        Intent intent = new Intent(getApplicationContext(), NameActivity.class);
+        startActivity(intent);
+        finish();
+        }
+
 
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
