@@ -47,7 +47,6 @@ public class UploadImageActivity extends AppCompatActivity {
     private FirebaseUser mCurrentUser;
     ImageButton addButton;
     LinearLayout rootLayout;
-    TextView skip;
     private MyData myData;
     RelativeLayout loading;
 
@@ -75,7 +74,7 @@ public class UploadImageActivity extends AppCompatActivity {
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         mImageStorage = FirebaseStorage.getInstance().getReference();
         loading = findViewById(R.id.loadingPanel);
-        skip = findViewById(R.id.skip);
+
         mAuth = FirebaseAuth.getInstance();
         String current_uid = mCurrentUser.getUid();
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
@@ -99,12 +98,6 @@ public class UploadImageActivity extends AppCompatActivity {
                 saveChanges();
             }
         });
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                skip();
-            }
-        });
         mRegProgress = new ProgressDialog(UploadImageActivity.this,
                 R.style.AppTheme);
         mRegProgress.setIndeterminate(true);
@@ -113,9 +106,6 @@ public class UploadImageActivity extends AppCompatActivity {
 
     }
 
-    private void skip() {
-        sendToStart();
-    }
 
     private void saveChanges() {
 
