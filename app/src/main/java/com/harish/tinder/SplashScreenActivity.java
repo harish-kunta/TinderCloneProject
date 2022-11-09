@@ -14,7 +14,6 @@ import com.harish.tinder.material_ui.MainActivity;
 
 public class SplashScreenActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         }
         else
         {
-        Intent intent = new Intent(getApplicationContext(), NameActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ChooseLoginRegistrationActivity.class);
         startActivity(intent);
         finish();
         }
