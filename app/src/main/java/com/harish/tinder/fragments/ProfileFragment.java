@@ -3,13 +3,16 @@ package com.harish.tinder.fragments;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -25,7 +28,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.harish.tinder.ChooseLoginRegistrationActivity;
 import com.harish.tinder.R;
+import com.harish.tinder.material_ui.SettingsActivity;
 import com.harish.tinder.utils.Imageutils;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -48,17 +56,12 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     TextView profileName;
-    TextView contentEmail;
-    TextView contentName;
-    Imageutils imageutils;
-    TextView logOut;
+    TextView profileEmail;
+//    TextView contentEmail;
+//    TextView contentName;
+    ImageView editProfileButton;
     CircleImageView profilePic;
-    FirebaseStorage storage;
-    RelativeLayout layout_logout;
     StorageReference storageReference;
-    private Uri filePath;
-    private Bitmap bitmap;
-    private String file_name;
     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
     private final int PICK_IMAGE_REQUEST = 71;
@@ -111,29 +114,42 @@ public class ProfileFragment extends Fragment {
             }
         });
         profileName = (TextView) mProfileView.findViewById(R.id.profile_name);
-        contentEmail = (TextView) mProfileView.findViewById(R.id.email_text);
+        profileEmail = (TextView) mProfileView.findViewById(R.id.profile_email);
 
-        contentName = (TextView) mProfileView.findViewById(R.id.name_text);
+//        contentEmail = (TextView) mProfileView.findViewById(R.id.email_text);
+        editProfileButton = (ImageView) mProfileView.findViewById(R.id.edit_profile);
+
+        editProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+//        contentName = (TextView) mProfileView.findViewById(R.id.name_text);
         profilePic = (CircleImageView) mProfileView.findViewById(R.id.profile_image);
         storageReference = FirebaseStorage.getInstance().getReference();
         userRef.child(user.getUid()).child("online").setValue("true");
-        contentEmail.setText(user.getEmail());
+//        contentEmail.setText(user.getEmail());
         userRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String display_name = dataSnapshot.child("name").getValue().toString();
-
+                String email = dataSnapshot.child("email").getValue().toString();
+                long dobUnix = (Long) dataSnapshot.child("dob").getValue();
                 String image = dataSnapshot.child("profileImageUrl").getValue().toString();
 
-                profileName.setText(display_name);
-                contentName.setText(display_name);
+                profileName.setText(display_name+", "+dobUnix);
+                profileEmail.setText(email);
+              //  contentName.setText(display_name);
                 if (!image.equals("default")) {
                     Glide
                             .with(mProfileView.getContext())
                             .load(image)
                             .into(profilePic);
                 } else {
-                    profilePic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_baseline_account_circle_24));
+                    profilePic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.ic_account_circle_white));
 
                 }
             }
@@ -147,4 +163,9 @@ public class ProfileFragment extends Fragment {
 //        Picasso.get().load(user.getPhotoUrl()).into(profilePic);
         return mProfileView;
     }
+
+
+//    public static int calculateAge(LocalDate birthDate, LocalDate currentDate) {
+////        return ChronoUnit.YEARS.between(start, end);
+//    }
 }

@@ -18,7 +18,7 @@
             android:layout_width="200dp"
             android:layout_gravity="center_horizontal"
             android:layout_height="200dp"
-            android:src="@drawable/ic_baseline_account_circle_24" />
+            android:src="@mipmap/ic_account_circle_white" />
 
 
         <ImageButton
@@ -42,23 +42,6 @@
                 android:secondaryProgressTint="@color/colorPrimary" />
         </RelativeLayout>
     </FrameLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:textColorHint="@color/colorAccent">
-
-        <EditText
-            android:id="@+id/status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Status"
-            android:inputType="textPersonName"
-            android:textColor="@color/colorAccent" />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

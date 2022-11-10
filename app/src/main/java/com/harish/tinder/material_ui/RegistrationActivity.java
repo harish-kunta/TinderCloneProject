@@ -99,6 +99,8 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
             Integer unixTime = dateToUnix(dob);
             if (name.length() <= 0) {
                 Snackbar.make(rootLayout, "Enter name", Snackbar.LENGTH_LONG).show();
+            } else if (name.matches(".*\\d.*")) {
+                Snackbar.make(rootLayout, "Name cannot contain numbers", Snackbar.LENGTH_LONG).show();
             } else if (!isValid(userEmail)) {
                 Snackbar.make(rootLayout, "Enter valid email", Snackbar.LENGTH_LONG).show();
             } else if (selectId == -1) {
@@ -204,9 +206,9 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        DecimalFormat mFormat= new DecimalFormat("00");
+        DecimalFormat mFormat = new DecimalFormat("00");
         mFormat.setRoundingMode(RoundingMode.DOWN);
-        String date = mFormat.format(Double.valueOf(dayOfMonth)) + "/" +  mFormat.format(Double.valueOf(month)) + "/" + year;
+        String date = mFormat.format(Double.valueOf(dayOfMonth)) + "/" + mFormat.format(Double.valueOf(month)) + "/" + year;
         user_dob.setText(date);
     }
 }

@@ -49,8 +49,6 @@ public class UploadImageActivity extends AppCompatActivity {
     LinearLayout rootLayout;
     private MyData myData;
     RelativeLayout loading;
-
-    EditText _statusText;
     private FirebaseAuth mAuth;
     private DatabaseReference mUserRef;
     private ProgressDialog mProgressDialog;
@@ -69,7 +67,6 @@ public class UploadImageActivity extends AppCompatActivity {
         profileImageView = findViewById(R.id.profile_image);
         addButton = findViewById(R.id.add_image);
         saveChanges = findViewById(R.id.save_changes);
-        _statusText = findViewById(R.id.status);
 
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         mImageStorage = FirebaseStorage.getInstance().getReference();
@@ -79,7 +76,6 @@ public class UploadImageActivity extends AppCompatActivity {
         String current_uid = mCurrentUser.getUid();
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
         mUserDatabase.keepSynced(true);
-        _statusText.setText(getString(R.string.default_status));
         profileImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,13 +104,7 @@ public class UploadImageActivity extends AppCompatActivity {
 
 
     private void saveChanges() {
-
         mRegProgress.show();
-
-        String status = _statusText.getText().toString();
-
-        uploadStatus(status);
-
     }
 
     private void uploadStatus(String status) {
