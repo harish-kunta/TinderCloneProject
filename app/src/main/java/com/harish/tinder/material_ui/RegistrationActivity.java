@@ -101,7 +101,9 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                 Snackbar.make(rootLayout, "Enter name", Snackbar.LENGTH_LONG).show();
             } else if (name.matches(".*\\d.*")) {
                 Snackbar.make(rootLayout, "Name cannot contain numbers", Snackbar.LENGTH_LONG).show();
-            } else if (!isValid(userEmail)) {
+            } else if (checkCapitalLetters(userEmail)) {
+                Snackbar.make(rootLayout, "Email cannot contain capital letters", Snackbar.LENGTH_LONG).show();
+            } else if (!isValidEmail(userEmail)) {
                 Snackbar.make(rootLayout, "Enter valid email", Snackbar.LENGTH_LONG).show();
             } else if (selectId == -1) {
                 Snackbar.make(rootLayout, "Gender not selected", Snackbar.LENGTH_LONG).show();
@@ -170,7 +172,7 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
         });
     }
 
-    public static boolean isValid(String email) {
+    public boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
@@ -180,6 +182,23 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
         if (email == null)
             return false;
         return pat.matcher(email).matches();
+    }
+
+    boolean checkCapitalLetters(String str) {
+        char ch;
+        boolean capitalFlag = false;
+        boolean lowerCaseFlag = false;
+        for (int i = 0; i < str.length(); i++) {
+            ch = str.charAt(i);
+             if (Character.isUpperCase(ch)) {
+                capitalFlag = true;
+            } else if (Character.isLowerCase(ch)) {
+                lowerCaseFlag = true;
+            }
+            if (capitalFlag && lowerCaseFlag)
+                return true;
+        }
+        return false;
     }
 
     public void showDatePickerDialog() {
