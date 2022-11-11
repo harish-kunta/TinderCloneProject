@@ -5,6 +5,18 @@
             app:key="signature"
             app:title="@string/signature_title"
             app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            app:key="Email"
+            app:title="Email"
+            app:useSimpleSummaryProvider="true"/>
+        <EditTextPreference
+            app:key="Date of Birth"
+            app:title="Date of Birth"
+            app:useSimpleSummaryProvider="true"/>
+        <EditTextPreference
+            app:key="Password"
+            app:title="password"
+            app:useSimpleSummaryProvider="true"/>
 
         <ListPreference
             app:defaultValue="reply"

@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.harish.tinder">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <application
         android:name=".TinderClone"
         android:allowBackup="true"
@@ -13,8 +11,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".MainActivity2"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Upload_Bio"
+            android:exported="false"
+            android:parentActivityName=".UploadImageActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".material_ui.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
         <activity
             android:name=".GenderActivity"
             android:exported="false"
@@ -75,5 +88,7 @@
             android:name=".Chat.ChatActivity"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
     </application>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

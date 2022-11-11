@@ -114,7 +114,7 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
             } else if (password.length() <= 0) {
                 Snackbar.make(rootLayout, "Enter password", Snackbar.LENGTH_LONG).show();
             } else if (!password.equals(checkPassword)) {
-                Snackbar.make(rootLayout, "Passwords donot match", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, "Passwords do not match", Snackbar.LENGTH_LONG).show();
             } else {
                 final RadioButton radioButton = (RadioButton) findViewById(selectId);
                 mRegProgress = new ProgressDialog(RegistrationActivity.this,

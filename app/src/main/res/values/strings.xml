@@ -48,5 +48,6 @@
         <item>johana</item>
         <item>katrena</item>
     </string-array>
+    <string name="app">Language</string>
 
 </resources>
