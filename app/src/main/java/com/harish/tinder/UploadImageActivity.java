@@ -95,7 +95,7 @@ public class UploadImageActivity extends AppCompatActivity {
             }
         });
         mRegProgress = new ProgressDialog(UploadImageActivity.this,
-                R.style.AppTheme);
+                R.style.AppThemeDialog);
         mRegProgress.setIndeterminate(true);
         mRegProgress.setCanceledOnTouchOutside(false);
         mRegProgress.setMessage("Uploading...");
@@ -104,7 +104,8 @@ public class UploadImageActivity extends AppCompatActivity {
 
 
     private void saveChanges() {
-        mRegProgress.show();
+      //  mRegProgress.show();
+        sendToStart();
     }
 
     private void uploadStatus(String status) {
@@ -113,8 +114,6 @@ public class UploadImageActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     mRegProgress.dismiss();
-
-                    sendToStart();
                 } else {
                     Snackbar.make(rootLayout, "Something Went Wrong!", Toast.LENGTH_SHORT).show();
                 }

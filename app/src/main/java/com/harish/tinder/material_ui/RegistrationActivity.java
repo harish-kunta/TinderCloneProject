@@ -107,6 +107,7 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                 Snackbar.make(rootLayout, "Enter valid email", Snackbar.LENGTH_LONG).show();
             } else if (selectId == -1) {
                 Snackbar.make(rootLayout, "Gender not selected", Snackbar.LENGTH_LONG).show();
+                //TODO : Verify that user is 18 years or older
             } else if (dob.length() <= 0) {
                 Snackbar.make(rootLayout, "Enter DOB", Snackbar.LENGTH_LONG).show();
             } else if (unixTime == null) {
