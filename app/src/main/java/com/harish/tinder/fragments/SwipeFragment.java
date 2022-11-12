@@ -172,13 +172,13 @@ public class SwipeFragment extends Fragment implements CardStackListener {
             }
 
         });
-        FloatingActionButton chat = homeView.findViewById(R.id.chat_button);
-        chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), AvailableProfileActivity.class));
-            }
-        });
+//        FloatingActionButton chat = homeView.findViewById(R.id.chat_button);
+//        chat.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getContext(), AvailableProfileActivity.class));
+//            }
+//        });
 
     }
 
