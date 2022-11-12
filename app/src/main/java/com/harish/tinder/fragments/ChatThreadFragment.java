@@ -219,8 +219,9 @@ public class ChatThreadFragment extends Fragment {
                                 item.setName(each_user.child("name").getValue().toString());
                                 item.setEmail(each_user.child("email").getValue().toString());
                                 item.setUid(each_user.child("uid").getValue().toString());
-                                item.setImageUrl(each_user.child("thumb_image").getValue().toString());
-                                holder.setUserImage(each_user.child("thumb_image").getValue().toString(), getContext());
+                                //TODO: change this to thumb_image
+                                item.setImageUrl(each_user.child("profileImageUrl").getValue().toString());
+                                holder.setUserImage(each_user.child("profileImageUrl").getValue().toString(), getContext());
                             }
                         }
                     }
