@@ -157,7 +157,7 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                         try {
                             throw task.getException();
                         } catch (FirebaseAuthWeakPasswordException e) {
-                            Snackbar.make(rootLayout, "Password is too weak! please enter a stronge password", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(rootLayout, "Password is too weak! please enter a strong password", Snackbar.LENGTH_LONG).show();
                         } catch (FirebaseAuthInvalidCredentialsException e) {
                             Snackbar.make(rootLayout, "Invalid Credentials!", Snackbar.LENGTH_LONG).show();
                         } catch (FirebaseAuthUserCollisionException e) {
