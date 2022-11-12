@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -56,6 +57,7 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
     private ProgressDialog mRegProgress;
 
     private Button signup;
+    private TextView signIn;
 
     private String userEmail, password, dob, name, checkPassword;
 
@@ -81,12 +83,21 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
         user_password = (TextInputEditText) findViewById(R.id.password_reg_field);
         user_check_password = (TextInputEditText) findViewById(R.id.confirm_pass_field);
         signup = (Button) findViewById(R.id.signup_reg_button);
+        signIn = (TextView) findViewById(R.id.sign_in);
         mRadioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
         user_dob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDatePickerDialog();
+            }
+        });
+        signIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent signup = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(signup);
+                finish();
             }
         });
         signup.setOnClickListener(v -> {
@@ -173,6 +184,7 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
         });
     }
 
+
     public boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
                 "[a-zA-Z0-9_+&*-]+)*@" +
@@ -191,7 +203,7 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
         boolean lowerCaseFlag = false;
         for (int i = 0; i < str.length(); i++) {
             ch = str.charAt(i);
-             if (Character.isUpperCase(ch)) {
+            if (Character.isUpperCase(ch)) {
                 capitalFlag = true;
             } else if (Character.isLowerCase(ch)) {
                 lowerCaseFlag = true;
