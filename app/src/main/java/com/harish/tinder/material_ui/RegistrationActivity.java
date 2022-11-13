@@ -98,9 +98,9 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
             dob = user_dob.getText().toString();
             Integer unixTime = dateToUnix(dob);
             if (name.length() <= 0) {
-                Snackbar.make(rootLayout, " Harish git Enter name", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, " Harish  Enter name", Snackbar.LENGTH_LONG).show();
             } else if (name.matches(".*\\d.*")) {
-                Snackbar.make(rootLayout, "harish Name cannot contain numbers", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, "Harish Name cannot contain numbers", Snackbar.LENGTH_LONG).show();
             } else if (checkCapitalLetters(userEmail)) {
                 Snackbar.make(rootLayout, " Harish Email cannot contain capital letters", Snackbar.LENGTH_LONG).show();
             } else if (!isValidEmail(userEmail)) {
