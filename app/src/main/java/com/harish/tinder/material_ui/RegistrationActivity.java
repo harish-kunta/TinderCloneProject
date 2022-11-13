@@ -221,6 +221,10 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                 Calendar.getInstance().get(Calendar.YEAR),
                 Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, -18);
+        //User can only register if they are 18 years old
+        datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
         datePickerDialog.show();
     }
 
