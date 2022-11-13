@@ -29,10 +29,13 @@ import com.google.firebase.storage.StorageReference;
 import com.harish.tinder.ChooseLoginRegistrationActivity;
 import com.harish.tinder.R;
 import com.harish.tinder.material_ui.SettingsActivity;
+import com.harish.tinder.utils.AgeCalculator;
 import com.harish.tinder.utils.Imageutils;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -133,14 +136,20 @@ public class ProfileFragment extends Fragment {
         userRef.child(user.getUid()).child("online").setValue("true");
 //        contentEmail.setText(user.getEmail());
         userRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            //TODO:remove this annotation
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String display_name = dataSnapshot.child("name").getValue().toString();
                 String email = dataSnapshot.child("email").getValue().toString();
                 long dobUnix = (Long) dataSnapshot.child("dob").getValue();
                 String image = dataSnapshot.child("profileImageUrl").getValue().toString();
-
-                profileName.setText(display_name+", "+dobUnix);
+                LocalDate birthDate =
+                        Instant.ofEpochSecond(dobUnix).atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate currentDate
+                        = LocalDate.now();
+                int age = AgeCalculator.calculateAge(birthDate, currentDate);
+                profileName.setText(display_name+", "+age);
                 profileEmail.setText(email);
               //  contentName.setText(display_name);
                 if (!image.equals("default")) {
