@@ -13,6 +13,10 @@
     <string name="url_privacy">https://chatterboxappharish.blogspot.com/2018/06/privacy-policy.html</string>
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
+    <string name="legal_header">LEGAL</string>
+    <string name="logout">Logout</string>
+    <string name="share_tinder">Share Tinder</string>
+    <string name="delete_account">Delete Account</string>
 
     <!-- Preference Titles -->
     <string name="signature_title">Your signature</string>
@@ -21,6 +25,10 @@
     <!-- Messages Preferences -->
     <string name="sync_title">Sync email periodically</string>
     <string name="attachment_title">Download incoming attachments</string>
+
+    <!-- legal Preferences -->
+    <string name="licenses_title">Licenses</string>
+    <string name="terms_of_service_title">Terms of Service</string>
 
     <!-- Sync Preferences -->
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
