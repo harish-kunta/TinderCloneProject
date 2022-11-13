@@ -98,24 +98,24 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
             dob = user_dob.getText().toString();
             Integer unixTime = dateToUnix(dob);
             if (name.length() <= 0) {
-                Snackbar.make(rootLayout, " harish Enter name", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, "Enter name", Snackbar.LENGTH_LONG).show();
             } else if (name.matches(".*\\d.*")) {
-                Snackbar.make(rootLayout, "harika Name cannot contain numbers", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, " Name cannot contain numbers", Snackbar.LENGTH_LONG).show();
             } else if (checkCapitalLetters(userEmail)) {
-                Snackbar.make(rootLayout, " harish Email cannot contain capital letters", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, " Email cannot contain capital letters", Snackbar.LENGTH_LONG).show();
             } else if (!isValidEmail(userEmail)) {
-                Snackbar.make(rootLayout, " harish Enter valid email", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, " Enter valid email", Snackbar.LENGTH_LONG).show();
             } else if (selectId == -1) {
-                Snackbar.make(rootLayout, " harish Gender not selected", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, " Gender not selected", Snackbar.LENGTH_LONG).show();
                 //TODO : Verify that user is 18 years or older
             } else if (dob.length() <= 0) {
-                Snackbar.make(rootLayout, " harish Enter DOB", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, "Enter DOB", Snackbar.LENGTH_LONG).show();
             } else if (unixTime == null) {
-                Snackbar.make(rootLayout, "harish Error while parsing DOB", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, "Error while parsing DOB", Snackbar.LENGTH_LONG).show();
             } else if (password.length() <= 0) {
-                Snackbar.make(rootLayout, "harish Enter password", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, "Enter password", Snackbar.LENGTH_LONG).show();
             } else if (!password.equals(checkPassword)) {
-                Snackbar.make(rootLayout, "harish Passwords do not match", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, "Passwords do not match", Snackbar.LENGTH_LONG).show();
             } else {
                 final RadioButton radioButton = (RadioButton) findViewById(selectId);
                 mRegProgress = new ProgressDialog(RegistrationActivity.this,
