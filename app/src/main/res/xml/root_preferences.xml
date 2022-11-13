@@ -45,25 +45,25 @@
 
     <PreferenceCategory app:title="@string/legal_header">
 
-        <EditTextPreference
+        <Preference
             app:key="license"
             app:title="@string/licenses_title" />
 
-        <EditTextPreference
+        <Preference
             app:key="terms_of_service"
             app:title="@string/terms_of_service_title" />
 
     </PreferenceCategory>
 
-    <EditTextPreference
+    <Preference
         app:key="share"
         app:title="@string/share_tinder" />
 
-    <EditTextPreference
+    <Preference
         app:key="logout"
         app:title="@string/logout" />
 
-    <EditTextPreference
+    <Preference
         app:key="delete_account"
         app:title="@string/delete_account" />
 

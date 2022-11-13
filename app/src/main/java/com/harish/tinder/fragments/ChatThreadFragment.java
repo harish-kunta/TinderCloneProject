@@ -210,7 +210,7 @@ public class ChatThreadFragment extends Fragment {
             try {
                 Query nameQuery = mUserDatabaseRunner;
                 nameQuery.keepSynced(true);
-                nameQuery.addValueEventListener(new ValueEventListener() {
+                nameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot each_user: dataSnapshot.getChildren()){
