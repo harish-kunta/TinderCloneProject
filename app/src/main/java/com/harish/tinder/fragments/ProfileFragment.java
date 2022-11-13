@@ -37,6 +37,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -135,15 +136,15 @@ public class ProfileFragment extends Fragment {
         storageReference = FirebaseStorage.getInstance().getReference();
         userRef.child(user.getUid()).child("online").setValue("true");
 //        contentEmail.setText(user.getEmail());
-        userRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+        userRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             //TODO:remove this annotation
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String display_name = dataSnapshot.child("name").getValue().toString();
-                String email = dataSnapshot.child("email").getValue().toString();
-                long dobUnix = (Long) dataSnapshot.child("dob").getValue();
-                String image = dataSnapshot.child("profileImageUrl").getValue().toString();
+                String display_name = getObjectString(dataSnapshot.child("name").getValue());
+                String email = getObjectString(dataSnapshot.child("email").getValue());
+                long dobUnix = getObjectLong(dataSnapshot.child("dob").getValue());
+                String image = getObjectString(dataSnapshot.child("profileImageUrl").getValue());
                 LocalDate birthDate =
                         Instant.ofEpochSecond(dobUnix).atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate currentDate
@@ -173,6 +174,19 @@ public class ProfileFragment extends Fragment {
         return mProfileView;
     }
 
+    String getObjectString(Object o){
+        if(o!=null){
+            return o.toString();
+        }
+        return "";
+    }
+
+    long getObjectLong(Object o){
+        if(o!=null){
+            return (Long)o;
+        }
+        return -1;
+    }
 
 //    public static int calculateAge(LocalDate birthDate, LocalDate currentDate) {
 ////        return ChronoUnit.YEARS.between(start, end);
