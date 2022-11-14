@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,8 +47,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
 
+public class ProfileFragment extends Fragment {
+    private EditText mAboutMe;
+    private EditText mInterests;
+    private EditText mJob;
+    private EditText mCompany;
+    private EditText mSchool;
+    private EditText mLivingIn;
+    public String aboutMe,interests,job,company,school,livingIn;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -96,6 +104,20 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAboutMe = (EditText) mAboutMe.findViewById(R.id.editTextTextPersonName3);
+        mInterests = (EditText) mInterests.findViewById(R.id.editTextTextPersonName4);
+        mJob = (EditText) mJob.findViewById(R.id.editTextTextPersonName5);
+        mCompany = (EditText) mCompany.findViewById(R.id.editTextTextPersonName6);
+        mSchool = (EditText) mSchool.findViewById(R.id.editTextTextPersonName7);
+        mLivingIn = (EditText) mLivingIn.findViewById(R.id.editTextTextPersonName8);
+        mLivingIn.setOnClickListener(view -> {
+            aboutMe = mAboutMe.getText().toString();
+            interests = mInterests.getText().toString();
+            job = mJob.getText().toString();
+            company = mCompany.getText().toString();
+            school = mSchool.getText().toString();
+            livingIn = mLivingIn.getText().toString();
+        });
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
