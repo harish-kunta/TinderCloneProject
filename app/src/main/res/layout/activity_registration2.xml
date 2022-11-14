@@ -77,13 +77,15 @@
                     android:id="@+id/radioButtonMale"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="Male" />
+                    android:text="Male"
+                    android:layout_width="1dp"/>
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/radioButtonFemale"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="Female" />
+                    android:text="Female"
+                    android:layout_width="1dp"/>
             </RadioGroup>
 
             <com.google.android.material.textfield.TextInputLayout

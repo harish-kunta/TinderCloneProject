@@ -36,6 +36,7 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="default_input_hint">Type your message</string>
     <string name="default_status">Hi there I am using Ping Me</string>
+    <string name="app">Language</string>
     <string-array name="text_array">
         <item>Hellow dear Im here</item>
         <item>I won to chat now </item>
@@ -56,6 +57,5 @@
         <item>johana</item>
         <item>katrena</item>
     </string-array>
-    <string name="app">Language</string>
 
 </resources>
