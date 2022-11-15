@@ -22,6 +22,7 @@
     <string name="signature_title">Your signature</string>
     <string name="reply_title">Default reply action</string>
 
+
     <!-- Messages Preferences -->
     <string name="sync_title">Sync email periodically</string>
     <string name="attachment_title">Download incoming attachments</string>
@@ -56,6 +57,6 @@
         <item>johana</item>
         <item>katrena</item>
     </string-array>
-    <string name="app">Language</string>
+
 
 </resources>
