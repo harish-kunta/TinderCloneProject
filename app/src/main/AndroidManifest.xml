@@ -11,6 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".interested_in"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".MainActivity2"
             android:exported="false">
             <meta-data
@@ -86,6 +93,7 @@
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
         <activity
             android:name=".Chat.ChatActivity"
+            android:exported="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
     </application>
 
