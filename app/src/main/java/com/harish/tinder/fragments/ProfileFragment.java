@@ -1,15 +1,13 @@
 package com.harish.tinder.fragments;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -30,14 +28,10 @@ import com.harish.tinder.ChooseLoginRegistrationActivity;
 import com.harish.tinder.R;
 import com.harish.tinder.material_ui.SettingsActivity;
 import com.harish.tinder.utils.AgeCalculator;
-import com.harish.tinder.utils.Imageutils;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -46,8 +40,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
 
+public class ProfileFragment extends Fragment {
+    private TextView mAboutMe;
+    private TextView mInterests;
+    private TextView mJob;
+    private TextView mCompany;
+    private TextView mSchool;
+    private TextView mLivingIn;
+    public String aboutMe,interests,job,company,school,livingIn;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -96,6 +97,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -122,6 +124,22 @@ public class ProfileFragment extends Fragment {
 
 //        contentEmail = (TextView) mProfileView.findViewById(R.id.email_text);
         editProfileButton = (ImageView) mProfileView.findViewById(R.id.edit_profile);
+
+
+        mAboutMe = (TextView) mProfileView.findViewById(R.id.TextViewPersonName3);
+        mInterests = (TextView) mProfileView.findViewById(R.id.TextViewPersonName4);
+        mJob = (TextView) mProfileView.findViewById(R.id.TextViewPersonName5);
+        mCompany = (TextView) mProfileView.findViewById(R.id.TextViewPersonName6);
+        mSchool = (TextView) mProfileView.findViewById(R.id.TextViewPersonName7);
+        mLivingIn = (TextView) mProfileView.findViewById(R.id.TextViewPersonName8);
+        mLivingIn.setOnClickListener(view -> {
+            aboutMe = mAboutMe.getText().toString();
+            interests = mInterests.getText().toString();
+            job = mJob.getText().toString();
+            company = mCompany.getText().toString();
+            school = mSchool.getText().toString();
+            livingIn = mLivingIn.getText().toString();
+        });
 
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -24,7 +24,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\prava\AppData\Local\Temp\ic_android_black_24dp.xml" />
+                                                <entry key="imagePath" value="C:\Users\Harish\AppData\Local\Temp\ic_android_black_24dp.xml" />
                                                 <entry key="opacityPercent" value="60" />
                                               </map>
                                             </option>
@@ -74,7 +74,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\prava\AppData\Local\Temp\baseline_account_circle_24.xml" />
+                                                <entry key="imagePath" value="C:\Users\Harish\AppData\Local\Temp\baseline_account_circle_24.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -145,7 +145,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="102f75" />
-                                                <entry key="imagePath" value="C:\Users\prava\AppData\Local\Temp\baseline_account_circle_24.xml" />
+                                                <entry key="imagePath" value="C:\Users\Harish\AppData\Local\Temp\baseline_videocam_24.xml" />
                                                 <entry key="paddingPercent" value="-10" />
                                               </map>
                                             </option>
@@ -157,7 +157,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/account_circle/baseline_account_circle_24.xml" />
+                                                <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/videocam/baseline_videocam_24.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -190,7 +190,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="iconShape" value="CIRCLE" />
-                                      <entry key="outputName" value="ic_account_circle_white" />
+                                      <entry key="outputName" value="ic_video" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -207,7 +207,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\prava\AppData\Local\Temp\ic_android_black_24dp.xml" />
+                                                <entry key="imagePath" value="C:\Users\Harish\AppData\Local\Temp\ic_android_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -271,7 +271,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="imagePath" value="C:\Users\prava\AppData\Local\Temp\ic_android_black_24dp.xml" />
+                                                <entry key="imagePath" value="C:\Users\Harish\AppData\Local\Temp\ic_android_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
