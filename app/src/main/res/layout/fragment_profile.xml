@@ -139,8 +139,8 @@
             tools:layout_editor_absoluteX="83dp"
             tools:layout_editor_absoluteY="93dp" />
 
-        <EditText
-            android:id="@+id/editTextTextPersonName3"
+        <TextView
+            android:id="@+id/TextViewPersonName3"
             android:layout_width="370dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -165,8 +165,8 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/editTextTextPersonName4"
+        <TextView
+            android:id="@+id/TextViewPersonName4"
             android:layout_width="370dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -192,8 +192,8 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/editTextTextPersonName5"
+        <TextView
+            android:id="@+id/TextViewPersonName5"
             android:layout_width="351dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -217,8 +217,8 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/editTextTextPersonName6"
+        <TextView
+            android:id="@+id/TextViewPersonName6"
             android:layout_width="351dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -242,8 +242,8 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/editTextTextPersonName7"
+        <TextView
+            android:id="@+id/TextViewPersonName7"
             android:layout_width="351dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -268,8 +268,8 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/editTextTextPersonName8"
+        <TextView
+            android:id="@+id/TextViewPersonName8"
             android:layout_width="351dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -286,7 +286,7 @@
 
 
 
-    <!--    <include layout="@layout/content_profile" />-->
+
 
     </LinearLayout>
     </ScrollView>
