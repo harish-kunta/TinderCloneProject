@@ -10,11 +10,11 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class interested_in extends AppCompatActivity {
+public class interestedIn extends AppCompatActivity {
     SeekBar distance;
     SwitchCompat man, woman;
-
-    TextView  distance_text;
+    RangeSeekBar seekBar;
+    TextView distanceText, ageRange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +22,13 @@ public class interested_in extends AppCompatActivity {
         setContentView(R.layout.activity_interested_in);
 
 
+
         ImageButton back = findViewById(R.id.back);
         distance = findViewById(R.id.distance);
         man = findViewById(R.id.switch_man);
         woman = findViewById(R.id.switch_woman);
-        distance_text = findViewById(R.id.distance_text);
+        distanceText = findViewById(R.id.distance_text);
+        ageRange = findViewById(R.id.ageRange);
 
 
 
@@ -34,7 +36,7 @@ public class interested_in extends AppCompatActivity {
         distance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                distance_text.setText(progress + " Km");
+                distanceText.setText(progress + " Km");
             }
 
             @Override
@@ -66,7 +68,12 @@ public class interested_in extends AppCompatActivity {
                 }
             }
         });
-
+        seekBar.equals(new RangeSeekBar.OnRangeSeekBarChangeListener() {
+            @Override
+            public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Object minValue, Object maxValue) {
+                ageRange.setText(minValue + "-" + maxValue);
+            }
+        });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
