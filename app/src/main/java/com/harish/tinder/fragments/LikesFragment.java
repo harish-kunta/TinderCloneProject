@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,10 +18,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.harish.tinder.Matches.MatchesObject;
 import com.harish.tinder.R;
 import com.harish.tinder.adapter.LikesAdapter;
-import com.harish.tinder.model.CourseCard;
+import com.harish.tinder.listeners.UserItemClickListener;
+import com.harish.tinder.model.UserObject;
 import com.harish.tinder.utils.GridSpacingItemDecoration;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import java.util.List;
  * Use the {@link LikesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LikesFragment extends Fragment {
+public class LikesFragment extends Fragment implements UserItemClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,7 +41,6 @@ public class LikesFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mLikesAdapter;
-    private RecyclerView.LayoutManager mLikesLayoutManager;
 
     private String currentUserID;
 
@@ -47,7 +48,6 @@ public class LikesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private View mLikesView;
-    private ArrayList<CourseCard> courseCards;
 
     public LikesFragment() {
         // Required empty public constructor
@@ -86,8 +86,8 @@ public class LikesFragment extends Fragment {
         matchDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    for(DataSnapshot match : dataSnapshot.getChildren()){
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot match : dataSnapshot.getChildren()) {
                         FetchMatchInformation(match.getKey());
                     }
                 }
@@ -105,19 +105,19 @@ public class LikesFragment extends Fragment {
         userDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     String userId = dataSnapshot.getKey();
                     String name = "";
                     String profileImageUrl = "";
-                    if(dataSnapshot.child("name").getValue()!=null){
+                    if (dataSnapshot.child("name").getValue() != null) {
                         name = dataSnapshot.child("name").getValue().toString();
                     }
-                    if(dataSnapshot.child("profileImageUrl").getValue()!=null){
+                    if (dataSnapshot.child("profileImageUrl").getValue() != null) {
                         profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
                     }
 
 
-                    MatchesObject obj = new MatchesObject(userId, name, profileImageUrl);
+                    UserObject obj = new UserObject(userId, name, profileImageUrl);
                     resultsMatches.add(obj);
                     mLikesAdapter.notifyDataSetChanged();
                 }
@@ -131,32 +131,27 @@ public class LikesFragment extends Fragment {
 
     }
 
-    private ArrayList<MatchesObject> resultsMatches = new ArrayList<MatchesObject>();
-    private List<MatchesObject> getDataSetMatches() {
+    private ArrayList<UserObject> resultsMatches = new ArrayList<UserObject>();
+
+    private List<UserObject> getDataSetMatches() {
         return resultsMatches;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         mLikesView = inflater.inflate(R.layout.fragment_courses_stagged, container, false);
         Context mcontext = mLikesView.getContext();
         currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        mLikesAdapter = new LikesAdapter(getDataSetMatches(), mcontext);
+        mLikesAdapter = new LikesAdapter(getDataSetMatches(), mcontext, this);
         getUserMatchId();
 
-        StaggeredGridLayoutManager layoutManager =
-                new StaggeredGridLayoutManager(
-                        2,
-                        StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
         mRecyclerView = mLikesView.findViewById(R.id.rv_courses);
-        mRecyclerView.setLayoutManager(
-                layoutManager
-        );
+        mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setClipToPadding(false);
         mRecyclerView.setHasFixedSize(true);
 
@@ -167,5 +162,10 @@ public class LikesFragment extends Fragment {
         mRecyclerView.setAdapter(mLikesAdapter);
 
         return mLikesView;
+    }
+
+    @Override
+    public void onUserClick(UserObject userObject, ImageView imageView) {
+        Toast.makeText(getContext(), userObject.getName(), Toast.LENGTH_LONG).show();
     }
 }

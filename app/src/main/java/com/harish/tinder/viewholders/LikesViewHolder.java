@@ -1,5 +1,6 @@
 package com.harish.tinder.viewholders;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -9,7 +10,10 @@ import android.widget.Toast;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.harish.tinder.Matches.MatchesObject;
 import com.harish.tinder.R;
+import com.harish.tinder.model.UserObject;
 
 /**
  * Created by manel on 10/31/2017.
@@ -36,5 +40,13 @@ public class LikesViewHolder extends RecyclerView.ViewHolder implements View.OnC
 //        intent.putExtras(b);
 //        view.getContext().startActivity(intent);
         Toast.makeText(view.getContext(), mUserName.getText(), Toast.LENGTH_LONG);
+    }
+
+    public void setPostImage(UserObject userObject, Context context) {
+        //mMatchId.setText(userObject.getUserId());
+        mUserName.setText(userObject.getName());
+        if (!userObject.getProfileImageUrl().equals("default")) {
+            Glide.with(context).load(userObject.getProfileImageUrl()).into(mUserImage);
+        }
     }
 }

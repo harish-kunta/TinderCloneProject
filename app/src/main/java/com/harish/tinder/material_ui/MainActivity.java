@@ -55,22 +55,22 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                            return;
-                        }
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()) {
+                    Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                    return;
+                }
 
-                        // Get new FCM registration token
-                        String token = task.getResult();
-
-                        Log.d(TAG, token);
-                        Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                // Get new FCM registration token
+                String token = task.getResult();
+                if (token != null || token.isEmpty()) {
+                    Log.d(TAG, token);
+                    ref.child("device_token").setValue(token);
+                }
+            }
+        });
 
 //        userRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -87,8 +87,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //            }
 //        });
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main2);
         replace(new SwipeFragment());
         bottomBar = findViewById(R.id.bottomBar);
@@ -129,16 +128,6 @@ public class MainActivity extends AppCompatActivity {
             ref.child("online").setValue("true");
         }
     }
-
-//    @Override
-//    public void onNewToken(@NonNull String token) {
-//        Log.d(TAG, "Refreshed token: " + token);
-//
-//        // If you want to send messages to this application instance or
-//        // manage this apps subscriptions on the server side, send the
-//        // FCM registration token to your app server.
-//        sendRegistrationToServer(token);
-//    }
 
     @Override
     protected void onStop() {

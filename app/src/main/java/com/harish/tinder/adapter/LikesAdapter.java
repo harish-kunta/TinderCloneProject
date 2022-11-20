@@ -4,13 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.harish.tinder.Matches.MatchesObject;
 import com.harish.tinder.R;
+import com.harish.tinder.listeners.UserItemClickListener;
+import com.harish.tinder.model.UserObject;
 import com.harish.tinder.viewholders.LikesViewHolder;
 
 import java.util.List;
@@ -20,13 +19,14 @@ import java.util.List;
  */
 
 public class LikesAdapter extends RecyclerView.Adapter<LikesViewHolder>{
-    private List<MatchesObject> matchesList;
+    private List<UserObject> likesList;
     private Context context;
 
-
-    public LikesAdapter(List<MatchesObject> matchesList, Context context){
-        this.matchesList = matchesList;
+    private UserItemClickListener userItemClickListener;
+    public LikesAdapter(List<UserObject> likesList, Context context, UserItemClickListener listener){
+        this.likesList = likesList;
         this.context = context;
+        this.userItemClickListener = listener;
     }
 
     @Override
@@ -41,21 +41,19 @@ public class LikesAdapter extends RecyclerView.Adapter<LikesViewHolder>{
 
     @Override
     public void onBindViewHolder(LikesViewHolder holder, int position) {
-        //holder.mMatchId.setText(matchesList.get(position).getUserId());
-        holder.mUserName.setText(matchesList.get(position).getName());
-        if(!matchesList.get(position).getProfileImageUrl().equals("default")){
-            Glide.with(context).load(matchesList.get(position).getProfileImageUrl()).into(holder.mUserImage);
-        }
-        holder.mUserLayout.setOnClickListener(new View.OnClickListener() {
+        //Set ViewTag
+        holder.itemView.setTag(position);
+        holder.setPostImage(likesList.get(position), holder.itemView.getContext());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), holder.mUserName.getText(), Toast.LENGTH_LONG);
+                userItemClickListener.onUserClick(likesList.get(position), holder.mUserImage);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return this.matchesList.size();
+        return this.likesList.size();
     }
 }
