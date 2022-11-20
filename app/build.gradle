@@ -60,6 +60,7 @@ dependencies {
     implementation 'io.github.ponnamkarthik:richlinkpreview:1.0.8'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.1.1'
     implementation 'id.zelory:compressor:2.1.1'
+    implementation 'com.pnikosis:materialish-progress:1.7'
 }
 
 apply plugin: 'com.google.gms.google-services'

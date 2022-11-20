@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.harish.tinder.R;
 import com.harish.tinder.adapter.LikesAdapter;
+import com.harish.tinder.alert.SweetAlertDialog;
 import com.harish.tinder.listeners.UserItemClickListener;
 import com.harish.tinder.model.UserObject;
 import com.harish.tinder.utils.GridSpacingItemDecoration;
@@ -166,6 +167,45 @@ public class LikesFragment extends Fragment implements UserItemClickListener {
 
     @Override
     public void onUserClick(UserObject userObject, ImageView imageView) {
-        Toast.makeText(getContext(), userObject.getName(), Toast.LENGTH_LONG).show();
+        new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Are you sure?")
+                .setContentText("Won't be able to recover this file!")
+                .setCancelText("No,cancel plx!")
+                .setConfirmText("Yes,delete it!")
+                .showCancelButton(true)
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        // reuse previous dialog instance, keep widget user state, reset them if you need
+                        sDialog.setTitleText("Cancelled!")
+                                .setContentText("Your imaginary file is safe :)")
+                                .setConfirmText("OK")
+                                .showCancelButton(false)
+                                .setCancelClickListener(null)
+                                .setConfirmClickListener(null)
+                                .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+
+                        // or you can new a SweetAlertDialog to show
+                               /* sDialog.dismiss();
+                                new SweetAlertDialog(SampleActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                        .setTitleText("Cancelled!")
+                                        .setContentText("Your imaginary file is safe :)")
+                                        .setConfirmText("OK")
+                                        .show();*/
+                    }
+                })
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.setTitleText("Deleted!")
+                                .setContentText("Your imaginary file has been deleted!")
+                                .setConfirmText("OK")
+                                .showCancelButton(false)
+                                .setCancelClickListener(null)
+                                .setConfirmClickListener(null)
+                                .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                    }
+                })
+                .show();
     }
 }

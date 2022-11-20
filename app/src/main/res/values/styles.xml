@@ -181,4 +181,41 @@
         <item name="tStampTextSize">@dimen/default_timestamp_text_size</item>
     </style>
 
+    <style name="alert_dialog" parent="android:Theme.Dialog">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowBackground">@color/float_transparent</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.4</item>
+    </style>
+
+
+    <style name="dialog_btn" parent="android:Widget.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:background">@drawable/cancel_btn_background</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+        <item name="android:textColor">@color/sd_button_text_color</item>
+    </style>
+
+    <style name="dialog_btn.cancel">
+        <item name="android:background">@drawable/cancel_btn_background</item>
+        <item name="android:textColor">@color/sd_button_text_color</item>
+    </style>
+
+    <style name="dialog_btn.confirm">
+        <item name="android:background">@drawable/confirm_btn_background</item>
+        <item name="android:textColor">@color/sd_button_text_color</item>
+    </style>
+
+    <style name="dialog_btn.warning">
+        <item name="android:background">@drawable/warning_btn_background</item>
+        <item name="android:textColor">@color/sd_button_text_color</item>
+    </style>
+
 </resources>

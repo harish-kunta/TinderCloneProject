@@ -64,4 +64,9 @@
     <string name="title_topic_course">Design Thinking</string>
     <string name="number_courses">14 courses</string>
 
+
+    <string name="dialog_default_title">Here\'s a message!</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="LOADING">Loading…</string>
 </resources>
