@@ -59,4 +59,8 @@
 
     <color name="default_message_color_rcv">@color/white</color>
     <color name="default_message_color_send">@color/black</color>
+    <color name="frutorial_title">#4c4c4c</color>
+    <color name="back_courses">#f8fafb</color>
+    <color name="darkTextColor">#020000</color>
+    <color name="dashboard_subtitle">#B7B7CC</color>
 </resources>

@@ -1,13 +1,14 @@
 package com.harish.tinder.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -15,10 +16,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.harish.tinder.Matches.MatchesAdapter;
 import com.harish.tinder.Matches.MatchesObject;
 import com.harish.tinder.R;
 import com.harish.tinder.adapter.LikesAdapter;
+import com.harish.tinder.model.CourseCard;
+import com.harish.tinder.utils.GridSpacingItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,12 +41,13 @@ public class LikesFragment extends Fragment {
     private RecyclerView.Adapter mLikesAdapter;
     private RecyclerView.LayoutManager mLikesLayoutManager;
 
-    private String cusrrentUserID;
+    private String currentUserID;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private View mLikesView;
+    private ArrayList<CourseCard> courseCards;
 
     public LikesFragment() {
         // Required empty public constructor
@@ -79,8 +82,7 @@ public class LikesFragment extends Fragment {
     }
 
     private void getUserMatchId() {
-
-        DatabaseReference matchDb = FirebaseDatabase.getInstance().getReference().child("Users").child(cusrrentUserID).child("connections").child("yeps");
+        DatabaseReference matchDb = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID).child("connections").child("matches");
         matchDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -137,19 +139,33 @@ public class LikesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        mLikesView = inflater.inflate(R.layout.fragment_likes, container, false);
-        cusrrentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        mRecyclerView = (RecyclerView) mLikesView.findViewById(R.id.recyclerView);
-        mRecyclerView.setNestedScrollingEnabled(false);
+        // Inflate the layout for this fragment
+        mLikesView = inflater.inflate(R.layout.fragment_courses_stagged, container, false);
+        Context mcontext = mLikesView.getContext();
+        currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        mLikesAdapter = new LikesAdapter(getDataSetMatches(), mcontext);
+        getUserMatchId();
+
+        StaggeredGridLayoutManager layoutManager =
+                new StaggeredGridLayoutManager(
+                        2,
+                        StaggeredGridLayoutManager.VERTICAL);
+
+        mRecyclerView = mLikesView.findViewById(R.id.rv_courses);
+        mRecyclerView.setLayoutManager(
+                layoutManager
+        );
+        mRecyclerView.setClipToPadding(false);
         mRecyclerView.setHasFixedSize(true);
-        mLikesLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLikesLayoutManager);
-        mLikesAdapter = new LikesAdapter(getDataSetMatches(), getActivity());
+
+
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.horizontal_card);
+        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, spacingInPixels, true, 0));
+
         mRecyclerView.setAdapter(mLikesAdapter);
 
-        getUserMatchId();
         return mLikesView;
     }
 }

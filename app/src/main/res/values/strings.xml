@@ -61,5 +61,7 @@
     </string-array>
     <string name="app">Language</string>
     <string name="msg_token_fmt">firebase message token</string>
+    <string name="title_topic_course">Design Thinking</string>
+    <string name="number_courses">14 courses</string>
 
 </resources>

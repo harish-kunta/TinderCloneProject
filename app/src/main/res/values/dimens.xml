@@ -13,4 +13,14 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="horizontal_card">8dp</dimen>
+    <dimen name="img_card_height">120dp</dimen>
+    <dimen name="card_radius">14dp</dimen>
+    <dimen name="horizontal_dashboard">32dp</dimen>
+    <dimen name="normalPadding">20dp</dimen>
+    <dimen name="drawable_left">5dp</dimen>
+    <dimen name="vertical_search">10dp</dimen>
+    <dimen name="top_text_card">14dp</dimen>
+    <dimen name="top_text_subtitle_card">4dp</dimen>
+    <dimen name="d_number_courses">11sp</dimen>
 </resources>
