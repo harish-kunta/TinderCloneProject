@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class interestedIn extends AppCompatActivity {
+public class InterestedIn extends AppCompatActivity {
     SeekBar distance;
     SwitchCompat man, woman;
     RangeSeekBar seekBar;
