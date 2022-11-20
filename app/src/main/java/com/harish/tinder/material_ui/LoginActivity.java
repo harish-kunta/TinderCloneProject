@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,7 +17,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -24,10 +25,11 @@ import com.google.android.material.textfield.TextInputLayout;
 public class LoginActivity extends AppCompatActivity {
 
     private Button sign_in, sign_up;
-    private TextInputEditText uname, pword;
-    private TextInputLayout usernameLayout,passwordLayout;
+    private TextInputEditText editTextEmail, editTextPassword;
+    private TextInputLayout emailLayout,passwordLayout;
+    private LinearLayout rootLayout;
 
-    private String username, password;
+    private String email, password;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
     @Override
@@ -45,16 +47,16 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
         };
-
+        rootLayout = (LinearLayout) findViewById(R.id.root_layout);
 
         sign_in = (Button)findViewById(R.id.sign_in_button);
         sign_up = (Button)findViewById(R.id.sign_up_button);
-        uname = (TextInputEditText)findViewById(R.id.username_field);
-        pword = (TextInputEditText)findViewById(R.id.password_field);
-        usernameLayout = (TextInputLayout)findViewById(R.id.username_field_input_layout);
+        editTextEmail = (TextInputEditText)findViewById(R.id.email_field);
+        editTextPassword = (TextInputEditText)findViewById(R.id.password_field);
+        emailLayout = (TextInputLayout)findViewById(R.id.username_field_input_layout);
         passwordLayout = (TextInputLayout)findViewById(R.id.password_field_input_layout);
 
-        uname.addTextChangedListener(new TextWatcher() {
+        editTextEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -68,13 +70,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length() == 0)
-                    usernameLayout.setError("Please enter username");
+                    emailLayout.setError("Please enter username");
                 else
-                    usernameLayout.setError(null);
+                    emailLayout.setError(null);
             }
         });
 
-        pword.addTextChangedListener(new TextWatcher() {
+        editTextPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -97,15 +99,15 @@ public class LoginActivity extends AppCompatActivity {
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                username = uname.getText().toString();
-                password = pword.getText().toString();
+                email = editTextEmail.getText().toString();
+                password = editTextPassword.getText().toString();
 
-                if(username.trim().length() > 0 && password.trim().length() > 0){
-                    mAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                if(email.trim().length() > 0 && password.trim().length() > 0){
+                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(!task.isSuccessful()){
-                                Toast.makeText(getApplicationContext(), "sign in error", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(rootLayout, "Incorrect username or password", Snackbar.LENGTH_LONG).show();
                             }
                         }
                     });
@@ -126,9 +128,12 @@ public class LoginActivity extends AppCompatActivity {
 //                    else{
 //                        Toast.makeText(getApplicationContext(), "Username/Password is incorrect"+uName+pWord, Toast.LENGTH_LONG).show();
 //                    }
-                }else{
-                    Toast.makeText(getApplicationContext(), "Please enter username and password", Toast.LENGTH_LONG).show();
-
+                } else if (email.length() <= 0) {
+                Snackbar.make(rootLayout, "Enter username", Snackbar.LENGTH_LONG).show();
+            } else if (password.length() <= 0) {
+                Snackbar.make(rootLayout, "Enter password", Snackbar.LENGTH_LONG).show();
+            }else{
+                    Snackbar.make(rootLayout, "Please enter username and password", Snackbar.LENGTH_LONG).show();
                 }
             }
         });

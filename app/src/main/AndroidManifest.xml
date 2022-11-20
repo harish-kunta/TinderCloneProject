@@ -11,42 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity2"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Upload_Bio"
-            android:exported="false"
-            android:parentActivityName=".UploadImageActivity">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".material_ui.SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity
-            android:name=".GenderActivity"
-            android:exported="false"
-            android:parentActivityName=".DOBActivity">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".DOBActivity"
-            android:exported="false"
-            android:parentActivityName=".NameActivity">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
         <activity android:name=".AvailableProfileActivity" />
-        <activity android:name=".MainPageActivity" />
-        <activity android:name=".NameActivity" />
         <activity
             android:name=".material_ui.MainActivity"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
@@ -67,17 +34,10 @@
             android:name=".material_ui.LoginActivity"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
         <activity
-            android:name=".MainActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
-        <activity
             android:name=".ChooseLoginRegistrationActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
-        <activity android:name=".RegistrationActivity" />
-        <activity android:name=".LoginActivity" />
         <activity android:name=".ChatActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".views.ProfileView" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".UploadImageActivity" />
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />

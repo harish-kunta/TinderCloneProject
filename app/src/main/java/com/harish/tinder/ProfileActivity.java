@@ -20,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.harish.tinder.fab.FloatingActionButton;
+import com.harish.tinder.material_ui.LoginActivity;
+import com.harish.tinder.material_ui.MainActivity;
 import com.harish.tinder.utils.Imageutils;
 import com.harish.tinder.views.ProfileEdit;
 import com.squareup.picasso.Picasso;
