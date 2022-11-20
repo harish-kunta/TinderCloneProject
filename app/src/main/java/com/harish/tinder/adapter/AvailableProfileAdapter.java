@@ -38,20 +38,16 @@ public class AvailableProfileAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        //  if( availableProfiles.get(position) instanceof AvailableProfile){
-        AvailableProfile availableProfile= (AvailableProfile) availableProfiles.get(position);
+        AvailableProfile availableProfile= availableProfiles.get(position);
         final Profile profile=availableProfile.getProfile();
         ViewHolder viewHolder= (ViewHolder) holder;
         viewHolder.fullNameText.setText(""+profile.getName());
         viewHolder.ageText.setText(""+profile.getAge()+"  year");
         Glide.with(viewHolder.image_pic).load(profile.getProfile_pic()).into(viewHolder.image_pic);
         viewHolder.textView.setText(availableProfile.getText());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CustomDialog customDialog =new CustomDialog();
-                customDialog.createDialog(context);
-            }
+        holder.itemView.setOnClickListener(v -> {
+            CustomDialog customDialog =new CustomDialog();
+            customDialog.createDialog(context);
         });
 
     }

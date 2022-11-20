@@ -28,6 +28,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.harish.tinder.ChooseLoginRegistrationActivity;
 import com.harish.tinder.R;
+import com.harish.tinder.material_ui.EditProfileActivity;
 import com.harish.tinder.material_ui.SettingsActivity;
 import com.harish.tinder.utils.AgeCalculator;
 import com.harish.tinder.utils.Imageutils;
@@ -64,6 +65,7 @@ public class ProfileFragment extends Fragment {
 //    TextView contentEmail;
 //    TextView contentName;
     ImageView editProfileButton;
+    ImageView settingsButton;
     CircleImageView profilePic;
     StorageReference storageReference;
     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -122,10 +124,19 @@ public class ProfileFragment extends Fragment {
 
 //        contentEmail = (TextView) mProfileView.findViewById(R.id.email_text);
         editProfileButton = (ImageView) mProfileView.findViewById(R.id.edit_profile);
+        settingsButton = (ImageView) mProfileView.findViewById(R.id.settings);
 
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent intent = new Intent(getContext(), SettingsActivity.class);
                 startActivity(intent);
             }

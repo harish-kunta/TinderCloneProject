@@ -11,8 +11,8 @@
     <string name="url_terms">https://chatterboxappharish.blogspot.com/2018/11/terms-and-conditions.html</string>
 
     <string name="url_privacy">https://chatterboxappharish.blogspot.com/2018/06/privacy-policy.html</string>
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
+    <string name="messages_header">Account Settings</string>
+    <string name="discover_header">Discovery</string>
     <string name="legal_header">LEGAL</string>
     <string name="logout">Logout</string>
     <string name="share_tinder">Share Tinder</string>
@@ -21,6 +21,9 @@
     <!-- Preference Titles -->
     <string name="signature_title">Your signature</string>
     <string name="reply_title">Default reply action</string>
+
+    <!-- Discover Preferences -->
+    <string name="show_people_title">Only show people in this range</string>
 
     <!-- Messages Preferences -->
     <string name="sync_title">Sync email periodically</string>
@@ -57,5 +60,6 @@
         <item>katrena</item>
     </string-array>
     <string name="app">Language</string>
+    <string name="msg_token_fmt">firebase message token</string>
 
 </resources>

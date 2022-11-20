@@ -28,11 +28,11 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sync_header">
+    <PreferenceCategory app:title="@string/discover_header">
 
         <SwitchPreferenceCompat
             app:key="sync"
-            app:title="@string/sync_title" />
+            app:title="@string/show_people_title" />
 
         <SwitchPreferenceCompat
             app:dependency="sync"

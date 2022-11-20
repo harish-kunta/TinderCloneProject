@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.harish.tinder">
-
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <application
         android:name=".TinderClone"
         android:allowBackup="true"
@@ -39,6 +39,7 @@
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".SettingsActivity" />
+        <activity android:name=".material_ui.EditProfileActivity" />
         <activity android:name=".UploadImageActivity" />
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
         <activity

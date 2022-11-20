@@ -36,7 +36,7 @@ import com.harish.tinder.SplashScreenActivity;
 
 import java.util.Objects;
 
-public class SettingsActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +45,19 @@ public class SettingsActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.settings, new SettingsFragment())
+                    .replace(R.id.settings, new EditProfileFragment())
                     .commit();
         }
     }
 
-    public static class SettingsFragment extends PreferenceFragmentCompat {
+    public static class EditProfileFragment extends PreferenceFragmentCompat {
         private FirebaseAuth mAuth;
         private ProgressDialog mRegProgress;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             Context context = getPreferenceManager().getContext();
-            setPreferencesFromResource(R.xml.settings_preferences, rootKey);
+            setPreferencesFromResource(R.xml.edit_profile_preferences, rootKey);
             mAuth = FirebaseAuth.getInstance();
 
             mRegProgress = new ProgressDialog(getActivity(),

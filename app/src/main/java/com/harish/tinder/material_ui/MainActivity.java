@@ -7,8 +7,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -16,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.harish.tinder.R;
 import com.harish.tinder.UploadImageActivity;
 import com.harish.tinder.fragments.ChatThreadFragment;
@@ -34,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users");
     DatabaseReference ref;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,23 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+
+                        Log.d(TAG, token);
+                        Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 //        userRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -106,6 +129,16 @@ public class MainActivity extends AppCompatActivity {
             ref.child("online").setValue("true");
         }
     }
+
+//    @Override
+//    public void onNewToken(@NonNull String token) {
+//        Log.d(TAG, "Refreshed token: " + token);
+//
+//        // If you want to send messages to this application instance or
+//        // manage this apps subscriptions on the server side, send the
+//        // FCM registration token to your app server.
+//        sendRegistrationToServer(token);
+//    }
 
     @Override
     protected void onStop() {
