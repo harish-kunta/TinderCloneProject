@@ -17,7 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.harish.tinder.Cards.arrayAdapter;
+import com.harish.tinder.Cards.ArrayAdapter;
 import com.harish.tinder.Cards.Card;
 import com.harish.tinder.R;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment {
 
     private DatabaseReference usersDb;
     List<Card> rowItems;
-    private com.harish.tinder.Cards.arrayAdapter arrayAdapter;
+    private ArrayAdapter arrayAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
 
         rowItems = new ArrayList<Card>();
 
-        arrayAdapter = new arrayAdapter(getContext(), R.layout.item, rowItems);
+        arrayAdapter = new ArrayAdapter(getContext(), R.layout.item, rowItems);
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) mHomeView.findViewById(R.id.frame);
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,11 +16,11 @@ import java.util.List;
  * Created by manel on 9/5/2017.
  */
 
-public class arrayAdapter extends ArrayAdapter<Card>{
+public class ArrayAdapter extends android.widget.ArrayAdapter<Card> {
 
     Context context;
 
-    public arrayAdapter(Context context, int resourceId, List<Card> items){
+    public ArrayAdapter(Context context, int resourceId, List<Card> items){
         super(context, resourceId, items);
     }
     public View getView(int position, View convertView, ViewGroup parent){

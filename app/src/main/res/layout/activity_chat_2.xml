@@ -45,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/fui_phone_hint"
+        tools:text="phone hint"
         tools:visibility="visible" />
 
     <com.harish.tinder.Chat.ChatView

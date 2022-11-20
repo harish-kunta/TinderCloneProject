@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.harish.tinder.Matches.MatchesObject;
-import com.harish.tinder.Matches.MatchesViewHolders;
 import com.harish.tinder.R;
+import com.harish.tinder.listeners.UserItemClickListener;
+import com.harish.tinder.model.UserObject;
+import com.harish.tinder.viewholders.LikesViewHolder;
 
 import java.util.List;
 
@@ -18,38 +18,42 @@ import java.util.List;
  * Created by manel on 10/31/2017.
  */
 
-public class LikesAdapter extends RecyclerView.Adapter<MatchesViewHolders>{
-    private List<MatchesObject> matchesList;
+public class LikesAdapter extends RecyclerView.Adapter<LikesViewHolder>{
+    private List<UserObject> likesList;
     private Context context;
 
-
-    public LikesAdapter(List<MatchesObject> matchesList, Context context){
-        this.matchesList = matchesList;
+    private UserItemClickListener userItemClickListener;
+    public LikesAdapter(List<UserObject> likesList, Context context, UserItemClickListener listener){
+        this.likesList = likesList;
         this.context = context;
+        this.userItemClickListener = listener;
     }
 
     @Override
-    public MatchesViewHolders onCreateViewHolder(ViewGroup parent, int viewType) {
+    public LikesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_matches, null, false);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card, null, false);
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutView.setLayoutParams(lp);
-        MatchesViewHolders rcv = new MatchesViewHolders(layoutView);
-
-        return rcv;
+        LikesViewHolder likesViewHolder = new LikesViewHolder(layoutView);
+        return likesViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(MatchesViewHolders holder, int position) {
-        holder.mMatchId.setText(matchesList.get(position).getUserId());
-        holder.mMatchName.setText(matchesList.get(position).getName());
-        if(!matchesList.get(position).getProfileImageUrl().equals("default")){
-            Glide.with(context).load(matchesList.get(position).getProfileImageUrl()).into(holder.mMatchImage);
-        }
+    public void onBindViewHolder(LikesViewHolder holder, int position) {
+        //Set ViewTag
+        holder.itemView.setTag(position);
+        holder.setPostImage(likesList.get(position), holder.itemView.getContext());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userItemClickListener.onUserClick(likesList.get(position), holder.mUserImage);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return this.matchesList.size();
+        return this.likesList.size();
     }
 }

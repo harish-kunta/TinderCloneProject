@@ -104,7 +104,6 @@ public class UploadImageActivity extends AppCompatActivity {
 
 
     private void saveChanges() {
-      //  mRegProgress.show();
         sendToStart();
     }
 

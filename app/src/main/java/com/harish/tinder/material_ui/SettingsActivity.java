@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -30,7 +29,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.harish.tinder.ChooseLoginRegistrationActivity;
 import com.harish.tinder.R;
@@ -59,7 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             Context context = getPreferenceManager().getContext();
-            setPreferencesFromResource(R.xml.root_preferences, rootKey);
+            setPreferencesFromResource(R.xml.settings_preferences, rootKey);
             mAuth = FirebaseAuth.getInstance();
 
             mRegProgress = new ProgressDialog(getActivity(),

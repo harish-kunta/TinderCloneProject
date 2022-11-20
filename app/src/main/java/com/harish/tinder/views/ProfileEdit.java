@@ -159,6 +159,7 @@ public class ProfileEdit extends AppCompatActivity implements Imageutils.ImageAt
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         imageutils.request_permission_result(requestCode, permissions, grantResults);
     }
 
