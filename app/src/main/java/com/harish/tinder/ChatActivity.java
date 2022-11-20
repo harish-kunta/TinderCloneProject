@@ -20,7 +20,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -38,6 +40,10 @@ import com.google.firebase.storage.UploadTask;
 import com.harish.tinder.Chat.ChatView;
 import com.harish.tinder.material_ui.MainActivity;
 import com.harish.tinder.model.ChatMessage;
+import com.harish.tinder.utils.ApiUtils;
+import com.harish.tinder.utils.FirebaseMessage;
+import com.harish.tinder.utils.MessageData;
+import com.harish.tinder.utils.NotifyData;
 import com.harish.tinder.views.ProfileView;
 import com.squareup.picasso.Picasso;
 
@@ -48,10 +54,11 @@ import java.util.Iterator;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private String threadID;
+    private String threadID, chatUserId;
     private String receiver_email, receiver_name, imageUrl;
     private String chat_msg,chat_user_name, type;
     private String currparticipant;
@@ -75,7 +82,7 @@ public class ChatActivity extends AppCompatActivity {
     private TextView dotsTextView;
     private final int PICK_IMAGE_REQUEST = 71;
 
-    private String user_name;
+    private String user_name, token;
     private CircleImageView toolbar_profile_icon;
     private Uri uri;
 
@@ -106,6 +113,7 @@ public class ChatActivity extends AppCompatActivity {
         });
         userRef.child(user.getUid()).child("online").setValue("true");
         threadID = getIntent().getExtras().get("threadID").toString();
+        chatUserId = getIntent().getExtras().get("uid").toString();
         try{
             receiver_name = getIntent().getExtras().get("name").toString();
         }catch (Exception e){
@@ -192,6 +200,58 @@ public class ChatActivity extends AppCompatActivity {
                 dotsTextView.setVisibility(View.GONE);
             }
         });
+
+        userRef.child(chatUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String online;
+                try {
+                    online = dataSnapshot.child("online").getValue().toString();
+                }
+                catch (Exception e)
+                {
+                    online="unknown";
+                }
+                if (dataSnapshot.hasChild("device_token")) {
+                    token = dataSnapshot.child("device_token").getValue().toString();
+                }
+//                userName = dataSnapshot.child("name").getValue().toString();
+//                mTitleView.setText(userName);
+//                //Snackbar.make(rootLayout,token,Snackbar.LENGTH_LONG).show();
+//                if (!image.equals("default")) {
+//                    Glide
+//                            .with(getApplicationContext())
+//                            .load(image)
+//                            .into(mProfileImage);
+//                } else {
+//                    mProfileImage.setImageDrawable(ContextCompat.getDrawable(ChatOpenActivity.this, R.drawable.ic_account_circle_white_48dp));
+//
+//                }
+//                if (online.equals("true")) {
+//                    mLastSeenView.setText("Online");
+//                }
+//                else if(online.equals("unknown"))
+//                {
+//                    mLastSeenView.setText("");
+//                }
+//                else {
+//                    GetTimeAgo getTimeAgo = new GetTimeAgo();
+//
+//                    long lastTime = Long.parseLong(online);
+//
+//                    String lastSeenTime = GetTimeAgo.getTimeAgo(lastTime, getApplicationContext());
+//
+//
+//                    mLastSeenView.setText(lastSeenTime);
+//                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         imageMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -239,7 +299,7 @@ public class ChatActivity extends AppCompatActivity {
                 map2.put("-"+receiver_email.replace(".",""), "true");
                 message_root.updateChildren(map2);
                 chatView.getInputEditText().setText("");
-
+                sendNotification(user.getEmail(), chatMessage.getMessage());
                 return false;
             }
         });
@@ -270,6 +330,40 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void sendNotification(final String title, final String body) {
+        NotifyData notifydata = new NotifyData(title, body, "HANDLE_NOTIFICATION");
+        MessageData messageData = new MessageData(user.getUid(), user_name, "message");
+        FirebaseMessage firebaseMessage = new FirebaseMessage(token, notifydata, messageData);
+        ApiUtils.sendNotificationService()
+                .sendMessage(firebaseMessage)
+                .enqueue(new retrofit2.Callback<FirebaseMessage>() {
+                    @Override
+                    public void onResponse(Call<FirebaseMessage> call, retrofit2.Response<FirebaseMessage> response) {
+                        if (response.code() == 200) {
+                            Log.d("One_login_call", "Message sent");
+                        } else if (response.code() == 400) {
+
+                        } else if (response.code() == 500) {
+                            Log.d("One_login_call", "Server Error");
+                            // Toast.makeText(controllerActivity, "Server Error", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Log.d("One_login_call", "SOT API call failed");
+                            //Toast.makeText(controllerActivity, "SOT API call failed", Toast.LENGTH_SHORT).show();
+
+                        }
+                        Log.d("One_login_Response", response.toString());
+                        //closeProgressDialog();
+                    }
+
+                    @Override
+                    public void onFailure(Call<FirebaseMessage> call, Throwable throwable) {
+
+                    }
+                });
 
     }
 

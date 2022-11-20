@@ -27,6 +27,7 @@ import com.harish.tinder.fragments.ChatThreadFragment;
 import com.harish.tinder.fragments.LikesFragment;
 import com.harish.tinder.fragments.ProfileFragment;
 import com.harish.tinder.fragments.SwipeFragment;
+import com.onesignal.OneSignal;
 
 import me.ibrahimsn.lib.OnItemSelectedListener;
 import me.ibrahimsn.lib.SmoothBottomBar;
@@ -35,6 +36,7 @@ import me.ibrahimsn.lib.SmoothBottomBar;
 public class MainActivity extends AppCompatActivity {
 
 
+    private static final String ONESIGNAL_APP_ID = "4e647a31-ca00-4764-93bb-077c155b5df7";
     private SmoothBottomBar bottomBar;
     final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -54,6 +56,17 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+
+        // Enable verbose OneSignal logging to debug issues if needed.
+        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
+
+        // OneSignal Initialization
+        OneSignal.initWithContext(this);
+        OneSignal.setAppId(ONESIGNAL_APP_ID);
+
+        // promptForPushNotifications will show the native Android notification permission prompt.
+        // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 7)
+        OneSignal.promptForPushNotifications();
 
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
             @Override
