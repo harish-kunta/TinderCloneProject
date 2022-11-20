@@ -11,24 +11,24 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.harish.tinder.R;
-
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.LinearLayout;
-
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
 
     private Button sign_in, sign_up;
+    private TextView forgotPassword;
     private TextInputEditText editTextEmail, editTextPassword;
     private TextInputLayout emailLayout,passwordLayout;
     private LinearLayout rootLayout;
-
     private String email, password;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
@@ -55,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = (TextInputEditText)findViewById(R.id.password_field);
         emailLayout = (TextInputLayout)findViewById(R.id.username_field_input_layout);
         passwordLayout = (TextInputLayout)findViewById(R.id.password_field_input_layout);
-
         editTextEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -95,7 +94,16 @@ public class LoginActivity extends AppCompatActivity {
                     passwordLayout.setError(null);
             }
         });
+
         //TODO : forgot password link
+        /*forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LoginActivity.this, "you can reset your password now", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginActivity.this, ForgotPassword.class));
+            }
+        });*/
+
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,6 +145,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        
 
         sign_up.setOnClickListener(v -> {
             Intent signup = new Intent(getApplicationContext(), RegistrationActivity.class);
