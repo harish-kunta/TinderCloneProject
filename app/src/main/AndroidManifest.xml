@@ -11,6 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".InterestedIn"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".material_ui.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity android:name=".AvailableProfileActivity" />
@@ -23,7 +30,6 @@
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -47,6 +53,7 @@
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
         <activity
             android:name=".Chat.ChatActivity"
+            android:exported="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
     </application>
 
