@@ -43,6 +43,8 @@
             android:name=".UserProfileActivity"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
         <activity
+            android:name=".ForgotPasswordActivity" />
+        <activity
             android:name=".ChooseLoginRegistrationActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
