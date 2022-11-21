@@ -50,7 +50,7 @@ public class Profile {
         this.distance=distance;
     }
 
-    @SerializedName("userId")
+    @SerializedName("user_id")
     private String id;
     @SerializedName("name")
     private String name;

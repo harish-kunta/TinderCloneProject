@@ -13,6 +13,7 @@ public class Constants {
     public static final String DEVICE_TOKEN = "device_token";
     public static final String ONLINE = "online";
     public static final String SEX = "sex";
+    public static final String DOB = "dob";
     public static final String PROFILE_IMAGE_URL = "profileImageUrl";
 
     public static final String MALE = "Male";

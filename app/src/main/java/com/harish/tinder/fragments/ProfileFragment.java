@@ -175,11 +175,7 @@ public class ProfileFragment extends Fragment {
                 String email = getObjectString(dataSnapshot.child("email").getValue());
                 long dobUnix = getObjectLong(dataSnapshot.child("dob").getValue());
                 String image = getObjectString(dataSnapshot.child("profileImageUrl").getValue());
-                LocalDate birthDate =
-                        Instant.ofEpochSecond(dobUnix).atZone(ZoneId.systemDefault()).toLocalDate();
-                LocalDate currentDate
-                        = LocalDate.now();
-                int age = AgeCalculator.calculateAge(birthDate, currentDate);
+                int age = AgeCalculator.calculateAge(dobUnix);
                 profileName.setText(display_name+", "+age);
                 profileEmail.setText(email);
               //  contentName.setText(display_name);

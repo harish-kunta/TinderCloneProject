@@ -3,6 +3,7 @@ package com.harish.tinder.fragments;
 import static com.harish.tinder.model.Constants.CHAT;
 import static com.harish.tinder.model.Constants.CHAT_ID;
 import static com.harish.tinder.model.Constants.CONNECTIONS;
+import static com.harish.tinder.model.Constants.DOB;
 import static com.harish.tinder.model.Constants.FEMALE;
 import static com.harish.tinder.model.Constants.MALE;
 import static com.harish.tinder.model.Constants.MATCHES;
@@ -44,6 +45,7 @@ import com.harish.tinder.UserProfileActivity;
 import com.harish.tinder.adapter.ProfileAdapter;
 import com.harish.tinder.model.Constants;
 import com.harish.tinder.model.Profile;
+import com.harish.tinder.utils.AgeCalculator;
 import com.harish.tinder.utils.ProgressDialogHelper;
 import com.harish.tinder.utils.StringResourceHelper;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
@@ -295,8 +297,12 @@ public class SwipeFragment extends Fragment implements CardStackListener {
                         if (!Objects.equals(dataSnapshot.child(PROFILE_IMAGE_URL).getValue(), Constants.DEFAULT)) {
                             profileImageUrl = Objects.requireNonNull(dataSnapshot.child(PROFILE_IMAGE_URL).getValue()).toString();
                         }
-                        //TODO: set age
-                        Profile profile = new Profile(dataSnapshot.getKey(), Objects.requireNonNull(dataSnapshot.child(NAME).getValue()).toString(), 26, profileImageUrl, 20);
+                        //TODO: remove this annotation
+                        //TODO : set distance dynamically
+                        Profile profile = null;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                            profile = new Profile(dataSnapshot.getKey(), Objects.requireNonNull(dataSnapshot.child(NAME).getValue()).toString(), AgeCalculator.calculateAge(getObjectLong(dataSnapshot.child(DOB).getValue())), profileImageUrl, 20);
+                        }
                         profileList.add(profile);
                         profileAdapter.notifyDataSetChanged();
                     }
@@ -359,5 +365,12 @@ public class SwipeFragment extends Fragment implements CardStackListener {
     @Override
     public void onCardDisappeared(View view, int position) {
 
+    }
+
+    long getObjectLong(Object o) {
+        if (o != null) {
+            return (Long) o;
+        }
+        return -1;
     }
 }
