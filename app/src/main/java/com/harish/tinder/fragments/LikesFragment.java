@@ -1,13 +1,19 @@
 package com.harish.tinder.fragments;
 
+import static com.harish.tinder.model.Constants.CONNECTIONS;
+import static com.harish.tinder.model.Constants.MATCHES;
+import static com.harish.tinder.model.Constants.NAME;
+import static com.harish.tinder.model.Constants.PROFILE_IMAGE_URL;
+import static com.harish.tinder.model.Constants.USERS;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -27,6 +33,7 @@ import com.harish.tinder.utils.GridSpacingItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,7 +47,6 @@ public class LikesFragment extends Fragment implements UserItemClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mLikesAdapter;
 
     private String currentUserID;
@@ -83,10 +89,10 @@ public class LikesFragment extends Fragment implements UserItemClickListener {
     }
 
     private void getUserMatchId() {
-        DatabaseReference matchDb = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID).child("connections").child("matches");
+        DatabaseReference matchDb = FirebaseDatabase.getInstance().getReference().child(USERS).child(currentUserID).child(CONNECTIONS).child(MATCHES);
         matchDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot match : dataSnapshot.getChildren()) {
                         FetchMatchInformation(match.getKey());
@@ -95,26 +101,26 @@ public class LikesFragment extends Fragment implements UserItemClickListener {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
     }
 
     private void FetchMatchInformation(String key) {
-        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("Users").child(key);
+        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child(USERS).child(key);
         userDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     String userId = dataSnapshot.getKey();
                     String name = "";
                     String profileImageUrl = "";
-                    if (dataSnapshot.child("name").getValue() != null) {
-                        name = dataSnapshot.child("name").getValue().toString();
+                    if (dataSnapshot.child(NAME).getValue() != null) {
+                        name = Objects.requireNonNull(dataSnapshot.child(NAME).getValue()).toString();
                     }
-                    if (dataSnapshot.child("profileImageUrl").getValue() != null) {
-                        profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
+                    if (dataSnapshot.child(PROFILE_IMAGE_URL).getValue() != null) {
+                        profileImageUrl = Objects.requireNonNull(dataSnapshot.child(PROFILE_IMAGE_URL).getValue()).toString();
                     }
 
 
@@ -125,14 +131,14 @@ public class LikesFragment extends Fragment implements UserItemClickListener {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
 
     }
 
-    private ArrayList<UserObject> resultsMatches = new ArrayList<UserObject>();
+    private final ArrayList<UserObject> resultsMatches = new ArrayList<UserObject>();
 
     private List<UserObject> getDataSetMatches() {
         return resultsMatches;
@@ -144,14 +150,14 @@ public class LikesFragment extends Fragment implements UserItemClickListener {
         // Inflate the layout for this fragment
         mLikesView = inflater.inflate(R.layout.fragment_courses_stagged, container, false);
         Context mcontext = mLikesView.getContext();
-        currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        currentUserID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         mLikesAdapter = new LikesAdapter(getDataSetMatches(), mcontext, this);
         getUserMatchId();
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
-        mRecyclerView = mLikesView.findViewById(R.id.rv_courses);
+        RecyclerView mRecyclerView = mLikesView.findViewById(R.id.rv_courses);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setClipToPadding(false);
         mRecyclerView.setHasFixedSize(true);
@@ -165,6 +171,8 @@ public class LikesFragment extends Fragment implements UserItemClickListener {
         return mLikesView;
     }
 
+
+    //TODO: This code must be replaced
     @Override
     public void onUserClick(UserObject userObject, ImageView imageView) {
         new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
@@ -173,39 +181,31 @@ public class LikesFragment extends Fragment implements UserItemClickListener {
                 .setCancelText("No,cancel plx!")
                 .setConfirmText("Yes,delete it!")
                 .showCancelButton(true)
-                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        // reuse previous dialog instance, keep widget user state, reset them if you need
-                        sDialog.setTitleText("Cancelled!")
-                                .setContentText("Your imaginary file is safe :)")
-                                .setConfirmText("OK")
-                                .showCancelButton(false)
-                                .setCancelClickListener(null)
-                                .setConfirmClickListener(null)
-                                .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                .setCancelClickListener(sDialog -> {
+                    // reuse previous dialog instance, keep widget user state, reset them if you need
+                    sDialog.setTitleText("Cancelled!")
+                            .setContentText("Your imaginary file is safe :)")
+                            .setConfirmText("OK")
+                            .showCancelButton(false)
+                            .setCancelClickListener(null)
+                            .setConfirmClickListener(null)
+                            .changeAlertType(SweetAlertDialog.ERROR_TYPE);
 
-                        // or you can new a SweetAlertDialog to show
-                               /* sDialog.dismiss();
-                                new SweetAlertDialog(SampleActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                        .setTitleText("Cancelled!")
-                                        .setContentText("Your imaginary file is safe :)")
-                                        .setConfirmText("OK")
-                                        .show();*/
-                    }
+                    // or you can new a SweetAlertDialog to show
+                           /* sDialog.dismiss();
+                            new SweetAlertDialog(SampleActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Cancelled!")
+                                    .setContentText("Your imaginary file is safe :)")
+                                    .setConfirmText("OK")
+                                    .show();*/
                 })
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        sDialog.setTitleText("Deleted!")
-                                .setContentText("Your imaginary file has been deleted!")
-                                .setConfirmText("OK")
-                                .showCancelButton(false)
-                                .setCancelClickListener(null)
-                                .setConfirmClickListener(null)
-                                .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                    }
-                })
+                .setConfirmClickListener(sDialog -> sDialog.setTitleText("Deleted!")
+                        .setContentText("Your imaginary file has been deleted!")
+                        .setConfirmText("OK")
+                        .showCancelButton(false)
+                        .setCancelClickListener(null)
+                        .setConfirmClickListener(null)
+                        .changeAlertType(SweetAlertDialog.SUCCESS_TYPE))
                 .show();
     }
 }
