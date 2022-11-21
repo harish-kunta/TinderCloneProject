@@ -10,11 +10,13 @@ public class Constants {
     public static final String DEFAULT = "default";
 
     public static final String NAME = "name";
+    public static final String EMAIL = "email";
     public static final String DEVICE_TOKEN = "device_token";
     public static final String ONLINE = "online";
     public static final String SEX = "sex";
     public static final String DOB = "dob";
     public static final String PROFILE_IMAGE_URL = "profileImageUrl";
+    public static final String UID = "uid";
 
     public static final String MALE = "Male";
     public static final String FEMALE = "Female";
@@ -31,4 +33,10 @@ public class Constants {
 
     public static final String CHAT_ID = "ChatId";
     public static final String CHAT = "Chat";
+
+    //Chat
+    public static final String INDEX_0 = "0";
+    public static final String INDEX_1 = "1";
+    public static final String MESSAGES = "messages";
+
 }
