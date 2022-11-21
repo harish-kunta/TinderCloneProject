@@ -50,18 +50,7 @@
     <include layout="@layout/user_content_profile" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="72dp"
-            android:layout_marginBottom="12dp"
-            android:src="@drawable/ic_close_drawable"
-            app:layout_anchor="@id/app_bar"
-            app:layout_anchorGravity="bottom|end"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_message"
+            android:id="@+id/close_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"

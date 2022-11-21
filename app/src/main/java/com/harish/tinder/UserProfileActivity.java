@@ -1,13 +1,8 @@
 package com.harish.tinder;
 
-import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.NotificationManager;
-import android.app.ProgressDialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -19,11 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +26,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -55,12 +45,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import retrofit2.Call;
-
 
 public class UserProfileActivity extends AppCompatActivity {
     private ImageView mProfileImage;
-    private FloatingActionButton mProfileSendMsg;
+    private FloatingActionButton mCloseProfile;
     private DatabaseReference mUsersDatabase;
     private DatabaseReference mFriendDatabase;
     private DatabaseReference mFavouriteDatabase;
@@ -147,19 +135,12 @@ public class UserProfileActivity extends AppCompatActivity {
         }
         rootLayout = findViewById(R.id.rootlayout);
         mProfileImage = findViewById(R.id.user_profile_image);
-        //mProfileName = findViewById(R.id.user_profile_name);
-        mProfileSendMsg = findViewById(R.id.fab_message);
-        //mProfileBack = findViewById(R.id.profile_back_button);
-
-        final FloatingActionButton fab = findViewById(R.id.fab);
-
+        mCloseProfile = findViewById(R.id.close_profile);
 
         mCurrent_state = 0;
 
         mFavouriteState = false;
-        fab.setVisibility(View.GONE);
 
-//
 //        mProgressDialog = new ProgressDialog(this);
 //        mProgressDialog.setTitle("Loading User Data...");
 //        mProgressDialog.setMessage("please wait while we load user data.");
@@ -259,24 +240,6 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
-        mFavouriteDatabase.child(mCurrentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild(user_id)) {
-                    fab.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_close_drawable));
-                    //likeButton.setLiked(true);
-                    mFavouriteState = true;
-                } else {
-                    mFavouriteState = false;
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
 //        mProfileBack.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -303,7 +266,7 @@ public class UserProfileActivity extends AppCompatActivity {
 //            }
 //        });
 
-        mProfileSendMsg.setOnClickListener(new View.OnClickListener() {
+        mCloseProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
@@ -311,67 +274,6 @@ public class UserProfileActivity extends AppCompatActivity {
 //                chatIntent.putExtra("user_id", user_id);
 //                chatIntent.putExtra("user_name", display_name);
 //                startActivity(chatIntent);
-            }
-        });
-
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mFavouriteState == false) {
-                    if (myData.isInternetConnected(getApplicationContext())) {
-                        Map favouriteMap = new HashMap();
-                        final String currentDate = DateFormat.getDateTimeInstance().format(new Date());
-
-                        favouriteMap.put("Favourites/" + mCurrentUser.getUid() + "/" + user_id + "/date", ServerValue.TIMESTAMP);
-
-                        mRootRef.updateChildren(favouriteMap, new DatabaseReference.CompletionListener() {
-                            @Override
-                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-
-
-                                if (databaseError == null) {
-                                    fab.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_close_drawable));
-                                    mFavouriteState = true;
-                                    Snackbar.make(rootLayout, "Added to favourites.", Snackbar.LENGTH_LONG).show();
-                                } else {
-                                    String error = databaseError.getMessage();
-                                    Log.e("Profile Activity", error);
-
-                                }
-
-                            }
-                        });
-                    } else {
-                        Snackbar.make(rootLayout, "No Internet Connection!", Snackbar.LENGTH_LONG).show();
-                    }
-                } else {
-                    if (myData.isInternetConnected(getApplicationContext())) {
-                        Map favouriteMap = new HashMap();
-                        final String currentDate = DateFormat.getDateTimeInstance().format(new Date());
-
-                        favouriteMap.put("Favourites/" + mCurrentUser.getUid() + "/" + user_id, null);
-                        mRootRef.updateChildren(favouriteMap, new DatabaseReference.CompletionListener() {
-                            @Override
-                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-
-
-                                if (databaseError == null) {
-                                    //likeButton.setLiked(false);
-                                    fab.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_close_drawable));
-                                    mFavouriteState = false;
-                                    Snackbar.make(rootLayout, "Removed from favourites!", Snackbar.LENGTH_LONG).show();
-                                } else {
-                                    String error = databaseError.getMessage();
-                                    Log.e("Profile Activity", error);
-                                }
-
-                            }
-                        });
-                    } else {
-                        Snackbar.make(rootLayout, "No Internet Connection!", Snackbar.LENGTH_LONG).show();
-                    }
-                }
             }
         });
 
