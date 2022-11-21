@@ -19,12 +19,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.harish.tinder.material_ui.MainActivity;
-
-import java.util.regex.Pattern;
-
-import static com.harish.tinder.material_ui.RegistrationActivity.TAG;
-import static java.util.regex.Pattern.matches;
-
 public class ForgotPasswordActivity extends AppCompatActivity {
     private Button buttonPwdReset;
     private EditText editTextPwdResetEmail;
