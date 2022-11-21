@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="80dp"
-    tools:context=".MainActivity">
+    tools:context=".UserProfileActivity">
 
 
     <com.yuyakaido.android.cardstackview.CardStackView
@@ -70,19 +70,19 @@
             app:fabSize="auto"
             app:rippleColor="#226FE2B3"/>
 
-<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--            android:id="@+id/chat_button"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_toRightOf="@+id/like_button"-->
-<!--            android:layout_toEndOf="@+id/like_button"-->
-<!--            android:layout_marginLeft="32dp"-->
-<!--            android:src="@drawable/sharp_chat_24"-->
-<!--            app:backgroundTint="@android:color/white"-->
-<!--            app:tint="#B31BCD"-->
-<!--            app:fabSize="auto"-->
-<!--            app:rippleColor="#226FE2B3"/>-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/info_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/like_button"
+            android:layout_toEndOf="@+id/like_button"
+            android:layout_marginLeft="32dp"
+            android:src="@drawable/ic_info_24"
+            app:backgroundTint="@android:color/white"
+            app:tint="#B31BCD"
+            app:fabSize="auto"
+            app:rippleColor="#226FE2B3"/>
 
     </RelativeLayout>
 

@@ -24,7 +24,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.harish.tinder.AvailableProfileActivity;
+import com.harish.tinder.ChatActivity;
 import com.harish.tinder.R;
+import com.harish.tinder.UserProfileActivity;
 import com.harish.tinder.adapter.ProfileAdapter;
 import com.harish.tinder.model.Profile;
 import com.harish.tinder.web_services.ProfileAPI;
@@ -172,13 +174,17 @@ public class SwipeFragment extends Fragment implements CardStackListener {
             }
 
         });
-//        FloatingActionButton chat = homeView.findViewById(R.id.chat_button);
-//        chat.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(getContext(), AvailableProfileActivity.class));
-//            }
-//        });
+        FloatingActionButton chat = homeView.findViewById(R.id.info_button);
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Profile profile = (Profile) currentProfile;
+                String userId = profile.getId();
+                Intent intent = new Intent(getContext(), UserProfileActivity.class);
+                intent.putExtra("user_id", userId);
+                startActivity(intent);
+            }
+        });
 
     }
 

@@ -40,6 +40,9 @@
             android:name=".material_ui.LoginActivity"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
         <activity
+            android:name=".UserProfileActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
+        <activity
             android:name=".ChooseLoginRegistrationActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
