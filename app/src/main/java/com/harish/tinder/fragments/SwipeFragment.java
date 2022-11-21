@@ -1,9 +1,24 @@
 package com.harish.tinder.fragments;
 
+import static com.harish.tinder.model.Constants.CHAT;
+import static com.harish.tinder.model.Constants.CHAT_ID;
+import static com.harish.tinder.model.Constants.CONNECTIONS;
+import static com.harish.tinder.model.Constants.FEMALE;
+import static com.harish.tinder.model.Constants.MALE;
+import static com.harish.tinder.model.Constants.MATCHES;
+import static com.harish.tinder.model.Constants.MEMBERS;
+import static com.harish.tinder.model.Constants.NAME;
+import static com.harish.tinder.model.Constants.NOPE;
+import static com.harish.tinder.model.Constants.PROFILE_IMAGE_URL;
+import static com.harish.tinder.model.Constants.SEX;
+import static com.harish.tinder.model.Constants.THREADS;
+import static com.harish.tinder.model.Constants.USERS;
+import static com.harish.tinder.model.Constants.USER_ID;
+import static com.harish.tinder.model.Constants.YEPS;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +26,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 
@@ -23,13 +39,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.harish.tinder.AvailableProfileActivity;
-import com.harish.tinder.ChatActivity;
 import com.harish.tinder.R;
 import com.harish.tinder.UserProfileActivity;
 import com.harish.tinder.adapter.ProfileAdapter;
+import com.harish.tinder.model.Constants;
 import com.harish.tinder.model.Profile;
-import com.harish.tinder.web_services.ProfileAPI;
+import com.harish.tinder.utils.ProgressDialogHelper;
+import com.harish.tinder.utils.StringResourceHelper;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
@@ -42,13 +58,8 @@ import com.yuyakaido.android.cardstackview.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -111,6 +122,7 @@ public class SwipeFragment extends Fragment implements CardStackListener {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        progressDialog = ProgressDialogHelper.getProgressDialog(getContext());
     }
 
     @Override
@@ -122,78 +134,55 @@ public class SwipeFragment extends Fragment implements CardStackListener {
         layoutManager = new CardStackLayoutManager(getContext(), this);
         setUpCardStack();
         setupButton(mHomeView);
-        setUpProgressDialog();
+        progressDialog.show();
         getFirebaseResponseData();
         return mHomeView;
     }
-
 
     // set up buttons actions
     private void setupButton(View homeView) {
         // skip button
         FloatingActionButton skip = homeView.findViewById(R.id.skip_button);
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder()
-                        .setDirection(Direction.Left)
-                        .setDuration(Duration.Normal.duration)
-                        .setInterpolator(new AccelerateInterpolator())
-                        .build();
-                layoutManager.setSwipeAnimationSetting(setting);
-                cardStackView.swipe();
-            }
+        skip.setOnClickListener(v -> {
+            SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder()
+                    .setDirection(Direction.Left)
+                    .setDuration(Duration.Normal.duration)
+                    .setInterpolator(new AccelerateInterpolator())
+                    .build();
+            layoutManager.setSwipeAnimationSetting(setting);
+            cardStackView.swipe();
         });
         // rewind  button
         FloatingActionButton rewind = homeView.findViewById(R.id.rewind_button);
-        rewind.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RewindAnimationSetting setting = new RewindAnimationSetting.Builder()
-                        .setDirection(Direction.Left)
-                        .setDuration(Duration.Normal.duration)
-                        .setInterpolator(new AccelerateInterpolator())
-                        .build();
-                layoutManager.setRewindAnimationSetting(setting);
-                cardStackView.rewind();
+        rewind.setOnClickListener(v -> {
+            RewindAnimationSetting setting = new RewindAnimationSetting.Builder()
+                    .setDirection(Direction.Left)
+                    .setDuration(Duration.Normal.duration)
+                    .setInterpolator(new AccelerateInterpolator())
+                    .build();
+            layoutManager.setRewindAnimationSetting(setting);
+            cardStackView.rewind();
 
-            }
         });
         // like button
         FloatingActionButton like = homeView.findViewById(R.id.like_button);
-        like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder()
-                        .setDirection(Direction.Right)
-                        .setDuration(Duration.Normal.duration)
-                        .setInterpolator(new AccelerateInterpolator())
-                        .build();
-                layoutManager.setSwipeAnimationSetting(setting);
-                cardStackView.swipe();
-            }
-
+        like.setOnClickListener(v -> {
+            SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder()
+                    .setDirection(Direction.Right)
+                    .setDuration(Duration.Normal.duration)
+                    .setInterpolator(new AccelerateInterpolator())
+                    .build();
+            layoutManager.setSwipeAnimationSetting(setting);
+            cardStackView.swipe();
         });
         FloatingActionButton chat = homeView.findViewById(R.id.info_button);
-        chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Profile profile = (Profile) currentProfile;
-                String userId = profile.getId();
-                Intent intent = new Intent(getContext(), UserProfileActivity.class);
-                intent.putExtra("user_id", userId);
-                startActivity(intent);
-            }
+        chat.setOnClickListener(v -> {
+            Profile profile = currentProfile;
+            String userId = profile.getId();
+            Intent intent = new Intent(getContext(), UserProfileActivity.class);
+            intent.putExtra(USER_ID, userId);
+            startActivity(intent);
         });
-
-    }
-
-    // set up progress dialog
-    private void setUpProgressDialog() {
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Fetching profiles data");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
 
     }
 
@@ -215,46 +204,16 @@ public class SwipeFragment extends Fragment implements CardStackListener {
         cardStackView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    // call the api to get profiles data
-    private void getWebServiceResponseData() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ProfileAPI.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create()).build();
-        ProfileAPI profileAPI = retrofit.create(ProfileAPI.class);
-        Call<List<Profile>> call = profileAPI.getProfiles();
-        call.enqueue(new Callback<List<Profile>>() {
-            @Override
-            public void onResponse(Call<List<Profile>> call, Response<List<Profile>> response) {
-
-                List<Profile> profileList = new ArrayList<>(response.body());
-                Log.d("Profiles", "" + profileList);
-                profileAdapter = new ProfileAdapter(getContext(), profileList);
-                if (progressDialog.isShowing())
-                    progressDialog.dismiss();
-                cardStackView.setAdapter(profileAdapter);
-
-            }
-
-
-            @Override
-            public void onFailure(Call<List<Profile>> call, Throwable t) {
-                Log.d("Failure", t.toString());
-
-            }
-        });
-    }
-
     private void getFirebaseResponseData() {
-        usersDb = FirebaseDatabase.getInstance().getReference().child("Users");
+        usersDb = FirebaseDatabase.getInstance().getReference().child(USERS);
 
         mAuth = FirebaseAuth.getInstance();
-        currentUId = mAuth.getCurrentUser().getUid();
+        currentUId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
         checkUserSex();
 
-        profileList = new ArrayList<Profile>();
+        profileList = new ArrayList<>();
 
-        //arrayAdapter = new arrayAdapter(getContext(), R.layout.item, rowItems);
         profileAdapter = new ProfileAdapter(getContext(), profileList);
         if (progressDialog.isShowing())
             progressDialog.dismiss();
@@ -263,24 +222,24 @@ public class SwipeFragment extends Fragment implements CardStackListener {
     }
 
     private void isConnectionMatch(String userId) {
-        DatabaseReference currentUserConnectionsDb = usersDb.child(currentUId).child("connections").child("yeps").child(userId);
+        DatabaseReference currentUserConnectionsDb = usersDb.child(currentUId).child(CONNECTIONS).child(YEPS).child(userId);
         currentUserConnectionsDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    Toast.makeText(getContext(), "new Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), StringResourceHelper.getString(getContext(), R.string.new_connection), Toast.LENGTH_LONG).show();
 
-                    String key = FirebaseDatabase.getInstance().getReference().child("Chat").push().getKey();
+                    String key = FirebaseDatabase.getInstance().getReference().child(CHAT).push().getKey();
 
-                    usersDb.child(dataSnapshot.getKey()).child("connections").child("matches").child(currentUId).child("ChatId").setValue(key);
-                    usersDb.child(currentUId).child("connections").child("matches").child(dataSnapshot.getKey()).child("ChatId").setValue(key);
+                    usersDb.child(Objects.requireNonNull(dataSnapshot.getKey())).child(CONNECTIONS).child(MATCHES).child(currentUId).child(CHAT_ID).setValue(key);
+                    usersDb.child(currentUId).child(CONNECTIONS).child(MATCHES).child(dataSnapshot.getKey()).child(CHAT_ID).setValue(key);
 
                     appendThread(currentUId, userId);
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
     }
@@ -290,26 +249,28 @@ public class SwipeFragment extends Fragment implements CardStackListener {
         ArrayList<String> members = new ArrayList<>();
         members.add(MatchUserId);
         members.add(currentUserId);
-        root = root.child("threads");
+        root = root.child(THREADS);
         root.keepSynced(true);
         String uniqueID = UUID.randomUUID().toString();
-        root.child(uniqueID).child("members").setValue(members);
+        root.child(uniqueID).child(MEMBERS).setValue(members);
     }
+
     public void checkUserSex() {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
         DatabaseReference userDb = usersDb.child(user.getUid());
         userDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    if (dataSnapshot.child("sex").getValue() != null) {
-                        userSex = dataSnapshot.child("sex").getValue().toString();
+                    if (dataSnapshot.child(SEX).getValue() != null) {
+                        userSex = Objects.requireNonNull(dataSnapshot.child(SEX).getValue()).toString();
                         switch (userSex) {
-                            case "Male":
-                                oppositeUserSex = "Female";
+                            case MALE:
+                                oppositeUserSex = FEMALE;
                                 break;
-                            case "Female":
-                                oppositeUserSex = "Male";
+                            case FEMALE:
+                                oppositeUserSex = MALE;
                                 break;
                         }
                         getOppositeSexUsers();
@@ -318,7 +279,7 @@ public class SwipeFragment extends Fragment implements CardStackListener {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
@@ -327,14 +288,15 @@ public class SwipeFragment extends Fragment implements CardStackListener {
     public void getOppositeSexUsers() {
         usersDb.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                if (dataSnapshot.child("sex").getValue() != null) {
-                    if (dataSnapshot.exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yeps").hasChild(currentUId) && dataSnapshot.child("sex").getValue().toString().equals(oppositeUserSex)) {
-                        String profileImageUrl = "default";
-                        if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
-                            profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
+                if (dataSnapshot.child(SEX).getValue() != null) {
+                    if (dataSnapshot.exists() && !dataSnapshot.child(CONNECTIONS).child(NOPE).hasChild(currentUId) && !dataSnapshot.child(CONNECTIONS).child(YEPS).hasChild(currentUId) && Objects.requireNonNull(dataSnapshot.child(SEX).getValue()).toString().equals(oppositeUserSex)) {
+                        String profileImageUrl = Constants.DEFAULT;
+                        if (!Objects.equals(dataSnapshot.child(PROFILE_IMAGE_URL).getValue(), Constants.DEFAULT)) {
+                            profileImageUrl = Objects.requireNonNull(dataSnapshot.child(PROFILE_IMAGE_URL).getValue()).toString();
                         }
-                        Profile profile = new Profile(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), 26, profileImageUrl, 20);
+                        //TODO: set age
+                        Profile profile = new Profile(dataSnapshot.getKey(), Objects.requireNonNull(dataSnapshot.child(NAME).getValue()).toString(), 26, profileImageUrl, 20);
                         profileList.add(profile);
                         profileAdapter.notifyDataSetChanged();
                     }
@@ -342,19 +304,19 @@ public class SwipeFragment extends Fragment implements CardStackListener {
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
             }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
             }
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
     }
@@ -367,17 +329,14 @@ public class SwipeFragment extends Fragment implements CardStackListener {
     @Override
     public void onCardSwiped(Direction direction) {
         if (direction.equals(Direction.Right)) {
-
-            Profile profile = (Profile) currentProfile;
+            Profile profile = currentProfile;
             String userId = profile.getId();
-            usersDb.child(userId).child("connections").child("yeps").child(currentUId).setValue(true);
+            usersDb.child(userId).child(CONNECTIONS).child(YEPS).child(currentUId).setValue(true);
             isConnectionMatch(userId);
-            Toast.makeText(getContext(), "Right", Toast.LENGTH_SHORT).show();
         } else {
-            Profile profile = (Profile) currentProfile;
+            Profile profile = currentProfile;
             String userId = profile.getId();
-            usersDb.child(userId).child("connections").child("nope").child(currentUId).setValue(true);
-            Toast.makeText(getContext(), "Left", Toast.LENGTH_SHORT).show();
+            usersDb.child(userId).child(CONNECTIONS).child(NOPE).child(currentUId).setValue(true);
         }
 
     }
@@ -394,7 +353,7 @@ public class SwipeFragment extends Fragment implements CardStackListener {
 
     @Override
     public void onCardAppeared(View view, int position) {
-       currentProfile = profileList.get(position);
+        currentProfile = profileList.get(position);
     }
 
     @Override
