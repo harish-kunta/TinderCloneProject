@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.harish.tinder.ForgotPasswordActivity;
 import com.harish.tinder.R;
 import android.content.Intent;
 import android.text.Editable;
@@ -23,7 +24,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
-
     private Button sign_in, sign_up;
     private TextView forgotPassword;
     private TextInputEditText editTextEmail, editTextPassword;
@@ -36,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
-
         mAuth = FirebaseAuth.getInstance();
         firebaseAuthStateListener = firebaseAuth -> {
             final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -48,24 +47,20 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
         rootLayout = (LinearLayout) findViewById(R.id.root_layout);
-
         sign_in = (Button)findViewById(R.id.sign_in_button);
         sign_up = (Button)findViewById(R.id.sign_up_button);
         editTextEmail = (TextInputEditText)findViewById(R.id.email_field);
         editTextPassword = (TextInputEditText)findViewById(R.id.password_field);
         emailLayout = (TextInputLayout)findViewById(R.id.username_field_input_layout);
         passwordLayout = (TextInputLayout)findViewById(R.id.password_field_input_layout);
+        forgotPassword = (TextView)findViewById(R.id.forgot_password);
         editTextEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
-
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length() == 0)
@@ -74,18 +69,13 @@ public class LoginActivity extends AppCompatActivity {
                     emailLayout.setError(null);
             }
         });
-
         editTextPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
-
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length() == 0)
@@ -96,20 +86,20 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //TODO : forgot password link
-        /*forgotPassword.setOnClickListener(new View.OnClickListener() {
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Toast.makeText(LoginActivity.this, "you can reset your password now", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginActivity.this, ForgotPassword.class));
+                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
             }
-        });*/
+        });
 
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 email = editTextEmail.getText().toString();
                 password = editTextPassword.getText().toString();
-
                 if(email.trim().length() > 0 && password.trim().length() > 0){
                     mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -145,7 +135,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        
 
         sign_up.setOnClickListener(v -> {
             Intent signup = new Intent(getApplicationContext(), RegistrationActivity.class);
