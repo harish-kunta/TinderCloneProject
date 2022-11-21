@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.harish.tinder.ChooseLoginRegistrationActivity;
+import com.harish.tinder.ImagePickerActivity;
 import com.harish.tinder.R;
 import com.harish.tinder.material_ui.EditProfileActivity;
 import com.harish.tinder.material_ui.SettingsActivity;
@@ -147,7 +148,7 @@ public class ProfileFragment extends Fragment {
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                Intent intent = new Intent(getContext(), ImagePickerActivity.class);
                 startActivity(intent);
             }
         });
