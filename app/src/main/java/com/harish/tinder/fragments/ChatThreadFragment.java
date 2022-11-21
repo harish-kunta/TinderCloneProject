@@ -99,12 +99,11 @@ public class ChatThreadFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         context = getContext();
         view = inflater.inflate(R.layout.fragment_chat_threads, container, false);
-        mResultList =  view.findViewById(R.id.result_list);
+        mResultList = view.findViewById(R.id.result_list);
         mResultList.setHasFixedSize(true);
         mResultList.setLayoutManager(new LinearLayoutManager(context));
         mUserDatabase = FirebaseDatabase.getInstance().getReference("threads");
@@ -116,10 +115,10 @@ public class ChatThreadFragment extends Fragment {
         getThreads();
 
 
-
         return view;
     }
-    public void getThreads(){
+
+    public void getThreads() {
         ValueEventListener valueEventListener = mUserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -132,18 +131,17 @@ public class ChatThreadFragment extends Fragment {
                     String email1 = " ";
                     String email2 = " ";
                     try {
-                        record = ds.child("members").child("0").getValue().toString() + " "
-                                + ds.child("members").child("1").getValue().toString();
-                    }catch (Exception e){
+                        record = ds.child("members").child("0").getValue().toString() + " " + ds.child("members").child("1").getValue().toString();
+                    } catch (Exception e) {
                         Log.e("Record", "Exeption");
                     }
 
                     //Log.e("Record", record);
                     //{members=[tripathy.devi@yahoo.com, hello@helloworld.com]}
                     if (record.contains(user.getUid())) {
-                        if(ds.child("members").child("0").getValue().toString().equals(user.getUid())){
+                        if (ds.child("members").child("0").getValue().toString().equals(user.getUid())) {
                             record = ds.child("members").child("1").getValue().toString();
-                        }else {
+                        } else {
                             record = ds.child("members").child("0").getValue().toString();
                         }
                         //Log.e("Record replace", record);
@@ -153,8 +151,7 @@ public class ChatThreadFragment extends Fragment {
                     }
                 }
                 //
-                SimpleRecyclerAdapter<ChatThread, UserBinder> adapter =
-                        new SimpleRecyclerAdapter<>(new UserBinder());
+                SimpleRecyclerAdapter<ChatThread, UserBinder> adapter = new SimpleRecyclerAdapter<>(new UserBinder());
 
                 mResultList.setAdapter(adapter);
                 adapter.setData(t);
@@ -166,6 +163,7 @@ public class ChatThreadFragment extends Fragment {
             }
         });
     }
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -201,7 +199,8 @@ public class ChatThreadFragment extends Fragment {
         private String sender;
         private Uri profilePath;
 
-        @Override public UserViewHolder create(LayoutInflater inflater, ViewGroup parent) {
+        @Override
+        public UserViewHolder create(LayoutInflater inflater, ViewGroup parent) {
             return new UserViewHolder(inflater.inflate(R.layout.thread_layout, parent, false));
         }
 
@@ -213,8 +212,8 @@ public class ChatThreadFragment extends Fragment {
                 nameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot each_user: dataSnapshot.getChildren()){
-                            if(each_user.child("uid").getValue().toString().equals(item.getUid())){
+                        for (DataSnapshot each_user : dataSnapshot.getChildren()) {
+                            if (each_user.child("uid").getValue().toString().equals(item.getUid())) {
                                 holder.user_name.setText(each_user.child("name").getValue().toString());
                                 item.setName(each_user.child("name").getValue().toString());
                                 item.setEmail(each_user.child("email").getValue().toString());
@@ -232,7 +231,7 @@ public class ChatThreadFragment extends Fragment {
                     }
                 });
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 //Log.e("Raise", "No email");
             }
             holder.profileStorageRef.child(item.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -296,24 +295,22 @@ public class ChatThreadFragment extends Fragment {
             firebaseLastMessageQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for(DataSnapshot ds : dataSnapshot.getChildren()){
-                        access = ds.child("-"+user.getEmail().replace(".","")).getValue().toString();
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        access = ds.child("-" + user.getEmail().replace(".", "")).getValue().toString();
                         sender = ds.child("name").getValue().toString();
                         lastMessageValue = ds.child("msg").getValue().toString();
                     }
-                    if(lastMessageValue!=null && access.equals("true")){
-                        if(!lastMessageValue.contains("https://firebasestorage.googleapis.com/")){
-                            if(sender.equals(user.getEmail()))
+                    if (lastMessageValue != null && access.equals("true")) {
+                        if (!lastMessageValue.contains("https://firebasestorage.googleapis.com/")) {
+                            if (sender.equals(user.getEmail()))
                                 holder.lastMessagView.setText("You: " + lastMessageValue);
-                            else
-                                holder.lastMessagView.setText(lastMessageValue);
-                        }else {
-                            if(sender.equals(user.getEmail()))
+                            else holder.lastMessagView.setText(lastMessageValue);
+                        } else {
+                            if (sender.equals(user.getEmail()))
                                 holder.lastMessagView.setText("You: Image");
-                            else
-                                holder.lastMessagView.setText("Image");
+                            else holder.lastMessagView.setText("Image");
                         }
-                    }else {
+                    } else {
                         holder.lastMessagView.setText("No messages");
                     }
 
@@ -329,11 +326,11 @@ public class ChatThreadFragment extends Fragment {
             userOnlineStatusQuery.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for(DataSnapshot each_user: dataSnapshot.getChildren()){
-                        if(each_user.child("email").getValue().toString().equals(item.getEmail())){
-                            if(each_user.child("online").getValue().toString().equals("true")){
+                    for (DataSnapshot each_user : dataSnapshot.getChildren()) {
+                        if (each_user.child("email").getValue().toString().equals(item.getEmail())) {
+                            if (each_user.child("online").getValue().toString().equals("true")) {
                                 holder.online.setVisibility(View.VISIBLE);
-                            }else {
+                            } else {
                                 holder.online.setVisibility(View.GONE);
                             }
                             //Log.e("snapshot", item.getEmail());
@@ -349,7 +346,8 @@ public class ChatThreadFragment extends Fragment {
 
         }
 
-        @Override public boolean canBindData(Object item) {
+        @Override
+        public boolean canBindData(Object item) {
             return item instanceof ChatThread;
         }
 
@@ -361,6 +359,7 @@ public class ChatThreadFragment extends Fragment {
             ImageView online;
             StorageReference profileStorageRef;
             RelativeLayout relativeLayout;
+
             public UserViewHolder(View itemView) {
                 super(itemView);
                 user_name = (TextView) itemView.findViewById(R.id.email_text);
@@ -374,25 +373,17 @@ public class ChatThreadFragment extends Fragment {
 
             public void setUserImage(String thumb_image, Context ctx) {
                 if (!thumb_image.equals("default")) {
-                    Glide
-                            .with(ctx)
-                            .load(thumb_image)
-                            .into(profile_image);
+                    Glide.with(ctx).load(thumb_image).into(profile_image);
                 } else {
                     profile_image.setImageDrawable(ContextCompat.getDrawable(ctx, R.drawable.ic_black_person_24dp));
-
                 }
 
             }
 
             // Normal ViewHolder code
         }
-        public void openChatActivity(final String receiver_email,
-                                     final String name,
-                                     final String imageUrl,
-                                     final String uid,
-                                     final String threadID)
-        {
+
+        public void openChatActivity(final String receiver_email, final String name, final String imageUrl, final String uid, final String threadID) {
             final String currentUser = user.getEmail();
             final ArrayList<String> participants = new ArrayList<>();
 
