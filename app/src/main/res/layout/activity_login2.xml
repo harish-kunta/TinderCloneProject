@@ -11,12 +11,10 @@
     android:orientation="vertical"
     android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
     tools:context=".material_ui.LoginActivity">
-
     <TextView
         android:id="@+id/sign_out"
         android:text="Tinder"
         style="@style/applogo" />
-
     <androidx.cardview.widget.CardView
         android:layout_width="300dp"
         android:layout_height="300dp"
@@ -24,14 +22,12 @@
         android:background="#ffffff"
         android:foregroundGravity="clip_vertical|center_horizontal"
         app:cardCornerRadius="15dp">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="5dp">
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/username_field_input_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -41,15 +37,12 @@
                 android:layout_marginBottom="10dp"
                 android:hint="Enter email"
                 app:errorEnabled="true">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"/>
-
             </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password_field_input_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -60,34 +53,28 @@
                 app:endIconMode="password_toggle"
                 app:endIconTint="@color/colorAccent"
                 app:errorEnabled="true">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
-
             </com.google.android.material.textfield.TextInputLayout>
-
             <TextView
                 android:id="@+id/forgot_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Forgot Password" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
-
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/sign_in_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sign In" />
-
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/sign_up_button"
                     android:layout_width="wrap_content"
@@ -97,12 +84,4 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-
-    <!--<TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Forgot Password?"
-        android:textColor="#3F6DA5"/>-->
-
 </LinearLayout>
