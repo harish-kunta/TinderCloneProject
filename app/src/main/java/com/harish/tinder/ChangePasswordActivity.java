@@ -20,6 +20,7 @@ import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.harish.tinder.material_ui.EditProfileActivity;
 
 public class ChangePasswordActivity extends AppCompatActivity {
     private FirebaseAuth authProfile;
@@ -50,7 +51,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         if (firebaseUser.equals("")) {
             Toast.makeText(ChangePasswordActivity.this, "something went wrong!user's details not available",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(ChangePasswordActivity.this, UpdateProfileActivity.class);
+            Intent intent = new Intent(ChangePasswordActivity.this, EditProfileActivity.class);
             startActivity(intent);
             finish();
         }else{
@@ -132,7 +133,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         Toast.makeText(ChangePasswordActivity.this, "password has been changed",Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(ChangePasswordActivity.this, UpdateProfileActivity.class);
+                        Intent intent = new Intent(ChangePasswordActivity.this, EditProfileActivity.class);
                         startActivity(intent);
                         finish();
                     }else{
