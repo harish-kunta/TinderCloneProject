@@ -1,15 +1,22 @@
 package com.harish.tinder.fragments;
 
+import static com.harish.tinder.model.Constants.DOB;
+import static com.harish.tinder.model.Constants.EMAIL;
+import static com.harish.tinder.model.Constants.NAME;
+import static com.harish.tinder.model.Constants.ONLINE;
+import static com.harish.tinder.model.Constants.PROFILE_IMAGE_URL;
+import static com.harish.tinder.model.Constants.USERS;
+
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -27,13 +34,8 @@ import com.google.firebase.storage.StorageReference;
 import com.harish.tinder.ChooseLoginRegistrationActivity;
 import com.harish.tinder.ImagePickerActivity;
 import com.harish.tinder.R;
-import com.harish.tinder.material_ui.EditProfileActivity;
 import com.harish.tinder.material_ui.SettingsActivity;
 import com.harish.tinder.utils.AgeCalculator;
-
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -50,7 +52,7 @@ public class ProfileFragment extends Fragment {
     private TextView mCompany;
     private TextView mSchool;
     private TextView mLivingIn;
-    public String aboutMe,interests,job,company,school,livingIn;
+    public String aboutMe, interests, job, company, school, livingIn;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -60,17 +62,15 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private View mProfileView;
-    private FirebaseAuth mAuth;
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private final FirebaseAuth mAuth;
+    private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     TextView profileName;
     TextView profileEmail;
-//    TextView contentEmail;
-//    TextView contentName;
     ImageView editProfileButton;
     ImageView settingsButton;
     CircleImageView profilePic;
     StorageReference storageReference;
-    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users");
+    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child(USERS);
 
     private final int PICK_IMAGE_REQUEST = 71;
 
@@ -112,30 +112,25 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mProfileView = inflater.inflate(R.layout.fragment_profile, container, false);
-        mProfileView.findViewById(R.id.sign_out).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAuth.signOut();
-                Intent intent = new Intent(getContext(), ChooseLoginRegistrationActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-                return;
-            }
+        mProfileView.findViewById(R.id.sign_out).setOnClickListener(view -> {
+            mAuth.signOut();
+            Intent intent = new Intent(getContext(), ChooseLoginRegistrationActivity.class);
+            startActivity(intent);
+            getActivity().finish();
         });
-        profileName = (TextView) mProfileView.findViewById(R.id.profile_name);
-        profileEmail = (TextView) mProfileView.findViewById(R.id.profile_email);
+        profileName = mProfileView.findViewById(R.id.profile_name);
+        profileEmail = mProfileView.findViewById(R.id.profile_email);
 
-//        contentEmail = (TextView) mProfileView.findViewById(R.id.email_text);
-        editProfileButton = (ImageView) mProfileView.findViewById(R.id.edit_profile);
-        settingsButton = (ImageView) mProfileView.findViewById(R.id.settings);
+        editProfileButton = mProfileView.findViewById(R.id.edit_profile);
+        settingsButton = mProfileView.findViewById(R.id.settings);
 
 
-        mAboutMe = (TextView) mProfileView.findViewById(R.id.TextViewPersonName3);
-        mInterests = (TextView) mProfileView.findViewById(R.id.TextViewPersonName4);
-        mJob = (TextView) mProfileView.findViewById(R.id.TextViewPersonName5);
-        mCompany = (TextView) mProfileView.findViewById(R.id.TextViewPersonName6);
-        mSchool = (TextView) mProfileView.findViewById(R.id.TextViewPersonName7);
-        mLivingIn = (TextView) mProfileView.findViewById(R.id.TextViewPersonName8);
+        mAboutMe = mProfileView.findViewById(R.id.TextViewPersonName3);
+        mInterests = mProfileView.findViewById(R.id.TextViewPersonName4);
+        mJob = mProfileView.findViewById(R.id.TextViewPersonName5);
+        mCompany = mProfileView.findViewById(R.id.TextViewPersonName6);
+        mSchool = mProfileView.findViewById(R.id.TextViewPersonName7);
+        mLivingIn = mProfileView.findViewById(R.id.TextViewPersonName8);
         mLivingIn.setOnClickListener(view -> {
             aboutMe = mAboutMe.getText().toString();
             interests = mInterests.getText().toString();
@@ -145,40 +140,32 @@ public class ProfileFragment extends Fragment {
             livingIn = mLivingIn.getText().toString();
         });
 
-        editProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ImagePickerActivity.class);
-                startActivity(intent);
-            }
+        editProfileButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), ImagePickerActivity.class);
+            startActivity(intent);
         });
 
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SettingsActivity.class);
-                startActivity(intent);
-            }
+        settingsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), SettingsActivity.class);
+            startActivity(intent);
         });
 
-//        contentName = (TextView) mProfileView.findViewById(R.id.name_text);
-        profilePic = (CircleImageView) mProfileView.findViewById(R.id.profile_image);
+        profilePic = mProfileView.findViewById(R.id.profile_image);
         storageReference = FirebaseStorage.getInstance().getReference();
-        userRef.child(user.getUid()).child("online").setValue("true");
-//        contentEmail.setText(user.getEmail());
+        assert user != null;
+        userRef.child(user.getUid()).child(ONLINE).setValue(true);
         userRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             //TODO:remove this annotation
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String display_name = getObjectString(dataSnapshot.child("name").getValue());
-                String email = getObjectString(dataSnapshot.child("email").getValue());
-                long dobUnix = getObjectLong(dataSnapshot.child("dob").getValue());
-                String image = getObjectString(dataSnapshot.child("profileImageUrl").getValue());
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String display_name = getObjectString(dataSnapshot.child(NAME).getValue());
+                String email = getObjectString(dataSnapshot.child(EMAIL).getValue());
+                long dobUnix = getObjectLong(dataSnapshot.child(DOB).getValue());
+                String image = getObjectString(dataSnapshot.child(PROFILE_IMAGE_URL).getValue());
                 int age = AgeCalculator.calculateAge(dobUnix);
-                profileName.setText(display_name+", "+age);
+                profileName.setText(display_name + ", " + age);
                 profileEmail.setText(email);
-              //  contentName.setText(display_name);
                 if (!image.equals("default")) {
                     Glide
                             .with(mProfileView.getContext())
@@ -189,32 +176,27 @@ public class ProfileFragment extends Fragment {
 
                 }
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
 
         });
-        //Log.e("Photo URL", filePath.toString());
-//        Picasso.get().load(user.getPhotoUrl()).into(profilePic);
         return mProfileView;
     }
 
-    String getObjectString(Object o){
-        if(o!=null){
+    String getObjectString(Object o) {
+        if (o != null) {
             return o.toString();
         }
         return "";
     }
 
-    long getObjectLong(Object o){
-        if(o!=null){
-            return (Long)o;
+    long getObjectLong(Object o) {
+        if (o != null) {
+            return (Long) o;
         }
         return -1;
     }
-
-//    public static int calculateAge(LocalDate birthDate, LocalDate currentDate) {
-////        return ChronoUnit.YEARS.between(start, end);
-//    }
 }
