@@ -1,23 +1,22 @@
 package com.harish.tinder.material_ui;
 
-import androidx.annotation.NonNull;
+import static com.harish.tinder.model.Constants.DEFAULT;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -25,11 +24,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.harish.tinder.R;
 import com.harish.tinder.UploadImageActivity;
+import com.harish.tinder.model.Constants;
+import com.harish.tinder.model.FirebaseUser;
+import com.harish.tinder.utils.StringResourceHelper;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -37,13 +38,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    private static final String TAG = "RegistrationActivity";
+    private static final String TAG = RegistrationActivity.class.getSimpleName();
     private TextInputEditText user_name;
     private TextInputEditText user_email;
     private TextInputEditText user_password;
@@ -51,15 +51,12 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
     private TextInputEditText user_dob;
 
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
     private RadioGroup mRadioGroup;
     private ScrollView rootLayout;
     private ProgressDialog mRegProgress;
 
-    private Button signup;
-    private TextView signIn;
-
     private String userEmail, password, dob, name, checkPassword;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,68 +64,52 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
         setContentView(R.layout.activity_registration2);
 
         mAuth = FirebaseAuth.getInstance();
-        firebaseAuthStateListener = firebaseAuth -> {
-            final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if (user != null) {
-                Intent intent = new Intent(getApplicationContext(), UploadImageActivity.class);
-                startActivity(intent);
-                finish();
-                return;
-            }
-        };
         rootLayout = findViewById(R.id.root_layout);
-        user_name = (TextInputEditText) findViewById(R.id.name_field);
-        user_email = (TextInputEditText) findViewById(R.id.email_field);
-        user_dob = (TextInputEditText) findViewById(R.id.dob_field);
-        user_password = (TextInputEditText) findViewById(R.id.password_reg_field);
-        user_check_password = (TextInputEditText) findViewById(R.id.confirm_pass_field);
-        signup = (Button) findViewById(R.id.signup_reg_button);
-        signIn = (TextView) findViewById(R.id.sign_in);
-        mRadioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        user_name = findViewById(R.id.name_field);
+        user_email = findViewById(R.id.email_field);
+        user_dob = findViewById(R.id.dob_field);
+        user_password = findViewById(R.id.password_reg_field);
+        user_check_password = findViewById(R.id.confirm_pass_field);
+        Button signup = findViewById(R.id.signup_reg_button);
+        TextView signIn = findViewById(R.id.sign_in);
+        mRadioGroup = findViewById(R.id.radioGroup);
+        context = getApplicationContext();
 
-        user_dob.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDatePickerDialog();
-            }
-        });
-        signIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent signup = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(signup);
-                finish();
-            }
+        user_dob.setOnClickListener(view -> showDatePickerDialog());
+        signIn.setOnClickListener(view -> {
+            Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(loginIntent);
+            finish();
         });
         signup.setOnClickListener(v -> {
             int selectId = mRadioGroup.getCheckedRadioButtonId();
-            name = user_name.getText().toString();
-            userEmail = user_email.getText().toString();
-            password = user_password.getText().toString();
-            checkPassword = user_check_password.getText().toString();
-            dob = user_dob.getText().toString();
-            Integer unixTime = dateToUnix(dob);
+            name = Objects.requireNonNull(user_name.getText()).toString();
+            userEmail = Objects.requireNonNull(user_email.getText()).toString();
+            password = Objects.requireNonNull(user_password.getText()).toString();
+            checkPassword = Objects.requireNonNull(user_check_password.getText()).toString();
+            dob = Objects.requireNonNull(user_dob.getText()).toString();
+            Integer unixTime = dateToUnix(dob, getApplicationContext());
             if (name.length() <= 0) {
-                Snackbar.make(rootLayout, "Enter name", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, StringResourceHelper.getString(context, R.string.enter_user_name), Snackbar.LENGTH_LONG).show();
             } else if (name.matches(".*\\d.*")) {
-                Snackbar.make(rootLayout, "Name cannot contain numbers", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, StringResourceHelper.getString(context, R.string.name_cannot_contain_numbers), Snackbar.LENGTH_LONG).show();
             } else if (checkCapitalLetters(userEmail)) {
-                Snackbar.make(rootLayout, "Email cannot contain capital letters", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, StringResourceHelper.getString(context, R.string.email_cannot_contain_capital_letters), Snackbar.LENGTH_LONG).show();
             } else if (!isValidEmail(userEmail)) {
-                Snackbar.make(rootLayout, "Enter valid email", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, StringResourceHelper.getString(context, R.string.enter_valid_email), Snackbar.LENGTH_LONG).show();
             } else if (selectId == -1) {
-                Snackbar.make(rootLayout, "Gender not selected", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, StringResourceHelper.getString(context, R.string.gender_not_selected), Snackbar.LENGTH_LONG).show();
                 //TODO : Verify that user is 18 years or older
             } else if (dob.length() <= 0) {
-                Snackbar.make(rootLayout, "Enter DOB", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, StringResourceHelper.getString(context, R.string.enter_dob), Snackbar.LENGTH_LONG).show();
             } else if (unixTime == null) {
-                Snackbar.make(rootLayout, "Error while parsing DOB", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, StringResourceHelper.getString(context, R.string.error_parsing_dob), Snackbar.LENGTH_LONG).show();
             } else if (password.length() <= 0) {
-                Snackbar.make(rootLayout, "Enter password", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, StringResourceHelper.getString(context, R.string.enter_password), Snackbar.LENGTH_LONG).show();
             } else if (!password.equals(checkPassword)) {
-                Snackbar.make(rootLayout, "Passwords do not match", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootLayout, StringResourceHelper.getString(context, R.string.passwords_not_match), Snackbar.LENGTH_LONG).show();
             } else {
-                final RadioButton radioButton = (RadioButton) findViewById(selectId);
+                final RadioButton radioButton = findViewById(selectId);
                 mRegProgress = new ProgressDialog(RegistrationActivity.this,
                         R.style.AppThemeDialog);
                 mRegProgress.setIndeterminate(true);
@@ -137,37 +118,27 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                 mRegProgress.show();
                 mAuth.createUserWithEmailAndPassword(userEmail, password).addOnCompleteListener(RegistrationActivity.this, task -> {
                     if (task.isSuccessful()) {
-                        String userId = mAuth.getCurrentUser().getUid();
-                        DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
-                        Map userInfo = new HashMap<>();
-                        userInfo.put("name", name);
-                        userInfo.put("email", userEmail);
-                        userInfo.put("sex", radioButton.getText().toString());
-                        userInfo.put("online", true);
-                        userInfo.put("profileImageUrl", "default");
-                        userInfo.put("uid", userId);
-                        userInfo.put("dob", unixTime.intValue());
-                        currentUserDb.updateChildren(userInfo).addOnSuccessListener(new OnSuccessListener() {
+                        String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+                        DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child(Constants.USERS).child(userId);
+                        FirebaseUser user = new FirebaseUser(name, userEmail, unixTime, true, DEFAULT, radioButton.getText().toString(), DEFAULT, userId);
+                        currentUserDb.setValue(user).addOnSuccessListener(new OnSuccessListener() {
                             @Override
                             public void onSuccess(Object o) {
-                                Snackbar.make(rootLayout, "Account Created successfully", Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(rootLayout, R.string.ACCOUNT_CREATED_SUCCESSFULLY, Snackbar.LENGTH_LONG).show();
                                 mRegProgress.dismiss();
                                 Intent signin = new Intent(getApplicationContext(), UploadImageActivity.class);
                                 signin.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(signin);
                                 finish();
                             }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                mRegProgress.dismiss();
-                                Toast.makeText(getApplicationContext(), "Details were not saved", Toast.LENGTH_SHORT).show();
-                            }
+                        }).addOnFailureListener(e -> {
+                            mRegProgress.dismiss();
+                            Snackbar.make(rootLayout, R.string.ACCOUNT_CREATION_UNSUCCESSFULL, Snackbar.LENGTH_LONG).show();
                         });
                     } else {
                         mRegProgress.dismiss();
                         try {
-                            throw task.getException();
+                            throw Objects.requireNonNull(task.getException());
                         } catch (FirebaseAuthWeakPasswordException e) {
                             Snackbar.make(rootLayout, "Password is too weak! please enter a strong password", Snackbar.LENGTH_LONG).show();
                         } catch (FirebaseAuthInvalidCredentialsException e) {
@@ -228,11 +199,12 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
         datePickerDialog.show();
     }
 
-    public static Integer dateToUnix(String timestamp) {
+    public static Integer dateToUnix(String timestamp, Context context) {
         if (timestamp == null) return null;
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat(StringResourceHelper.getString(context, R.string.date_pattern));
             Date dt = sdf.parse(timestamp);
+            assert dt != null;
             long epoch = dt.getTime();
             return (int) (epoch / 1000);
         } catch (ParseException e) {

@@ -66,4 +66,16 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="LOADING">Loading…</string>
+    <string name="ACCOUNT_CREATED_SUCCESSFULLY">Account Created successfully</string>
+    <string name="ACCOUNT_CREATION_UNSUCCESSFULL">Account creation unsuccessful!</string>
+    <string name="date_pattern">dd/MM/yyyy</string>
+    <string name="enter_user_name">Enter user name</string>
+    <string name="name_cannot_contain_numbers">Name cannot contain numbers</string>
+    <string name="email_cannot_contain_capital_letters">Email cannot contain capital letters</string>
+    <string name="enter_valid_email">Enter valid email</string>
+    <string name="gender_not_selected">Gender not selected</string>
+    <string name="enter_dob">Enter DOB</string>
+    <string name="error_parsing_dob">Error while parsing DOB</string>
+    <string name="enter_password">Enter password</string>
+    <string name="passwords_not_match">Passwords do not match</string>
 </resources>
