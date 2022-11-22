@@ -140,6 +140,24 @@
         android:textSize="14sp"
         android:visibility="gone" />
 
+    <FrameLayout
+        android:id="@+id/password_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="9dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            wheel:matProg_progressIndeterminate="true" />
+    </FrameLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -148,6 +166,8 @@
 
         <Button
             android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             style="@style/dialog_btn.cancel"
             android:layout_marginEnd="@dimen/common_spaces_double"
             android:text="@string/dialog_cancel"
@@ -155,6 +175,8 @@
 
         <Button
             android:id="@+id/confirm_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             style="@style/dialog_btn.confirm"
             android:text="@string/dialog_ok" />
     </LinearLayout>

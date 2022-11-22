@@ -13,6 +13,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.Transformation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,7 +28,8 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
 
     private View mDialogView, mSuccessLeftMask, mSuccessRightMask;
     private TextView mTitleTextView, mContentTextView;
-    private FrameLayout mErrorFrame, mSuccessFrame, mProgressFrame, mWarningFrame;
+    private EditText mPasswordText;
+    private FrameLayout mErrorFrame, mSuccessFrame, mProgressFrame, mWarningFrame, mPasswordFrame;
     private SuccessTickView mSuccessTick;
     private ImageView mErrorX, mCustomImage;
     private Button mConfirmButton, mCancelButton;
@@ -36,7 +38,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     private String mTitleText, mContentText;
     private String mCancelText, mConfirmText;
     private boolean mShowTitle, mShowContent;
-    private boolean mShowCancel, mShowConfirm = true;
+    private boolean mShowCancel, mShowForgotPassword, mShowConfirm = true;
     private boolean mCloseFromCancel;
     private boolean mHideKeyBoardOnDismiss = true;
 
@@ -53,6 +55,14 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     public static final int WARNING_TYPE = 3;
     public static final int CUSTOM_IMAGE_TYPE = 4;
     public static final int PROGRESS_TYPE = 5;
+
+    public SweetAlertDialog showForgotPassword(boolean isShow) {
+        mShowForgotPassword = isShow;
+        if (mPasswordFrame != null) {
+            mPasswordFrame.setVisibility(mShowForgotPassword ? View.VISIBLE : View.GONE);
+        }
+        return this;
+    }
 
     public interface OnSweetClickListener {
         void onClick(SweetAlertDialog sweetAlertDialog);
@@ -123,10 +133,12 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         mDialogView = getWindow().getDecorView().findViewById(android.R.id.content);
         mTitleTextView = findViewById(R.id.title_text);
         mContentTextView = findViewById(R.id.content_text);
+        mPasswordText = findViewById(R.id.password);
         mErrorFrame = findViewById(R.id.error_frame);
         mErrorX = mErrorFrame.findViewById(R.id.error_x);
         mSuccessFrame = findViewById(R.id.success_frame);
         mProgressFrame = findViewById(R.id.progress_dialog);
+        mPasswordFrame = findViewById(R.id.password_field);
         mSuccessTick = mSuccessFrame.findViewById(R.id.success_tick);
         mSuccessLeftMask = mSuccessFrame.findViewById(R.id.mask_left);
         mSuccessRightMask = mSuccessFrame.findViewById(R.id.mask_right);
@@ -143,6 +155,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         setCancelText(mCancelText);
         setConfirmText(mConfirmText);
         changeAlertType(mAlertType, true);
+        showForgotPassword(mShowForgotPassword);
 
     }
 

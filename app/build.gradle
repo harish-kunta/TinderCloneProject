@@ -69,6 +69,7 @@ dependencies {
 
     implementation 'com.lzy.widget:imagepicker:0.6.1'
     implementation 'com.lzy.widget:view-core:0.2.1'
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.harish.tinder.alert.SweetAlertDialog;
 import com.harish.tinder.utils.StringResourceHelper;
 
 import java.util.Objects;
@@ -92,7 +93,44 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        forgotPassword.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class)));
+        forgotPassword.setOnClickListener(view -> {
+            new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Enter your email id")
+                    .setContentText("You will receive an email to reset your password")
+                    .setCancelText("Cancel")
+                    .setConfirmText("Send email")
+                    .showForgotPassword(true)
+                    .showCancelButton(true)
+                    .setCancelClickListener(sDialog -> {
+                        // reuse previous dialog instance, keep widget user state, reset them if you need
+                        sDialog.setTitleText("Cancelled!")
+                                .setContentText("Your imaginary file is safe :)")
+                                .setConfirmText("OK")
+                                .showCancelButton(false)
+                                .setCancelClickListener(null)
+                                .setConfirmClickListener(null)
+                                .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+
+                        // or you can new a SweetAlertDialog to show
+                           /* sDialog.dismiss();
+                            new SweetAlertDialog(SampleActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Cancelled!")
+                                    .setContentText("Your imaginary file is safe :)")
+                                    .setConfirmText("OK")
+                                    .show();*/
+                    })
+                    .setConfirmClickListener(sDialog -> sDialog.setTitleText("Email sent!")
+                            .setContentText("Please check your email/spam folder for password recovery link!")
+                            .setConfirmText("OK")
+                            .showCancelButton(false)
+                            .setCancelClickListener(null)
+                            .setConfirmClickListener(null)
+                            .showForgotPassword(false)
+                            .changeAlertType(SweetAlertDialog.SUCCESS_TYPE)
+
+                    )
+                    .show();
+        });
 
         sign_in.setOnClickListener(v -> {
             email = Objects.requireNonNull(editTextEmail.getText()).toString();

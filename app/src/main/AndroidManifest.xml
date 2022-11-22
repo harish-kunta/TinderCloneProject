@@ -30,17 +30,12 @@
         <activity
             android:name=".material_ui.SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".AvailableProfileActivity" />
         <activity
             android:name=".material_ui.MainActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
-        <activity
-            android:name=".SplashScreenActivity"
-            android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
