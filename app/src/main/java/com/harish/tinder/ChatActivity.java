@@ -1,5 +1,7 @@
 package com.harish.tinder;
 
+import static com.harish.tinder.model.Constants.USER_ID;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,9 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -38,13 +38,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.harish.tinder.Chat.ChatView;
-import com.harish.tinder.material_ui.MainActivity;
 import com.harish.tinder.model.ChatMessage;
 import com.harish.tinder.utils.ApiUtils;
 import com.harish.tinder.utils.FirebaseMessage;
 import com.harish.tinder.utils.MessageData;
 import com.harish.tinder.utils.NotifyData;
-import com.harish.tinder.views.ProfileView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -61,7 +59,6 @@ public class ChatActivity extends AppCompatActivity {
     private String threadID, chatUserId;
     private String receiver_email, receiver_name, imageUrl;
     private String chat_msg,chat_user_name, type;
-    private String currparticipant;
     private long time;
 
     private DatabaseReference root = FirebaseDatabase.getInstance().getReference();
@@ -372,6 +369,7 @@ public class ChatActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_chat, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -387,13 +385,10 @@ public class ChatActivity extends AppCompatActivity {
             return true;
         }
         else if(id == R.id.view_profile){
-            Intent intent = new Intent(ChatActivity.this, ProfileView.class);
-            intent.putExtra("name", receiver_name);
-            intent.putExtra("email", receiver_email);
-            intent.putExtra("photo_url", imageUrl);
-            intent.putExtra("thread", threadID);
+            String userId = user.getUid();
+            Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
+            intent.putExtra(USER_ID, userId);
             startActivity(intent);
-            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -409,6 +404,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onPause();
         userRef.child(user.getUid()).child("online").setValue("false");
     }
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
