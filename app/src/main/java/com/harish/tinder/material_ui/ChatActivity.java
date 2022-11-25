@@ -1,5 +1,6 @@
 package com.harish.tinder.material_ui;
 
+import static com.harish.tinder.model.Constants.DEVICE_TOKEN;
 import static com.harish.tinder.model.Constants.USER_ID;
 
 import android.content.Intent;
@@ -210,8 +211,8 @@ public class ChatActivity extends AppCompatActivity {
                 {
                     online="unknown";
                 }
-                if (dataSnapshot.hasChild("device_token")) {
-                    token = dataSnapshot.child("device_token").getValue().toString();
+                if (dataSnapshot.hasChild(DEVICE_TOKEN)) {
+                    token = dataSnapshot.child(DEVICE_TOKEN).getValue().toString();
                 }
 //                userName = dataSnapshot.child("name").getValue().toString();
 //                mTitleView.setText(userName);

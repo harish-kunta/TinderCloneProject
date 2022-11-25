@@ -1,7 +1,5 @@
 package com.harish.tinder.model;
 
-import com.google.gson.annotations.SerializedName;
-
 public class FirebaseDbUser {
     public String name;
     public String email;
@@ -12,26 +10,25 @@ public class FirebaseDbUser {
     public String profileImageUrlCompressed;
     public String uid;
 
-    public boolean isTerms_agreed() {
-        return terms_agreed;
+    public boolean isTermsAgreed() {
+        return termsAgreed;
     }
 
-    public void setTerms_agreed(boolean terms_agreed) {
-        this.terms_agreed = terms_agreed;
+    public void setTermsAgreed(boolean termsAgreed) {
+        this.termsAgreed = termsAgreed;
     }
 
-    @SerializedName("terms_agreed")
-    public boolean terms_agreed;
+    public boolean termsAgreed;
 
-    public String getDevice_token() {
-        return device_token;
+    public String getDeviceToken() {
+        return deviceToken;
     }
 
-    public void setDevice_token(String device_token) {
-        this.device_token = device_token;
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
     }
 
-    public String device_token;
+    public String deviceToken;
 
     public String getStatus() {
         return status;

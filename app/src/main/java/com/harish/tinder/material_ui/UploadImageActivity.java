@@ -1,5 +1,10 @@
 package com.harish.tinder.material_ui;
 
+import static com.harish.tinder.model.Constants.COMPRESSED;
+import static com.harish.tinder.model.Constants.PROFILE_IMAGES;
+import static com.harish.tinder.model.Constants.PROFILE_IMAGE_URL;
+import static com.harish.tinder.model.Constants.PROFILE_IMAGE_URL_COMPRESSED;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -192,8 +197,8 @@ public class UploadImageActivity extends AppCompatActivity {
                     final byte[] thumb_byte = byteArrayOutputStream.toByteArray();
 
 
-                    final StorageReference filepath = mImageStorage.child("profile_images").child(current_user_id + ".jpg");
-                    final StorageReference thumb_filepath_image = mImageStorage.child("profile_images").child("thumbs").child(current_user_id + ".jpg");
+                    final StorageReference filepath = mImageStorage.child(PROFILE_IMAGES).child(current_user_id + ".jpg");
+                    final StorageReference thumb_filepath_image = mImageStorage.child(PROFILE_IMAGES).child(COMPRESSED).child(current_user_id + ".jpg");
 
                     filepath.putFile(resultUri)
                             .continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -235,8 +240,8 @@ public class UploadImageActivity extends AppCompatActivity {
                                                         //String thumb_downloadUrl=thumb_task.getResult().getUploadSessionUri().toString();
                                                         if (task.isSuccessful()) {
                                                             Map update_hashmap = new HashMap();
-                                                            update_hashmap.put("profileImageUrl", download_url);
-                                                            update_hashmap.put("thumb_image", thumb_downloadUrl);
+                                                            update_hashmap.put(PROFILE_IMAGE_URL, download_url);
+                                                            update_hashmap.put(PROFILE_IMAGE_URL_COMPRESSED, thumb_downloadUrl);
 
                                                             mUserDatabase.updateChildren(update_hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                 @Override

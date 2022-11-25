@@ -39,11 +39,14 @@ public class MainActivity extends AppCompatActivity {
     final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference ref;
     FirebaseDbUser firebaseDbUser;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
         if (firebaseUser == null) {
+            mAuth.signOut();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
             finish();
@@ -53,7 +56,12 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     firebaseDbUser = snapshot.getValue(FirebaseDbUser.class);
-                    if (!firebaseDbUser.isTerms_agreed()) {
+                    if(firebaseDbUser == null || firebaseDbUser.getUid()==null){
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if (!firebaseDbUser.isTermsAgreed()) {
                         Intent intent = new Intent(getApplicationContext(), HouseRulesActivity.class);
                         startActivity(intent);
                         finish();
@@ -63,6 +71,19 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }
+                    else{
+                        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+                            if (!task.isSuccessful()) {
+                                Log.w(TAG, getString(R.string.fcm_token_fetch_failed), task.getException());
+                                return;
+                            }
+
+                            // Get new FCM registration token
+                            String token = task.getResult();
+                            Log.d(TAG, token);
+                            ref.child(DEVICE_TOKEN).setValue(token);
+                        });
+                    }
                 }
 
                 @Override
@@ -70,17 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
-                if (!task.isSuccessful()) {
-                    Log.w(TAG, getString(R.string.fcm_token_fetch_failed), task.getException());
-                    return;
-                }
 
-                // Get new FCM registration token
-                String token = task.getResult();
-                Log.d(TAG, token);
-                ref.child(DEVICE_TOKEN).setValue(token);
-            });
 
             //TODO : Update the activity to take to profile picture page
 //        userRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {

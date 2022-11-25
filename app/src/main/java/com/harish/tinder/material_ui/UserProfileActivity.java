@@ -138,8 +138,8 @@ public class UserProfileActivity extends AppCompatActivity {
                 } else {
                     status = "";
                 }
-                if (firebaseDbUser.getDevice_token() != null) {
-                    token = firebaseDbUser.getDevice_token();
+                if (firebaseDbUser.getDeviceToken() != null) {
+                    token = firebaseDbUser.getDeviceToken();
                 }
                 if (firebaseDbUser.getProfileImageUrl() != null) {
                     image = firebaseDbUser.getProfileImageUrl();

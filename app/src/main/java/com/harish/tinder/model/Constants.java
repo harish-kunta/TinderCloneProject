@@ -11,13 +11,14 @@ public class Constants {
 
     public static final String NAME = "name";
     public static final String EMAIL = "email";
-    public static final String DEVICE_TOKEN = "device_token";
+    public static final String DEVICE_TOKEN = "deviceToken";
     public static final String ONLINE = "online";
     public static final String SEX = "sex";
     public static final String DOB = "dob";
     public static final String PROFILE_IMAGE_URL = "profileImageUrl";
+    public static final String PROFILE_IMAGE_URL_COMPRESSED = "profileImageUrlCompressed";
     public static final String UID = "uid";
-    public static final String TERMS_AGREED = "terms_agreed";
+    public static final String TERMS_AGREED = "termsAgreed";
 
     public static final String MALE = "Male";
     public static final String FEMALE = "Female";
@@ -40,4 +41,7 @@ public class Constants {
     public static final String INDEX_1 = "1";
     public static final String MESSAGES = "messages";
 
+    //storage
+    public static final String COMPRESSED = "compressed";
+    public static final String PROFILE_IMAGES = "profile_images";
 }
