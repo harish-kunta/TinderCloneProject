@@ -1,4 +1,4 @@
-package com.harish.tinder;
+package com.harish.tinder.material_ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +19,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.harish.tinder.material_ui.EditProfileActivity;
+import com.harish.tinder.R;
 
 public class ChangePasswordActivity extends AppCompatActivity {
     private FirebaseAuth authProfile;

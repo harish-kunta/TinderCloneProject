@@ -47,7 +47,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.harish.tinder.ChatActivity;
+import com.harish.tinder.material_ui.ChatActivity;
 import com.harish.tinder.R;
 import com.harish.tinder.model.ChatThread;
 

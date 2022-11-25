@@ -1,4 +1,4 @@
-package com.harish.tinder;
+package com.harish.tinder.material_ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,9 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.harish.tinder.R;
 import com.harish.tinder.fab.FloatingActionButton;
-import com.harish.tinder.material_ui.LoginActivity;
-import com.harish.tinder.material_ui.MainActivity;
 import com.harish.tinder.utils.Imageutils;
 import com.harish.tinder.views.ProfileEdit;
 import com.squareup.picasso.Picasso;

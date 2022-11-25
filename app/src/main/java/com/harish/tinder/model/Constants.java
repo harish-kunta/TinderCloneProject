@@ -17,6 +17,7 @@ public class Constants {
     public static final String DOB = "dob";
     public static final String PROFILE_IMAGE_URL = "profileImageUrl";
     public static final String UID = "uid";
+    public static final String TERMS_AGREED = "terms_agreed";
 
     public static final String MALE = "Male";
     public static final String FEMALE = "Female";

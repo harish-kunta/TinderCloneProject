@@ -30,9 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.harish.tinder.ChooseLoginRegistrationActivity;
 import com.harish.tinder.R;
-import com.harish.tinder.SplashScreenActivity;
 
 import java.util.Objects;
 

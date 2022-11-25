@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="80dp"
-    tools:context=".UserProfileActivity">
+    tools:context=".material_ui.UserProfileActivity">
 
 
     <com.yuyakaido.android.cardstackview.CardStackView

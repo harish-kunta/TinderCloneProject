@@ -27,7 +27,6 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.harish.tinder.R;
-import com.harish.tinder.UploadImageActivity;
 import com.harish.tinder.model.Constants;
 import com.harish.tinder.model.FirebaseDbUser;
 import com.harish.tinder.utils.StringResourceHelper;
@@ -126,7 +125,7 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                             public void onSuccess(Object o) {
                                 Snackbar.make(rootLayout, R.string.ACCOUNT_CREATED_SUCCESSFULLY, Snackbar.LENGTH_LONG).show();
                                 mRegProgress.dismiss();
-                                Intent signin = new Intent(getApplicationContext(), UploadImageActivity.class);
+                                Intent signin = new Intent(getApplicationContext(), HouseRulesActivity.class);
                                 signin.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(signin);
                                 finish();

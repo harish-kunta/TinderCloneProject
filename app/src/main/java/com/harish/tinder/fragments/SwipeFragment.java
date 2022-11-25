@@ -41,7 +41,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.harish.tinder.R;
-import com.harish.tinder.UserProfileActivity;
+import com.harish.tinder.material_ui.UserProfileActivity;
 import com.harish.tinder.adapter.ProfileAdapter;
 import com.harish.tinder.model.Constants;
 import com.harish.tinder.model.Profile;

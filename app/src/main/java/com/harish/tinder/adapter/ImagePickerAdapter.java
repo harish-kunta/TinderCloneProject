@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.harish.tinder.ImagePickerActivity;
+import com.harish.tinder.material_ui.ImagePickerActivity;
 import com.harish.tinder.R;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;

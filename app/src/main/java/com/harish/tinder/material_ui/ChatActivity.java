@@ -1,4 +1,4 @@
-package com.harish.tinder;
+package com.harish.tinder.material_ui;
 
 import static com.harish.tinder.model.Constants.USER_ID;
 
@@ -38,11 +38,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.harish.tinder.Chat.ChatView;
+import com.harish.tinder.R;
 import com.harish.tinder.model.ChatMessage;
 import com.harish.tinder.utils.ApiUtils;
-import com.harish.tinder.utils.FirebaseMessage;
-import com.harish.tinder.utils.MessageData;
-import com.harish.tinder.utils.NotifyData;
+import com.harish.tinder.model.FirebaseMessage;
+import com.harish.tinder.model.MessageData;
+import com.harish.tinder.model.NotifyData;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

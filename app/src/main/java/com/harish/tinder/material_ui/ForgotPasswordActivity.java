@@ -1,4 +1,4 @@
-package com.harish.tinder;
+package com.harish.tinder.material_ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.harish.tinder.material_ui.MainActivity;
+import com.harish.tinder.R;
+
 public class ForgotPasswordActivity extends AppCompatActivity {
     private Button buttonPwdReset;
     private EditText editTextPwdResetEmail;

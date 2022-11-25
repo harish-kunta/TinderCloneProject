@@ -1,17 +1,15 @@
-package com.harish.tinder;
+package com.harish.tinder.material_ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.harish.tinder.material_ui.MainActivity;
-
+import com.harish.tinder.R;
 public class SplashScreenActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 

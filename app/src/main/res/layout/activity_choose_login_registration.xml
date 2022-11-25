@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_bk"
-    tools:context="com.harish.tinder.ChooseLoginRegistrationActivity"
+    tools:context="com.harish.tinder.material_ui.ChooseLoginRegistrationActivity"
     android:orientation="vertical">
     <TextView
         android:id="@+id/sign_out"

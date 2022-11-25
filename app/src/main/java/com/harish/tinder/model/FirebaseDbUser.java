@@ -12,6 +12,17 @@ public class FirebaseDbUser {
     public String profileImageUrlCompressed;
     public String uid;
 
+    public boolean isTerms_agreed() {
+        return terms_agreed;
+    }
+
+    public void setTerms_agreed(boolean terms_agreed) {
+        this.terms_agreed = terms_agreed;
+    }
+
+    @SerializedName("terms_agreed")
+    public boolean terms_agreed;
+
     public String getDevice_token() {
         return device_token;
     }

@@ -31,7 +31,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.harish.tinder.ProfileActivity;
+import com.harish.tinder.material_ui.ProfileActivity;
 import com.harish.tinder.R;
 import com.harish.tinder.utils.Imageutils;
 import com.squareup.picasso.Picasso;

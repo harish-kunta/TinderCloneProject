@@ -1,4 +1,4 @@
-package com.harish.tinder;
+package com.harish.tinder.material_ui;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,8 +12,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.harish.tinder.material_ui.LoginActivity;
-import com.harish.tinder.material_ui.RegistrationActivity;
+import com.harish.tinder.R;
 
 public class ChooseLoginRegistrationActivity extends AppCompatActivity {
     TextView customText;

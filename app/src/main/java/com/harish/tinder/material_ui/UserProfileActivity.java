@@ -1,8 +1,7 @@
-package com.harish.tinder;
+package com.harish.tinder.material_ui;
 
 import static com.harish.tinder.model.Constants.CONNECTIONS;
 import static com.harish.tinder.model.Constants.MATCHES;
-import static com.harish.tinder.model.Constants.USERS;
 
 import android.app.DownloadManager;
 import android.app.NotificationManager;
@@ -42,8 +41,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.harish.tinder.R;
 import com.harish.tinder.alert.SweetAlertDialog;
-import com.harish.tinder.material_ui.MainActivity;
 import com.harish.tinder.model.Constants;
 import com.harish.tinder.model.FirebaseDbUser;
 import com.harish.tinder.utils.MyData;

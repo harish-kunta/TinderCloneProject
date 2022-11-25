@@ -11,8 +11,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.harish.tinder.R;
-import com.harish.tinder.UserProfileActivity;
-import com.harish.tinder.listeners.UserItemClickListener;
+import com.harish.tinder.material_ui.UserProfileActivity;
 import com.harish.tinder.model.UserObject;
 import com.harish.tinder.viewholders.LikesViewHolder;
 

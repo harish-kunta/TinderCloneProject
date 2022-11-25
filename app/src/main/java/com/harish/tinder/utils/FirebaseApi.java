@@ -1,5 +1,7 @@
 package com.harish.tinder.utils;
 
+import com.harish.tinder.model.FirebaseMessage;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;

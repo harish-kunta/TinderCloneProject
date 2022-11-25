@@ -1,4 +1,4 @@
-package com.harish.tinder.utils;
+package com.harish.tinder.model;
 
 public class NotifyData {
     String title;
