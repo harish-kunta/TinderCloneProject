@@ -1,5 +1,9 @@
 package com.harish.tinder;
 
+import static com.harish.tinder.model.Constants.CONNECTIONS;
+import static com.harish.tinder.model.Constants.MATCHES;
+import static com.harish.tinder.model.Constants.USERS;
+
 import android.app.DownloadManager;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -9,8 +13,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -23,6 +29,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -34,6 +42,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.harish.tinder.alert.SweetAlertDialog;
 import com.harish.tinder.material_ui.MainActivity;
 import com.harish.tinder.model.Constants;
 import com.harish.tinder.model.FirebaseDbUser;
@@ -55,12 +64,14 @@ public class UserProfileActivity extends AppCompatActivity {
     private DatabaseReference mUserRef;
     private MyData myData;
     public String token;
+    FirebaseDbUser firebaseDbUser;
+
+    private Button unMatchUserButton;
 
     private FirebaseUser mCurrentUser;
     String image;
     String display_name;
     String status;
-    String email;
     CoordinatorLayout rootLayout;
     private static final int REQUEST_WRITE_PERMISSION = 786;
     CollapsingToolbarLayout ctl;
@@ -114,10 +125,12 @@ public class UserProfileActivity extends AppCompatActivity {
         rootLayout = findViewById(R.id.rootlayout);
         mProfileImage = findViewById(R.id.user_profile_image);
         mCloseProfile = findViewById(R.id.close_profile);
+        unMatchUserButton = findViewById(R.id.unmatch_user_button);
+
         mUsersDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                FirebaseDbUser firebaseDbUser = dataSnapshot.getValue(FirebaseDbUser.class);
+                firebaseDbUser = dataSnapshot.getValue(FirebaseDbUser.class);
                 if (firebaseDbUser.getName() != null) {
                     display_name = firebaseDbUser.getName();
                 }
@@ -175,6 +188,62 @@ public class UserProfileActivity extends AppCompatActivity {
             }
 
         });
+
+        mUserRef.child(CONNECTIONS).child(MATCHES).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot match : dataSnapshot.getChildren()) {
+                        if(match.getKey().equals(user_id)){
+                            unMatchUserButton.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        unMatchUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SweetAlertDialog(UserProfileActivity.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("UnMatch user")
+                        .setContentText("Are you sure you want to unmatch " + firebaseDbUser.getName())
+                        .setCancelText("Cancel")
+                        .setConfirmText("unmatch")
+                        .showCancelButton(true)
+                        .setCancelClickListener(SweetAlertDialog::cancel)
+                        .setConfirmClickListener(this::unMatchUser)
+                        .show();
+            }
+
+            private void unMatchUser(SweetAlertDialog sweetAlertDialog) {
+                mUsersDatabase.child(Constants.CONNECTIONS).child(Constants.MATCHES).child(mCurrentUser.getUid()).getRef().removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                mUserRef.child(Constants.CONNECTIONS).child(Constants.MATCHES).child(user_id).getRef().removeValue();
+                                sweetAlertDialog.setTitleText("User unmatched!")
+                                        .setContentText("User was removed successfully!")
+                                        .setConfirmText("OK")
+                                        .showCancelButton(false)
+                                        .setCancelClickListener(null)
+                                        .setConfirmClickListener(null)
+                                        .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                cancelledDialog(sweetAlertDialog, "Problem", e.getMessage(), "OK");
+                            }
+                        });
+            }
+        });
+
         mFriendDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -195,9 +264,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
             }
         });
-
         mCloseProfile.setOnClickListener(v -> onBackPressed());
-
     }
 
     @Override
@@ -222,6 +289,18 @@ public class UserProfileActivity extends AppCompatActivity {
             mUserRef.child(Constants.ONLINE).setValue("true");
         }
 
+    }
+
+    private void cancelledDialog(SweetAlertDialog sDialog, String title, String contentText, String confirmText) {
+        // reuse previous dialog instance, keep widget user state, reset them if you need
+        sDialog.setTitleText(title)
+                .setContentText(contentText)
+                .setConfirmText(confirmText)
+                .showCancelButton(false)
+                .setCancelClickListener(null)
+                .setConfirmClickListener(null)
+                .showForgotPassword(false)
+                .changeAlertType(SweetAlertDialog.ERROR_TYPE);
     }
 
     private void sendToStart() {

@@ -1,6 +1,9 @@
 package com.harish.tinder.adapter;
 
+import static com.harish.tinder.model.Constants.USER_ID;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.harish.tinder.R;
+import com.harish.tinder.UserProfileActivity;
 import com.harish.tinder.listeners.UserItemClickListener;
 import com.harish.tinder.model.UserObject;
 import com.harish.tinder.viewholders.LikesViewHolder;
@@ -18,15 +22,13 @@ import java.util.List;
  * Created by manel on 10/31/2017.
  */
 
-public class LikesAdapter extends RecyclerView.Adapter<LikesViewHolder>{
+public class LikesAdapter extends RecyclerView.Adapter<LikesViewHolder> {
     private List<UserObject> likesList;
     private Context context;
 
-    private UserItemClickListener userItemClickListener;
-    public LikesAdapter(List<UserObject> likesList, Context context, UserItemClickListener listener){
+    public LikesAdapter(List<UserObject> likesList, Context context) {
         this.likesList = likesList;
         this.context = context;
-        this.userItemClickListener = listener;
     }
 
     @Override
@@ -43,12 +45,13 @@ public class LikesAdapter extends RecyclerView.Adapter<LikesViewHolder>{
     public void onBindViewHolder(LikesViewHolder holder, int position) {
         //Set ViewTag
         holder.itemView.setTag(position);
-        holder.setPostImage(likesList.get(position), holder.itemView.getContext());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userItemClickListener.onUserClick(likesList.get(position), holder.mUserImage);
-            }
+        UserObject userObject = likesList.get(position);
+        holder.setPostImage(userObject, holder.itemView.getContext());
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(holder.itemView.getContext(), UserProfileActivity.class);
+            intent.putExtra(USER_ID, userObject.getUserId());
+            context.startActivity(intent);
+            // userItemClickListener.onUserClick(likesList.get(position), holder.mUserImage);
         });
     }
 

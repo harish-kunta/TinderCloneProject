@@ -385,9 +385,8 @@ public class ChatActivity extends AppCompatActivity {
             return true;
         }
         else if(id == R.id.view_profile){
-            String userId = user.getUid();
             Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
-            intent.putExtra(USER_ID, userId);
+            intent.putExtra(USER_ID, chatUserId);
             startActivity(intent);
         }
 

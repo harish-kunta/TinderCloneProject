@@ -19,7 +19,8 @@ import com.harish.tinder.model.UserObject;
  * Created by manel on 10/31/2017.
  */
 public class LikesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-    public TextView mMatchId, mUserName;
+    public TextView mUserName;
+    public String mUserId;
     public ImageView mUserImage;
     public CardView mUserLayout;
     public LikesViewHolder(View itemView) {
@@ -44,6 +45,7 @@ public class LikesViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
     public void setPostImage(UserObject userObject, Context context) {
         //mMatchId.setText(userObject.getUserId());
+        mUserId = userObject.getUserId();
         mUserName.setText(userObject.getName());
         if (!userObject.getProfileImageUrl().equals("default")) {
             Glide.with(context).load(userObject.getProfileImageUrl()).into(mUserImage);

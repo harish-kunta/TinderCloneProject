@@ -1,5 +1,7 @@
 package com.harish.tinder.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class FirebaseDbUser {
     public String name;
     public String email;

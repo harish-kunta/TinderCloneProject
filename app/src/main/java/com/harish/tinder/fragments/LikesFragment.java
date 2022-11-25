@@ -5,6 +5,7 @@ import static com.harish.tinder.model.Constants.MATCHES;
 import static com.harish.tinder.model.Constants.NAME;
 import static com.harish.tinder.model.Constants.PROFILE_IMAGE_URL;
 import static com.harish.tinder.model.Constants.USERS;
+import static com.harish.tinder.model.Constants.YEPS;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -89,7 +90,7 @@ public class LikesFragment extends Fragment implements UserItemClickListener {
     }
 
     private void getUserMatchId() {
-        DatabaseReference matchDb = FirebaseDatabase.getInstance().getReference().child(USERS).child(currentUserID).child(CONNECTIONS).child(MATCHES);
+        DatabaseReference matchDb = FirebaseDatabase.getInstance().getReference().child(USERS).child(currentUserID).child(CONNECTIONS).child(YEPS);
         matchDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -152,7 +153,7 @@ public class LikesFragment extends Fragment implements UserItemClickListener {
         Context mcontext = mLikesView.getContext();
         currentUserID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
-        mLikesAdapter = new LikesAdapter(getDataSetMatches(), mcontext, this);
+        mLikesAdapter = new LikesAdapter(getDataSetMatches(), mcontext);
         getUserMatchId();
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
