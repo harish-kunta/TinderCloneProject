@@ -90,7 +90,7 @@ public class ProfileView extends AppCompatActivity {
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userRef.child(user.getUid()).child("online").setValue("false");
+                userRef.child(user.getUid()).child("online").setValue("true");
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(ProfileView.this, LoginActivity.class);
                 startActivity(intent);
@@ -119,7 +119,7 @@ public class ProfileView extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        userRef.child(user.getUid()).child("online").setValue("false");
+        userRef.child(user.getUid()).child("online").setValue("true");
     }
 
     @Override

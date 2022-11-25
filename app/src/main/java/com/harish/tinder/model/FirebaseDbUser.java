@@ -1,16 +1,40 @@
 package com.harish.tinder.model;
 
-public class FirebaseUser {
+public class FirebaseDbUser {
     public String name;
     public String email;
     public int dob;
-    public boolean online;
+    public String online;
     public String profileImageUrl;
     public String sex;
     public String profileImageUrlCompressed;
     public String uid;
 
-    public FirebaseUser(String name, String email, int dob, boolean online, String profileImageUrl, String sex, String profileImageUrlCompressed, String uid) {
+    public String getDevice_token() {
+        return device_token;
+    }
+
+    public void setDevice_token(String device_token) {
+        this.device_token = device_token;
+    }
+
+    public String device_token;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String status;
+
+    public FirebaseDbUser() {
+
+    }
+
+    public FirebaseDbUser(String name, String email, int dob, String online, String profileImageUrl, String sex, String profileImageUrlCompressed, String uid) {
         this.name = name;
         this.email = email;
         this.dob = dob;
@@ -45,11 +69,11 @@ public class FirebaseUser {
         this.dob = dob;
     }
 
-    public boolean getOnline() {
+    public String getOnline() {
         return online;
     }
 
-    public void setOnline(boolean online) {
+    public void setOnline(String online) {
         this.online = online;
     }
 

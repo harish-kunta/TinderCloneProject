@@ -6,12 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -38,10 +35,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.harish.tinder.material_ui.MainActivity;
+import com.harish.tinder.model.Constants;
+import com.harish.tinder.model.FirebaseDbUser;
 import com.harish.tinder.utils.MyData;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,17 +57,6 @@ public class UserProfileActivity extends AppCompatActivity {
     public String token;
 
     private FirebaseUser mCurrentUser;
-
-//    private ProgressDialog mProgressDialog;
-    private DatabaseReference mFriendRequestDatabase, mBlockDatabase;
-    private int mCurrent_state = 0;
-    private boolean blockedState = false;
-
-    //0 = not Friends
-    //1 = request received
-    //2 = request sent
-    //3 = friends
-    private boolean mFavouriteState;
     String image;
     String display_name;
     String status;
@@ -106,20 +92,12 @@ public class UserProfileActivity extends AppCompatActivity {
         /* Obtain String from Intent  */
         if (intent != null) {
             user_id = intent.getStringExtra("user_id");
-            //position=intent.getIntExtra("position",0);
         }
-//        SharedPreferences settings = getSharedPreferences("RecyclerView", 0);
-//        SharedPreferences.Editor editor = settings.edit();
-//        editor.putInt("item_position",position);
-//        editor.apply();
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
 
         mRootRef = FirebaseDatabase.getInstance().getReference();
-        mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
-
-        mFriendRequestDatabase = FirebaseDatabase.getInstance().getReference().child("Friend_req");
-        mBlockDatabase = FirebaseDatabase.getInstance().getReference().child("Blocking");
+        mUsersDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.USERS).child(user_id);
         mFavouriteDatabase = FirebaseDatabase.getInstance().getReference().child("Favourites");
         mFriendDatabase = FirebaseDatabase.getInstance().getReference().child("Friends");
         mFriendDatabase.keepSynced(true);
@@ -128,7 +106,7 @@ public class UserProfileActivity extends AppCompatActivity {
         mNotificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id);
         mAuth = FirebaseAuth.getInstance();
 
-        mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+        mUserRef = FirebaseDatabase.getInstance().getReference().child(Constants.USERS).child(mAuth.getCurrentUser().getUid());
 
         if (!myData.isInternetConnected(getApplicationContext())) {
             Snackbar.make(rootLayout, "No Internet Connection!", Snackbar.LENGTH_LONG).show();
@@ -136,45 +114,23 @@ public class UserProfileActivity extends AppCompatActivity {
         rootLayout = findViewById(R.id.rootlayout);
         mProfileImage = findViewById(R.id.user_profile_image);
         mCloseProfile = findViewById(R.id.close_profile);
-
-        mCurrent_state = 0;
-
-        mFavouriteState = false;
-
-//        mProgressDialog = new ProgressDialog(this);
-//        mProgressDialog.setTitle("Loading User Data...");
-//        mProgressDialog.setMessage("please wait while we load user data.");
-//        mProgressDialog.setCanceledOnTouchOutside(false);
-//        mProgressDialog.show();
-//        mUserRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    currentUserName = dataSnapshot.child("name").getValue().toString();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
         mUsersDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("name") && dataSnapshot.child("name").getValue() != null) {
-                    display_name = dataSnapshot.child("name").getValue().toString();
+                FirebaseDbUser firebaseDbUser = dataSnapshot.getValue(FirebaseDbUser.class);
+                if (firebaseDbUser.getName() != null) {
+                    display_name = firebaseDbUser.getName();
                 }
-                if (dataSnapshot.hasChild("status") && dataSnapshot.child("status").getValue() != null) {
-                    status = dataSnapshot.child("status").getValue().toString();
+                if (firebaseDbUser.getStatus() != null) {
+                    status = firebaseDbUser.getStatus();
                 } else {
                     status = "";
                 }
-                if (dataSnapshot.hasChild("device_token") && dataSnapshot.child("device_token").getValue() != null) {
-                    token = dataSnapshot.child("device_token").getValue().toString();
+                if (firebaseDbUser.getDevice_token() != null) {
+                    token = firebaseDbUser.getDevice_token();
                 }
-                if (dataSnapshot.hasChild("profileImageUrl") && dataSnapshot.child("profileImageUrl").getValue() != null) {
-                    image = dataSnapshot.child("profileImageUrl").getValue().toString();
+                if (firebaseDbUser.getProfileImageUrl() != null) {
+                    image = firebaseDbUser.getProfileImageUrl();
                 }
                 ctl.setTitle(display_name);
 //                DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("Friends").child(user_id);
@@ -192,7 +148,7 @@ public class UserProfileActivity extends AppCompatActivity {
 //                    }
 //                });
                 //mProfileName.setText(display_name);
-                if (!image.equals("default")) {
+                if (!image.equals(Constants.DEFAULT)) {
                     RequestOptions options = new RequestOptions()
                             .centerCrop()
                             .placeholder(R.drawable.ic_close_drawable)
@@ -240,64 +196,20 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
-//        mProfileBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//                // v.startAnimation(AnimationUtils.loadAnimation(ProfileActivity.this, R.anim.image_click));
-//
-//            }
-//        });
-
-//        mProfileImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent profileImageIntent = new Intent(MaterialProfileActivity.this, ProfileImageActivity.class);
-//                profileImageIntent.putExtra("user_id", user_id);
-//                startActivity(profileImageIntent);
-//            }
-//        });
-//        mProfileImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (!image.equals("default")) {
-//                    new PhotoFullPopupWindow(getApplicationContext(), R.layout.popup_photo_full, v, image, null);
-//                }
-//            }
-//        });
-
-        mCloseProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-//                Intent chatIntent = new Intent(getApplicationContext(), ChatOpenActivity.class);
-//                chatIntent.putExtra("user_id", user_id);
-//                chatIntent.putExtra("user_name", display_name);
-//                startActivity(chatIntent);
-            }
-        });
+        mCloseProfile.setOnClickListener(v -> onBackPressed());
 
     }
-
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_profile, menu);
-//        return true;
-//    }
 
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        // updateUI(currentUser);
         if (currentUser == null) {
             sendToStart();
 
         } else {
-            mUserRef.child("online").setValue("true");
+            mUserRef.child(Constants.ONLINE).setValue("true");
 
         }
     }
@@ -307,14 +219,12 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onPause();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            mUserRef.child("online").setValue(ServerValue.TIMESTAMP);
-
+            mUserRef.child(Constants.ONLINE).setValue("true");
         }
 
     }
 
     private void sendToStart() {
-
         Intent startIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(startIntent);
         finish();
@@ -327,25 +237,9 @@ public class UserProfileActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
-//            case R.id.download_image:
-//                if (myData.isInternetConnected(getApplicationContext())) {
-//                    requestPermission();
-//                } else {
-//                    Snackbar.make(rootLayout, "No Internet Connection!", Snackbar.LENGTH_LONG).show();
-//                }
-//                return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void requestPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
-            Log.d("ProfileImageActivity", "Permission");
-        } else {
-            downloadFile(image);
-        }
     }
 
     @Override
@@ -358,14 +252,6 @@ public class UserProfileActivity extends AppCompatActivity {
 
     public void downloadFile(String image) {
         try {
-
-
-//            File direct = new File(Environment.getExternalStorageDirectory()
-//                    + "/ChatterBox");
-//
-//            if (!direct.exists()) {
-//                direct.mkdirs();
-//            }
 
             DownloadManager mgr = (DownloadManager) this.getSystemService(Context.DOWNLOAD_SERVICE);
 
@@ -389,47 +275,6 @@ public class UserProfileActivity extends AppCompatActivity {
             e.printStackTrace();
             Snackbar.make(rootLayout, "Error in downloading Image", Snackbar.LENGTH_LONG).show();
         }
-    }
-
-    void removeDataFromDatabase() {
-        mRootRef.child("Popular").setValue(null);
-    }
-
-    private void generatePopularUsers() {
-        removeDataFromDatabase();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference().child("Friends");
-        final Map popularMap = new HashMap();
-//You can use the single or the value.. depending if you want to keep track
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snap : dataSnapshot.getChildren()) {
-                    Log.e(snap.getKey(), snap.getChildrenCount() + "");
-                    if (snap.getChildrenCount() > 0) {
-
-                        popularMap.put(snap.getKey() + "/count", snap.getChildrenCount());
-                        // requestMap.put("notifications/" + user_id + "/" + newnotificationId, notificationData);
-
-                    }
-                    mRootRef.child("Popular").updateChildren(popularMap, new DatabaseReference.CompletionListener() {
-                        @Override
-                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                            if (databaseError != null) {
-
-                                Snackbar.make(rootLayout, "There was some error in sending request", Snackbar.LENGTH_LONG).show();
-                            }
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
 //    private void sendNotification(final String title, final String body) {

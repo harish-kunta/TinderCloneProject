@@ -153,7 +153,7 @@ public class ProfileFragment extends Fragment {
         profilePic = mProfileView.findViewById(R.id.profile_image);
         storageReference = FirebaseStorage.getInstance().getReference();
         assert user != null;
-        userRef.child(user.getUid()).child(ONLINE).setValue(true);
+        userRef.child(user.getUid()).child(ONLINE).setValue("true");
         userRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             //TODO:remove this annotation
             @RequiresApi(api = Build.VERSION_CODES.O)

@@ -259,7 +259,7 @@ public class ChatThreadFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot each_user : dataSnapshot.getChildren()) {
                         if (each_user.child(EMAIL).getValue().toString().equals(item.getEmail())) {
-                            if (each_user.child(ONLINE).getValue().toString().equals("true")) {
+                            if ("true".equals(each_user.child(ONLINE).getValue())) {
                                 holder.online.setVisibility(View.VISIBLE);
                             } else {
                                 holder.online.setVisibility(View.GONE);

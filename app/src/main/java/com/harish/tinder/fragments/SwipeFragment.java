@@ -337,12 +337,12 @@ public class SwipeFragment extends Fragment implements CardStackListener {
         if (direction.equals(Direction.Right)) {
             Profile profile = currentProfile;
             String userId = profile.getId();
-            usersDb.child(userId).child(CONNECTIONS).child(YEPS).child(currentUId).setValue(true);
+            usersDb.child(userId).child(CONNECTIONS).child(YEPS).child(currentUId).setValue("true");
             isConnectionMatch(userId);
         } else {
             Profile profile = currentProfile;
             String userId = profile.getId();
-            usersDb.child(userId).child(CONNECTIONS).child(NOPE).child(currentUId).setValue(true);
+            usersDb.child(userId).child(CONNECTIONS).child(NOPE).child(currentUId).setValue("true");
         }
 
     }

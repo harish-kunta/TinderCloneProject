@@ -108,7 +108,7 @@ public class ChatActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        userRef.child(user.getUid()).child("online").setValue("true");
+        userRef.child(user.getUid()).child("online").setValue("false");
         threadID = getIntent().getExtras().get("threadID").toString();
         chatUserId = getIntent().getExtras().get("uid").toString();
         try{

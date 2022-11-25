@@ -29,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.harish.tinder.R;
 import com.harish.tinder.UploadImageActivity;
 import com.harish.tinder.model.Constants;
-import com.harish.tinder.model.FirebaseUser;
+import com.harish.tinder.model.FirebaseDbUser;
 import com.harish.tinder.utils.StringResourceHelper;
 
 import java.math.RoundingMode;
@@ -120,7 +120,7 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                     if (task.isSuccessful()) {
                         String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
                         DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child(Constants.USERS).child(userId);
-                        FirebaseUser user = new FirebaseUser(name, userEmail, unixTime, true, DEFAULT, radioButton.getText().toString(), DEFAULT, userId);
+                        FirebaseDbUser user = new FirebaseDbUser(name, userEmail, unixTime, "true", DEFAULT, radioButton.getText().toString(), DEFAULT, userId);
                         currentUserDb.setValue(user).addOnSuccessListener(new OnSuccessListener() {
                             @Override
                             public void onSuccess(Object o) {
@@ -154,7 +154,6 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
             }
         });
     }
-
 
     public boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
