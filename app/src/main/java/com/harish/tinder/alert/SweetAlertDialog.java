@@ -396,6 +396,10 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         return mConfirmText;
     }
 
+    public String getEmailText() {
+        return mPasswordText.getText().toString();
+    }
+
     public SweetAlertDialog setConfirmText(String text) {
         mConfirmText = text;
         if (mConfirmButton != null && mConfirmText != null) {
