@@ -1,7 +1,7 @@
 package com.harish.tinder.material_ui;
 
-import static com.harish.tinder.model.Constants.CONNECTIONS;
-import static com.harish.tinder.model.Constants.MATCHES;
+import static com.harish.tinder.model.FirebaseConstants.CONNECTIONS;
+import static com.harish.tinder.model.FirebaseConstants.MATCHES;
 
 import android.app.DownloadManager;
 import android.app.NotificationManager;
@@ -43,7 +43,7 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.harish.tinder.R;
 import com.harish.tinder.alert.SweetAlertDialog;
-import com.harish.tinder.model.Constants;
+import com.harish.tinder.model.FirebaseConstants;
 import com.harish.tinder.model.FirebaseDbUser;
 import com.harish.tinder.utils.MyData;
 
@@ -107,7 +107,7 @@ public class UserProfileActivity extends AppCompatActivity {
         notificationManager.cancelAll();
 
         mRootRef = FirebaseDatabase.getInstance().getReference();
-        mUsersDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.USERS).child(user_id);
+        mUsersDatabase = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.USERS).child(user_id);
         mFavouriteDatabase = FirebaseDatabase.getInstance().getReference().child("Favourites");
         mFriendDatabase = FirebaseDatabase.getInstance().getReference().child("Friends");
         mFriendDatabase.keepSynced(true);
@@ -116,7 +116,7 @@ public class UserProfileActivity extends AppCompatActivity {
         mNotificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id);
         mAuth = FirebaseAuth.getInstance();
 
-        mUserRef = FirebaseDatabase.getInstance().getReference().child(Constants.USERS).child(mAuth.getCurrentUser().getUid());
+        mUserRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.USERS).child(mAuth.getCurrentUser().getUid());
 
         if (!myData.isInternetConnected(getApplicationContext())) {
             Snackbar.make(rootLayout, "No Internet Connection!", Snackbar.LENGTH_LONG).show();
@@ -160,7 +160,7 @@ public class UserProfileActivity extends AppCompatActivity {
 //                    }
 //                });
                 //mProfileName.setText(display_name);
-                if (!image.equals(Constants.DEFAULT)) {
+                if (!image.equals(FirebaseConstants.DEFAULT)) {
                     RequestOptions options = new RequestOptions()
                             .centerCrop()
                             .placeholder(R.drawable.ic_close_drawable)
@@ -221,10 +221,10 @@ public class UserProfileActivity extends AppCompatActivity {
             }
 
             private void unMatchUser(SweetAlertDialog sweetAlertDialog) {
-                mUsersDatabase.child(Constants.CONNECTIONS).child(Constants.MATCHES).child(mCurrentUser.getUid()).getRef().removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                mUsersDatabase.child(FirebaseConstants.CONNECTIONS).child(FirebaseConstants.MATCHES).child(mCurrentUser.getUid()).getRef().removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                mUserRef.child(Constants.CONNECTIONS).child(Constants.MATCHES).child(user_id).getRef().removeValue();
+                                mUserRef.child(FirebaseConstants.CONNECTIONS).child(FirebaseConstants.MATCHES).child(user_id).getRef().removeValue();
                                 sweetAlertDialog.setTitleText("User unmatched!")
                                         .setContentText("User was removed successfully!")
                                         .setConfirmText("OK")
@@ -275,7 +275,7 @@ public class UserProfileActivity extends AppCompatActivity {
             sendToStart();
 
         } else {
-            mUserRef.child(Constants.ONLINE).setValue("true");
+            mUserRef.child(FirebaseConstants.ONLINE).setValue("true");
 
         }
     }
@@ -285,7 +285,7 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onPause();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            mUserRef.child(Constants.ONLINE).setValue("true");
+            mUserRef.child(FirebaseConstants.ONLINE).setValue("true");
         }
 
     }

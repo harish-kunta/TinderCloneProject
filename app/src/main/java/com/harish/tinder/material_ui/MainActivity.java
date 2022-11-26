@@ -1,9 +1,9 @@
 package com.harish.tinder.material_ui;
 
-import static com.harish.tinder.model.Constants.DEFAULT;
-import static com.harish.tinder.model.Constants.DEVICE_TOKEN;
-import static com.harish.tinder.model.Constants.ONLINE;
-import static com.harish.tinder.model.Constants.USERS;
+import static com.harish.tinder.model.FirebaseConstants.DEFAULT;
+import static com.harish.tinder.model.FirebaseConstants.DEVICE_TOKEN;
+import static com.harish.tinder.model.FirebaseConstants.ONLINE;
+import static com.harish.tinder.model.FirebaseConstants.USERS;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.harish.tinder.R;
-import com.harish.tinder.fragments.ChatThreadFragment;
+import com.harish.tinder.fragments.ChatFragment;
 import com.harish.tinder.fragments.LikesFragment;
 import com.harish.tinder.fragments.ProfileFragment;
 import com.harish.tinder.fragments.SwipeFragment;
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                         replace(new LikesFragment());
                         break;
                     case 2:
-                        replace(new ChatThreadFragment());
+                        replace(new ChatFragment());
                         break;
                     case 3:
                         replace(new ProfileFragment());

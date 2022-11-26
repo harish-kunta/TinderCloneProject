@@ -1,11 +1,10 @@
 package com.harish.tinder.fragments;
 
-import static com.harish.tinder.model.Constants.CONNECTIONS;
-import static com.harish.tinder.model.Constants.MATCHES;
-import static com.harish.tinder.model.Constants.NAME;
-import static com.harish.tinder.model.Constants.PROFILE_IMAGE_URL;
-import static com.harish.tinder.model.Constants.USERS;
-import static com.harish.tinder.model.Constants.YEPS;
+import static com.harish.tinder.model.FirebaseConstants.CONNECTIONS;
+import static com.harish.tinder.model.FirebaseConstants.NAME;
+import static com.harish.tinder.model.FirebaseConstants.PROFILE_IMAGE_URL;
+import static com.harish.tinder.model.FirebaseConstants.USERS;
+import static com.harish.tinder.model.FirebaseConstants.YEPS;
 
 import android.content.Context;
 import android.os.Bundle;

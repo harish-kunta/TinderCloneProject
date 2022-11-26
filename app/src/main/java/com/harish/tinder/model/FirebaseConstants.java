@@ -1,6 +1,6 @@
 package com.harish.tinder.model;
 
-public class Constants {
+public class FirebaseConstants {
 
     //Intents
     public static final String USER_ID = "user_id";
@@ -27,6 +27,7 @@ public class Constants {
     public static final String MATCHES = "matches";
     public static final String THREADS = "threads";
     public static final String MEMBERS = "members";
+    public static final String NOTIFICATIONS = "notifications";
 
     //connections
     public static final String CONNECTIONS = "connections";

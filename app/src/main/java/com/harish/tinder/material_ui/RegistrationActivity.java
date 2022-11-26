@@ -1,6 +1,6 @@
 package com.harish.tinder.material_ui;
 
-import static com.harish.tinder.model.Constants.DEFAULT;
+import static com.harish.tinder.model.FirebaseConstants.DEFAULT;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,7 +27,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.harish.tinder.R;
-import com.harish.tinder.model.Constants;
+import com.harish.tinder.model.FirebaseConstants;
 import com.harish.tinder.model.FirebaseDbUser;
 import com.harish.tinder.utils.StringResourceHelper;
 
@@ -118,7 +118,7 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                 mAuth.createUserWithEmailAndPassword(userEmail, password).addOnCompleteListener(RegistrationActivity.this, task -> {
                     if (task.isSuccessful()) {
                         String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-                        DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child(Constants.USERS).child(userId);
+                        DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.USERS).child(userId);
                         FirebaseDbUser user = new FirebaseDbUser(name, userEmail, unixTime, "true", DEFAULT, radioButton.getText().toString(), DEFAULT, userId);
                         currentUserDb.setValue(user).addOnSuccessListener(new OnSuccessListener() {
                             @Override

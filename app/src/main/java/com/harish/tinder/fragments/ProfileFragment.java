@@ -1,12 +1,12 @@
 package com.harish.tinder.fragments;
 
-import static com.harish.tinder.model.Constants.DEFAULT;
-import static com.harish.tinder.model.Constants.DOB;
-import static com.harish.tinder.model.Constants.EMAIL;
-import static com.harish.tinder.model.Constants.NAME;
-import static com.harish.tinder.model.Constants.ONLINE;
-import static com.harish.tinder.model.Constants.PROFILE_IMAGE_URL;
-import static com.harish.tinder.model.Constants.USERS;
+import static com.harish.tinder.model.FirebaseConstants.DEFAULT;
+import static com.harish.tinder.model.FirebaseConstants.DOB;
+import static com.harish.tinder.model.FirebaseConstants.EMAIL;
+import static com.harish.tinder.model.FirebaseConstants.NAME;
+import static com.harish.tinder.model.FirebaseConstants.ONLINE;
+import static com.harish.tinder.model.FirebaseConstants.PROFILE_IMAGE_URL;
+import static com.harish.tinder.model.FirebaseConstants.USERS;
 
 import android.content.Intent;
 import android.os.Build;

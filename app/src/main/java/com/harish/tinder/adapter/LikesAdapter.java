@@ -1,6 +1,6 @@
 package com.harish.tinder.adapter;
 
-import static com.harish.tinder.model.Constants.USER_ID;
+import static com.harish.tinder.model.FirebaseConstants.USER_ID;
 
 import android.content.Context;
 import android.content.Intent;

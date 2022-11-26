@@ -1,21 +1,21 @@
 package com.harish.tinder.fragments;
 
-import static com.harish.tinder.model.Constants.CHAT;
-import static com.harish.tinder.model.Constants.CHAT_ID;
-import static com.harish.tinder.model.Constants.CONNECTIONS;
-import static com.harish.tinder.model.Constants.DOB;
-import static com.harish.tinder.model.Constants.FEMALE;
-import static com.harish.tinder.model.Constants.MALE;
-import static com.harish.tinder.model.Constants.MATCHES;
-import static com.harish.tinder.model.Constants.MEMBERS;
-import static com.harish.tinder.model.Constants.NAME;
-import static com.harish.tinder.model.Constants.NOPE;
-import static com.harish.tinder.model.Constants.PROFILE_IMAGE_URL;
-import static com.harish.tinder.model.Constants.SEX;
-import static com.harish.tinder.model.Constants.THREADS;
-import static com.harish.tinder.model.Constants.USERS;
-import static com.harish.tinder.model.Constants.USER_ID;
-import static com.harish.tinder.model.Constants.YEPS;
+import static com.harish.tinder.model.FirebaseConstants.CHAT;
+import static com.harish.tinder.model.FirebaseConstants.CHAT_ID;
+import static com.harish.tinder.model.FirebaseConstants.CONNECTIONS;
+import static com.harish.tinder.model.FirebaseConstants.DOB;
+import static com.harish.tinder.model.FirebaseConstants.FEMALE;
+import static com.harish.tinder.model.FirebaseConstants.MALE;
+import static com.harish.tinder.model.FirebaseConstants.MATCHES;
+import static com.harish.tinder.model.FirebaseConstants.MEMBERS;
+import static com.harish.tinder.model.FirebaseConstants.NAME;
+import static com.harish.tinder.model.FirebaseConstants.NOPE;
+import static com.harish.tinder.model.FirebaseConstants.PROFILE_IMAGE_URL;
+import static com.harish.tinder.model.FirebaseConstants.SEX;
+import static com.harish.tinder.model.FirebaseConstants.THREADS;
+import static com.harish.tinder.model.FirebaseConstants.USERS;
+import static com.harish.tinder.model.FirebaseConstants.USER_ID;
+import static com.harish.tinder.model.FirebaseConstants.YEPS;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -43,7 +43,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.harish.tinder.R;
 import com.harish.tinder.material_ui.UserProfileActivity;
 import com.harish.tinder.adapter.ProfileAdapter;
-import com.harish.tinder.model.Constants;
+import com.harish.tinder.model.FirebaseConstants;
 import com.harish.tinder.model.Profile;
 import com.harish.tinder.utils.AgeCalculator;
 import com.harish.tinder.utils.ProgressDialogHelper;
@@ -61,7 +61,6 @@ import com.yuyakaido.android.cardstackview.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -236,7 +235,7 @@ public class SwipeFragment extends Fragment implements CardStackListener {
                     usersDb.child(Objects.requireNonNull(dataSnapshot.getKey())).child(CONNECTIONS).child(MATCHES).child(currentUId).child(CHAT_ID).setValue(key);
                     usersDb.child(currentUId).child(CONNECTIONS).child(MATCHES).child(dataSnapshot.getKey()).child(CHAT_ID).setValue(key);
 
-                    appendThread(currentUId, userId);
+                    appendThread(currentUId, userId, key);
                 }
             }
 
@@ -246,14 +245,13 @@ public class SwipeFragment extends Fragment implements CardStackListener {
         });
     }
 
-    private void appendThread(String currentUserId, String MatchUserId) {
+    private void appendThread(String currentUserId, String MatchUserId, String uniqueID) {
         DatabaseReference root = FirebaseDatabase.getInstance().getReference();
         ArrayList<String> members = new ArrayList<>();
         members.add(MatchUserId);
         members.add(currentUserId);
         root = root.child(THREADS);
         root.keepSynced(true);
-        String uniqueID = UUID.randomUUID().toString();
         root.child(uniqueID).child(MEMBERS).setValue(members);
     }
 
@@ -293,8 +291,8 @@ public class SwipeFragment extends Fragment implements CardStackListener {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.child(SEX).getValue() != null) {
                     if (dataSnapshot.exists() && !dataSnapshot.child(CONNECTIONS).child(NOPE).hasChild(currentUId) && !dataSnapshot.child(CONNECTIONS).child(YEPS).hasChild(currentUId) && Objects.requireNonNull(dataSnapshot.child(SEX).getValue()).toString().equals(oppositeUserSex)) {
-                        String profileImageUrl = Constants.DEFAULT;
-                        if (!Objects.equals(dataSnapshot.child(PROFILE_IMAGE_URL).getValue(), Constants.DEFAULT)) {
+                        String profileImageUrl = FirebaseConstants.DEFAULT;
+                        if (!Objects.equals(dataSnapshot.child(PROFILE_IMAGE_URL).getValue(), FirebaseConstants.DEFAULT)) {
                             profileImageUrl = Objects.requireNonNull(dataSnapshot.child(PROFILE_IMAGE_URL).getValue()).toString();
                         }
                         //TODO: remove this annotation

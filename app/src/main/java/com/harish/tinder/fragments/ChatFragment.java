@@ -1,22 +1,27 @@
 package com.harish.tinder.fragments;
 
-import static com.harish.tinder.model.Constants.DEFAULT;
-import static com.harish.tinder.model.Constants.EMAIL;
-import static com.harish.tinder.model.Constants.INDEX_0;
-import static com.harish.tinder.model.Constants.INDEX_1;
-import static com.harish.tinder.model.Constants.MEMBERS;
-import static com.harish.tinder.model.Constants.MESSAGES;
-import static com.harish.tinder.model.Constants.NAME;
-import static com.harish.tinder.model.Constants.ONLINE;
-import static com.harish.tinder.model.Constants.PROFILE_IMAGE_URL;
-import static com.harish.tinder.model.Constants.PROFILE_IMAGE_URL_COMPRESSED;
-import static com.harish.tinder.model.Constants.THREADS;
-import static com.harish.tinder.model.Constants.UID;
-import static com.harish.tinder.model.Constants.USERS;
+import static com.harish.tinder.model.FirebaseConstants.CONNECTIONS;
+import static com.harish.tinder.model.FirebaseConstants.DEFAULT;
+import static com.harish.tinder.model.FirebaseConstants.EMAIL;
+import static com.harish.tinder.model.FirebaseConstants.INDEX_0;
+import static com.harish.tinder.model.FirebaseConstants.INDEX_1;
+import static com.harish.tinder.model.FirebaseConstants.MATCHES;
+import static com.harish.tinder.model.FirebaseConstants.MEMBERS;
+import static com.harish.tinder.model.FirebaseConstants.MESSAGES;
+import static com.harish.tinder.model.FirebaseConstants.NAME;
+import static com.harish.tinder.model.FirebaseConstants.ONLINE;
+import static com.harish.tinder.model.FirebaseConstants.PROFILE_IMAGE_URL_COMPRESSED;
+import static com.harish.tinder.model.FirebaseConstants.THREADS;
+import static com.harish.tinder.model.FirebaseConstants.UID;
+import static com.harish.tinder.model.FirebaseConstants.USERS;
+import static com.harish.tinder.model.IntentConstants.CHAT_USER_EMAIL;
+import static com.harish.tinder.model.IntentConstants.CHAT_USER_IMAGE_URL;
+import static com.harish.tinder.model.IntentConstants.CHAT_USER_NAME;
+import static com.harish.tinder.model.IntentConstants.CHAT_USER_UID;
+import static com.harish.tinder.model.IntentConstants.THREAD_ID;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -59,7 +64,7 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class ChatThreadFragment extends Fragment {
+public class ChatFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -76,15 +81,14 @@ public class ChatThreadFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private OnFragmentInteractionListener mListener;
 
 
-    public ChatThreadFragment() {
+    public ChatFragment() {
         // Required empty public constructor
     }
 
-    public static ChatThreadFragment newInstance(String param1, String param2) {
-        ChatThreadFragment fragment = new ChatThreadFragment();
+    public static ChatFragment newInstance(String param1, String param2) {
+        ChatFragment fragment = new ChatFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -109,8 +113,7 @@ public class ChatThreadFragment extends Fragment {
         mResultList = view.findViewById(R.id.result_list);
         mResultList.setHasFixedSize(true);
         mResultList.setLayoutManager(new LinearLayoutManager(context));
-        mThreadsDatabase = FirebaseDatabase.getInstance().getReference(THREADS);
-        mThreadsDatabase.keepSynced(true);
+
         mUsersDatabase = FirebaseDatabase.getInstance().getReference(USERS);
         mUsersDatabase.keepSynced(true);
         mResultList.setAdapter(firebaseRecyclerAdapter);
@@ -119,6 +122,10 @@ public class ChatThreadFragment extends Fragment {
     }
 
     public void getThreads() {
+        //TODO: Update this chat to not to check every record in database
+        //mUsersDatabase.child(user.getUid()).child(CONNECTIONS).child(MATCHES)
+        mThreadsDatabase = FirebaseDatabase.getInstance().getReference(THREADS);
+        mThreadsDatabase.keepSynced(true);
         mThreadsDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -153,24 +160,6 @@ public class ChatThreadFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
-    }
-
     public class UserBinder extends ItemBinder<ChatThread, UserBinder.UserViewHolder> {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         private final DatabaseReference lastMessage = FirebaseDatabase.getInstance().getReference();
@@ -187,21 +176,17 @@ public class ChatThreadFragment extends Fragment {
         @Override
         public void bind(final UserViewHolder holder, final ChatThread item) {
             try {
-                Query nameQuery = mUsersDatabase;
+                Query nameQuery = mUsersDatabase.child(item.getUid());
                 nameQuery.keepSynced(true);
                 nameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot each_user : dataSnapshot.getChildren()) {
-                            if (Objects.requireNonNull(each_user.child(UID).getValue()).toString().equals(item.getUid())) {
-                                holder.user_name.setText(Objects.requireNonNull(each_user.child(NAME).getValue()).toString());
-                                item.setName(Objects.requireNonNull(each_user.child(NAME).getValue()).toString());
-                                item.setEmail(Objects.requireNonNull(each_user.child(EMAIL).getValue()).toString());
-                                item.setUid(Objects.requireNonNull(each_user.child(UID).getValue()).toString());
-                                item.setImageUrl(Objects.requireNonNull(each_user.child(PROFILE_IMAGE_URL_COMPRESSED).getValue()).toString());
-                                holder.setUserImage(Objects.requireNonNull(each_user.child(PROFILE_IMAGE_URL_COMPRESSED).getValue()).toString(), getContext());
-                            }
-                        }
+                        holder.user_name.setText(Objects.requireNonNull(dataSnapshot.child(NAME).getValue()).toString());
+                        item.setName(Objects.requireNonNull(dataSnapshot.child(NAME).getValue()).toString());
+                        item.setEmail(Objects.requireNonNull(dataSnapshot.child(EMAIL).getValue()).toString());
+                        item.setUid(Objects.requireNonNull(dataSnapshot.child(UID).getValue()).toString());
+                        item.setImageUrl(Objects.requireNonNull(dataSnapshot.child(PROFILE_IMAGE_URL_COMPRESSED).getValue()).toString());
+                        holder.setUserImage(Objects.requireNonNull(dataSnapshot.child(PROFILE_IMAGE_URL_COMPRESSED).getValue()).toString(), getContext());
                     }
 
                     @Override
@@ -312,11 +297,11 @@ public class ChatThreadFragment extends Fragment {
 
         public void openChatActivity(final String receiver_email, final String name, final String imageUrl, final String uid, final String threadID) {
             Intent intent = new Intent(getContext(), ChatActivity.class);
-            intent.putExtra("threadID", threadID);
-            intent.putExtra("name", name);
-            intent.putExtra("receiver_email", receiver_email);
-            intent.putExtra("imageUrl", imageUrl);
-            intent.putExtra("uid", uid);
+            intent.putExtra(THREAD_ID, threadID);
+            intent.putExtra(CHAT_USER_NAME, name);
+            intent.putExtra(CHAT_USER_EMAIL, receiver_email);
+            intent.putExtra(CHAT_USER_IMAGE_URL, imageUrl);
+            intent.putExtra(CHAT_USER_UID, uid);
             startActivity(intent);
         }
     }

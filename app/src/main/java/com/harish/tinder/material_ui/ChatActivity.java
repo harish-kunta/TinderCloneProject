@@ -1,7 +1,15 @@
 package com.harish.tinder.material_ui;
 
-import static com.harish.tinder.model.Constants.DEVICE_TOKEN;
-import static com.harish.tinder.model.Constants.USER_ID;
+import static com.harish.tinder.model.FirebaseConstants.DEVICE_TOKEN;
+import static com.harish.tinder.model.FirebaseConstants.NOTIFICATIONS;
+import static com.harish.tinder.model.FirebaseConstants.THREADS;
+import static com.harish.tinder.model.FirebaseConstants.USERS;
+import static com.harish.tinder.model.FirebaseConstants.USER_ID;
+import static com.harish.tinder.model.IntentConstants.CHAT_USER_EMAIL;
+import static com.harish.tinder.model.IntentConstants.CHAT_USER_IMAGE_URL;
+import static com.harish.tinder.model.IntentConstants.CHAT_USER_NAME;
+import static com.harish.tinder.model.IntentConstants.CHAT_USER_UID;
+import static com.harish.tinder.model.IntentConstants.THREAD_ID;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -65,9 +73,9 @@ public class ChatActivity extends AppCompatActivity {
 
     private DatabaseReference root = FirebaseDatabase.getInstance().getReference();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private DatabaseReference threadRef = FirebaseDatabase.getInstance().getReference().child("threads");
-    private DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users");
-    private DatabaseReference notifications = FirebaseDatabase.getInstance().getReference().child("notifications");
+    private DatabaseReference threadRef = FirebaseDatabase.getInstance().getReference().child(THREADS);
+    private DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child(USERS);
+    private DatabaseReference notifications = FirebaseDatabase.getInstance().getReference().child(NOTIFICATIONS);
     private StorageReference mImageStorage;
     private String temp_key;
     private ArrayList <String> messageKey = new ArrayList<>();
@@ -99,27 +107,22 @@ public class ChatActivity extends AppCompatActivity {
         block_button.setVisibility(View.GONE);
         imageMessageView = findViewById(R.id.image_message_view);
         dotsTextView = findViewById(R.id.typing);
-        toolbar_profile_icon = (CircleImageView) findViewById(R.id.toolbar_profile_icon);
+        toolbar_profile_icon = findViewById(R.id.toolbar_profile_icon);
         mImageStorage = FirebaseStorage.getInstance().getReference();
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         toolbar.inflateMenu(R.menu.menu_profile);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-        userRef.child(user.getUid()).child("online").setValue("false");
-        threadID = getIntent().getExtras().get("threadID").toString();
-        chatUserId = getIntent().getExtras().get("uid").toString();
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
+
+        threadID = getIntent().getExtras().get(THREAD_ID).toString();
+        chatUserId = getIntent().getExtras().get(CHAT_USER_UID).toString();
         try{
-            receiver_name = getIntent().getExtras().get("name").toString();
+            receiver_name = getIntent().getExtras().get(CHAT_USER_NAME).toString();
         }catch (Exception e){
-            receiver_name = getIntent().getExtras().get("receiver_email").toString();
+            receiver_name = getIntent().getExtras().get(CHAT_USER_EMAIL).toString();
         }
-        imageUrl = getIntent().getExtras().get("imageUrl").toString();
-        receiver_email = getIntent().getExtras().get("receiver_email").toString();
+        imageUrl = getIntent().getExtras().get(CHAT_USER_IMAGE_URL).toString();
+        receiver_email = getIntent().getExtras().get(CHAT_USER_EMAIL).toString();
         threadRef.child(threadID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

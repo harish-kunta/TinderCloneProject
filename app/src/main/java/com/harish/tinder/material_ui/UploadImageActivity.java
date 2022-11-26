@@ -1,9 +1,9 @@
 package com.harish.tinder.material_ui;
 
-import static com.harish.tinder.model.Constants.COMPRESSED;
-import static com.harish.tinder.model.Constants.PROFILE_IMAGES;
-import static com.harish.tinder.model.Constants.PROFILE_IMAGE_URL;
-import static com.harish.tinder.model.Constants.PROFILE_IMAGE_URL_COMPRESSED;
+import static com.harish.tinder.model.FirebaseConstants.COMPRESSED;
+import static com.harish.tinder.model.FirebaseConstants.PROFILE_IMAGES;
+import static com.harish.tinder.model.FirebaseConstants.PROFILE_IMAGE_URL;
+import static com.harish.tinder.model.FirebaseConstants.PROFILE_IMAGE_URL_COMPRESSED;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
