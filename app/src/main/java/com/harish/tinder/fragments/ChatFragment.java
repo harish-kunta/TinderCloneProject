@@ -1,5 +1,6 @@
 package com.harish.tinder.fragments;
 
+import static com.harish.tinder.model.FirebaseConstants.CHAT_ID;
 import static com.harish.tinder.model.FirebaseConstants.CONNECTIONS;
 import static com.harish.tinder.model.FirebaseConstants.DEFAULT;
 import static com.harish.tinder.model.FirebaseConstants.EMAIL;
@@ -123,30 +124,16 @@ public class ChatFragment extends Fragment {
 
     public void getThreads() {
         //TODO: Update this chat to not to check every record in database
-        //mUsersDatabase.child(user.getUid()).child(CONNECTIONS).child(MATCHES)
-        mThreadsDatabase = FirebaseDatabase.getInstance().getReference(THREADS);
-        mThreadsDatabase.keepSynced(true);
-        mThreadsDatabase.addValueEventListener(new ValueEventListener() {
+        mUsersDatabase.child(user.getUid()).child(CONNECTIONS).child(MATCHES).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<String> receiver = new ArrayList<>();
                 String record = "";
                 List<ChatThread> t = new ArrayList<>();
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    try {
-                        record = Objects.requireNonNull(ds.child(MEMBERS).child(INDEX_0).getValue()) + " " + Objects.requireNonNull(ds.child(MEMBERS).child(INDEX_1).getValue());
-                    } catch (Exception e) {
-                        Log.e("Record", "Exception");
-                    }
-                    if (record.contains(user.getUid())) {
-                        if (Objects.requireNonNull(ds.child(MEMBERS).child(INDEX_0).getValue()).toString().equals(user.getUid())) {
-                            record = Objects.requireNonNull(ds.child(MEMBERS).child(INDEX_1).getValue()).toString();
-                        } else {
-                            record = Objects.requireNonNull(ds.child(MEMBERS).child(INDEX_0).getValue()).toString();
-                        }
-                        receiver.add(record);
-                        t.add(new ChatThread(record, ds.getKey()));
-                    }
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    record = ds.child(CHAT_ID).getValue().toString();
+                    receiver.add(record);
+                    t.add(new ChatThread(ds.getKey(), record));
                 }
                 SimpleRecyclerAdapter<ChatThread, UserBinder> adapter = new SimpleRecyclerAdapter<>(new UserBinder());
                 mResultList.setAdapter(adapter);
@@ -154,10 +141,45 @@ public class ChatFragment extends Fragment {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+
+//        mThreadsDatabase = FirebaseDatabase.getInstance().getReference(THREADS);
+//        mThreadsDatabase.keepSynced(true);
+//        mThreadsDatabase.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                ArrayList<String> receiver = new ArrayList<>();
+//                String record = "";
+//                List<ChatThread> t = new ArrayList<>();
+//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//                    try {
+//                        record = Objects.requireNonNull(ds.child(MEMBERS).child(INDEX_0).getValue()) + " " + Objects.requireNonNull(ds.child(MEMBERS).child(INDEX_1).getValue());
+//                    } catch (Exception e) {
+//                        Log.e("Record", "Exception");
+//                    }
+//                    if (record.contains(user.getUid())) {
+//                        if (Objects.requireNonNull(ds.child(MEMBERS).child(INDEX_0).getValue()).toString().equals(user.getUid())) {
+//                            record = Objects.requireNonNull(ds.child(MEMBERS).child(INDEX_1).getValue()).toString();
+//                        } else {
+//                            record = Objects.requireNonNull(ds.child(MEMBERS).child(INDEX_0).getValue()).toString();
+//                        }
+//                        receiver.add(record);
+//                        t.add(new ChatThread(record, ds.getKey()));
+//                    }
+//                }
+//                SimpleRecyclerAdapter<ChatThread, UserBinder> adapter = new SimpleRecyclerAdapter<>(new UserBinder());
+//                mResultList.setAdapter(adapter);
+//                adapter.setData(t);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 
     public class UserBinder extends ItemBinder<ChatThread, UserBinder.UserViewHolder> {
