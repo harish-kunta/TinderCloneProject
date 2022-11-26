@@ -9,6 +9,7 @@ import static com.harish.tinder.model.Constants.MESSAGES;
 import static com.harish.tinder.model.Constants.NAME;
 import static com.harish.tinder.model.Constants.ONLINE;
 import static com.harish.tinder.model.Constants.PROFILE_IMAGE_URL;
+import static com.harish.tinder.model.Constants.PROFILE_IMAGE_URL_COMPRESSED;
 import static com.harish.tinder.model.Constants.THREADS;
 import static com.harish.tinder.model.Constants.UID;
 import static com.harish.tinder.model.Constants.USERS;
@@ -197,9 +198,8 @@ public class ChatThreadFragment extends Fragment {
                                 item.setName(Objects.requireNonNull(each_user.child(NAME).getValue()).toString());
                                 item.setEmail(Objects.requireNonNull(each_user.child(EMAIL).getValue()).toString());
                                 item.setUid(Objects.requireNonNull(each_user.child(UID).getValue()).toString());
-                                //TODO: change this to thumb_image
-                                item.setImageUrl(Objects.requireNonNull(each_user.child(PROFILE_IMAGE_URL).getValue()).toString());
-                                holder.setUserImage(Objects.requireNonNull(each_user.child(PROFILE_IMAGE_URL).getValue()).toString(), getContext());
+                                item.setImageUrl(Objects.requireNonNull(each_user.child(PROFILE_IMAGE_URL_COMPRESSED).getValue()).toString());
+                                holder.setUserImage(Objects.requireNonNull(each_user.child(PROFILE_IMAGE_URL_COMPRESSED).getValue()).toString(), getContext());
                             }
                         }
                     }

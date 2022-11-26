@@ -56,22 +56,19 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     firebaseDbUser = snapshot.getValue(FirebaseDbUser.class);
-                    if(firebaseDbUser == null || firebaseDbUser.getUid()==null){
+                    if (firebaseDbUser == null || firebaseDbUser.getUid() == null) {
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                         finish();
-                    }
-                    else if (!firebaseDbUser.isTermsAgreed()) {
+                    } else if (!firebaseDbUser.isTermsAgreed()) {
                         Intent intent = new Intent(getApplicationContext(), HouseRulesActivity.class);
                         startActivity(intent);
                         finish();
-                    }
-                    else if(firebaseDbUser.getProfileImageUrl() == null || DEFAULT.equals(firebaseDbUser.getProfileImageUrl())){
+                    } else if (firebaseDbUser.getProfileImageUrl() == null || DEFAULT.equals(firebaseDbUser.getProfileImageUrl())) {
                         Intent intent = new Intent(getApplicationContext(), UploadImageActivity.class);
                         startActivity(intent);
                         finish();
-                    }
-                    else{
+                    } else {
                         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
                             if (!task.isSuccessful()) {
                                 Log.w(TAG, getString(R.string.fcm_token_fetch_failed), task.getException());
@@ -91,24 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-
-
-            //TODO : Update the activity to take to profile picture page
-//        userRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.child("profileImageUrl").getValue() == null || "default".equals(snapshot.child("profileImageUrl").getValue().toString())) {
-//                    Intent intent = new Intent(getApplicationContext(), UploadImageActivity.class);
-//                    startActivity(intent);
-//                    finish();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
 
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             setContentView(R.layout.activity_main2);

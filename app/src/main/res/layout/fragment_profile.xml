@@ -41,7 +41,7 @@
                 android:background="@drawable/app_bk"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:paddingTop="40dp">
+                android:padding="32dp">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -68,7 +68,7 @@
                         <ImageButton
                             android:id="@+id/edit_profile"
                             android:layout_width="wrap_content"
-                            android:layout_height="40dp"
+                            android:layout_height="0dp"
                             android:layout_gravity="right"
                             android:background="@drawable/round_button"
                             android:padding="8dp"
@@ -95,26 +95,26 @@
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginTop="20dp"
-                    android:background="@color/profileBackground"
-                    android:gravity="center">
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="bottom"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    android:background="@color/profileBackground"-->
+<!--                    android:gravity="center">-->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_alignParentTop="true"
-                        android:background="@drawable/app_bk" />
+<!--                    <View-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="30dp"-->
+<!--                        android:layout_alignParentTop="true"-->
+<!--                        android:background="@drawable/app_bk" />-->
 
-                    <TextView
-                        android:id="@+id/sign_out"
-                        style="@style/profileStyledBackButton"
-                        android:text="Sign out" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/sign_out"-->
+<!--                        style="@style/profileStyledBackButton"-->
+<!--                        android:text="Sign out" />-->
 
-                </RelativeLayout>
+<!--                </RelativeLayout>-->
 
             </LinearLayout>
 
@@ -166,7 +166,7 @@
             tools:layout_editor_absoluteY="93dp" />
 
         <TextView
-            android:id="@+id/TextViewPersonName3"
+            android:id="@+id/about_text"
             android:layout_width="370dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -192,7 +192,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/TextViewPersonName4"
+            android:id="@+id/interested_in"
             android:layout_width="370dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -219,7 +219,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/TextViewPersonName5"
+            android:id="@+id/job"
             android:layout_width="351dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -244,7 +244,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/TextViewPersonName6"
+            android:id="@+id/company"
             android:layout_width="351dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -269,7 +269,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/TextViewPersonName7"
+            android:id="@+id/school"
             android:layout_width="351dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -295,7 +295,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/TextViewPersonName8"
+            android:id="@+id/living_in"
             android:layout_width="351dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -316,9 +316,6 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:minHeight="48dp"/>
-
-
-
 
     </LinearLayout>
     </ScrollView>

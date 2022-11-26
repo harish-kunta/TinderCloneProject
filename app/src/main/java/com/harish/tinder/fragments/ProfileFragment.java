@@ -1,5 +1,6 @@
 package com.harish.tinder.fragments;
 
+import static com.harish.tinder.model.Constants.DEFAULT;
 import static com.harish.tinder.model.Constants.DOB;
 import static com.harish.tinder.model.Constants.EMAIL;
 import static com.harish.tinder.model.Constants.NAME;
@@ -31,10 +32,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.harish.tinder.material_ui.ChooseLoginRegistrationActivity;
 import com.harish.tinder.material_ui.ImagePickerActivity;
 import com.harish.tinder.R;
 import com.harish.tinder.material_ui.SettingsActivity;
+import com.harish.tinder.model.FirebaseDbUser;
 import com.harish.tinder.utils.AgeCalculator;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -112,33 +113,18 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mProfileView = inflater.inflate(R.layout.fragment_profile, container, false);
-        mProfileView.findViewById(R.id.sign_out).setOnClickListener(view -> {
-            mAuth.signOut();
-            Intent intent = new Intent(getContext(), ChooseLoginRegistrationActivity.class);
-            startActivity(intent);
-            getActivity().finish();
-        });
         profileName = mProfileView.findViewById(R.id.profile_name);
         profileEmail = mProfileView.findViewById(R.id.profile_email);
 
         editProfileButton = mProfileView.findViewById(R.id.edit_profile);
         settingsButton = mProfileView.findViewById(R.id.settings);
 
-
-        mAboutMe = mProfileView.findViewById(R.id.TextViewPersonName3);
-        mInterests = mProfileView.findViewById(R.id.TextViewPersonName4);
-        mJob = mProfileView.findViewById(R.id.TextViewPersonName5);
-        mCompany = mProfileView.findViewById(R.id.TextViewPersonName6);
-        mSchool = mProfileView.findViewById(R.id.TextViewPersonName7);
-        mLivingIn = mProfileView.findViewById(R.id.TextViewPersonName8);
-        mLivingIn.setOnClickListener(view -> {
-            aboutMe = mAboutMe.getText().toString();
-            interests = mInterests.getText().toString();
-            job = mJob.getText().toString();
-            company = mCompany.getText().toString();
-            school = mSchool.getText().toString();
-            livingIn = mLivingIn.getText().toString();
-        });
+        mAboutMe = mProfileView.findViewById(R.id.about_me);
+        mInterests = mProfileView.findViewById(R.id.interested_in);
+        mJob = mProfileView.findViewById(R.id.job);
+        mCompany = mProfileView.findViewById(R.id.company);
+        mSchool = mProfileView.findViewById(R.id.school);
+        mLivingIn = mProfileView.findViewById(R.id.living_in);
 
         editProfileButton.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), ImagePickerActivity.class);
@@ -159,21 +145,21 @@ public class ProfileFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                FirebaseDbUser firebaseDbUser = dataSnapshot.getValue(FirebaseDbUser.class);
                 String display_name = getObjectString(dataSnapshot.child(NAME).getValue());
                 String email = getObjectString(dataSnapshot.child(EMAIL).getValue());
                 long dobUnix = getObjectLong(dataSnapshot.child(DOB).getValue());
                 String image = getObjectString(dataSnapshot.child(PROFILE_IMAGE_URL).getValue());
                 int age = AgeCalculator.calculateAge(dobUnix);
-                profileName.setText(display_name + ", " + age);
-                profileEmail.setText(email);
-                if (!image.equals("default")) {
+                profileName.setText(firebaseDbUser.getName() + ", " + age);
+                profileEmail.setText(firebaseDbUser.getEmail());
+                if (!DEFAULT.equals(firebaseDbUser.getProfileImageUrl())) {
                     Glide
                             .with(mProfileView.getContext())
                             .load(image)
                             .into(profilePic);
                 } else {
                     profilePic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.ic_account_circle_white));
-
                 }
             }
 
@@ -186,6 +172,7 @@ public class ProfileFragment extends Fragment {
         return mProfileView;
     }
 
+    //TODO: Remove this
     String getObjectString(Object o) {
         if (o != null) {
             return o.toString();
@@ -193,6 +180,7 @@ public class ProfileFragment extends Fragment {
         return "";
     }
 
+    //TODO: Remove this
     long getObjectLong(Object o) {
         if (o != null) {
             return (Long) o;
