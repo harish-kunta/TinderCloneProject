@@ -40,7 +40,7 @@ import java.util.Objects;
  * Use the {@link LikesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LikesFragment extends Fragment implements UserItemClickListener {
+public class LikesFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -169,43 +169,5 @@ public class LikesFragment extends Fragment implements UserItemClickListener {
         mRecyclerView.setAdapter(mLikesAdapter);
 
         return mLikesView;
-    }
-
-
-    //TODO: This code must be replaced
-    @Override
-    public void onUserClick(UserObject userObject, ImageView imageView) {
-        new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Are you sure?")
-                .setContentText("Won't be able to recover this file!")
-                .setCancelText("No,cancel plx!")
-                .setConfirmText("Yes,delete it!")
-                .showCancelButton(true)
-                .setCancelClickListener(sDialog -> {
-                    // reuse previous dialog instance, keep widget user state, reset them if you need
-                    sDialog.setTitleText("Cancelled!")
-                            .setContentText("Your imaginary file is safe :)")
-                            .setConfirmText("OK")
-                            .showCancelButton(false)
-                            .setCancelClickListener(null)
-                            .setConfirmClickListener(null)
-                            .changeAlertType(SweetAlertDialog.ERROR_TYPE);
-
-                    // or you can new a SweetAlertDialog to show
-                           /* sDialog.dismiss();
-                            new SweetAlertDialog(SampleActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                    .setTitleText("Cancelled!")
-                                    .setContentText("Your imaginary file is safe :)")
-                                    .setConfirmText("OK")
-                                    .show();*/
-                })
-                .setConfirmClickListener(sDialog -> sDialog.setTitleText("Deleted!")
-                        .setContentText("Your imaginary file has been deleted!")
-                        .setConfirmText("OK")
-                        .showCancelButton(false)
-                        .setCancelClickListener(null)
-                        .setConfirmClickListener(null)
-                        .changeAlertType(SweetAlertDialog.SUCCESS_TYPE))
-                .show();
     }
 }

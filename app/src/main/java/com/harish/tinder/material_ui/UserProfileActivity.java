@@ -1,5 +1,6 @@
 package com.harish.tinder.material_ui;
 
+import static com.harish.tinder.model.FirebaseConstants.CHAT_ID;
 import static com.harish.tinder.model.FirebaseConstants.CONNECTIONS;
 import static com.harish.tinder.model.FirebaseConstants.MATCHES;
 
@@ -221,25 +222,37 @@ public class UserProfileActivity extends AppCompatActivity {
             }
 
             private void unMatchUser(SweetAlertDialog sweetAlertDialog) {
-                mUsersDatabase.child(FirebaseConstants.CONNECTIONS).child(FirebaseConstants.MATCHES).child(mCurrentUser.getUid()).getRef().removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                mUserRef.child(FirebaseConstants.CONNECTIONS).child(FirebaseConstants.MATCHES).child(user_id).getRef().removeValue();
-                                sweetAlertDialog.setTitleText("User unmatched!")
-                                        .setContentText("User was removed successfully!")
-                                        .setConfirmText("OK")
-                                        .showCancelButton(false)
-                                        .setCancelClickListener(null)
-                                        .setConfirmClickListener(null)
-                                        .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                cancelledDialog(sweetAlertDialog, "Problem", e.getMessage(), "OK");
-                            }
-                        });
+                mUserRef.child(CONNECTIONS).child(FirebaseConstants.MATCHES).child(user_id).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        //String chatID = snapshot.getValue(CHAT_ID);
+                        mUsersDatabase.child(CONNECTIONS).child(MATCHES).child(mCurrentUser.getUid()).getRef().removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        mUserRef.child(FirebaseConstants.CONNECTIONS).child(FirebaseConstants.MATCHES).child(user_id).getRef().removeValue();
+                                        sweetAlertDialog.setTitleText("User unmatched!")
+                                                .setContentText("User was removed successfully!")
+                                                .setConfirmText("OK")
+                                                .showCancelButton(false)
+                                                .setCancelClickListener(null)
+                                                .setConfirmClickListener(null)
+                                                .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        cancelledDialog(sweetAlertDialog, "Problem", e.getMessage(), "OK");
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
         });
 

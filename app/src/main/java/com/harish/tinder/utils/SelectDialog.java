@@ -141,7 +141,6 @@ public class SelectDialog extends Dialog implements OnClickListener, OnItemClick
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 if(mCancelListener != null){
                     mCancelListener.onCancelClick(v);
                 }
@@ -178,19 +177,16 @@ public class SelectDialog extends Dialog implements OnClickListener, OnItemClick
 
         @Override
         public int getCount() {
-            // TODO Auto-generated method stub
             return mStrings.size();
         }
 
         @Override
         public Object getItem(int position) {
-            // TODO Auto-generated method stub
             return mStrings.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-            // TODO Auto-generated method stub
             return position;
         }
 

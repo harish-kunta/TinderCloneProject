@@ -82,6 +82,7 @@
             app:backgroundTint="@android:color/white"
             app:tint="@color/red"
             app:fabSize="auto"
+            android:visibility="gone"
             app:rippleColor="#22ED7563" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -96,6 +97,7 @@
             android:layout_marginLeft="24dp"
             app:tint="@color/green"
             app:fabSize="auto"
+            android:visibility="gone"
             app:rippleColor="#226FE2B3"/>
 
     </RelativeLayout>

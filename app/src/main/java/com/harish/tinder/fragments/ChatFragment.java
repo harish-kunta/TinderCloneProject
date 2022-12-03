@@ -123,7 +123,6 @@ public class ChatFragment extends Fragment {
     }
 
     public void getThreads() {
-        //TODO: Update this chat to not to check every record in database
         mUsersDatabase.child(user.getUid()).child(CONNECTIONS).child(MATCHES).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
