@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -87,6 +88,7 @@ public class SwipeFragment extends Fragment implements CardStackListener {
     private ProfileAdapter profileAdapter;
     private CardStackLayoutManager layoutManager;
     private CardStackView cardStackView;
+    private RelativeLayout buttonsContainer;
     private ProgressDialog progressDialog;
 
     private DatabaseReference usersDb;
@@ -132,6 +134,7 @@ public class SwipeFragment extends Fragment implements CardStackListener {
         // Inflate the layout for this fragment
         mHomeView = inflater.inflate(R.layout.fragment_home, container, false);
         cardStackView = mHomeView.findViewById(R.id.card_stack_view);
+        buttonsContainer = mHomeView.findViewById(R.id.button_container);
         layoutManager = new CardStackLayoutManager(getContext(), this);
         setUpCardStack();
         setupButton(mHomeView);
@@ -302,6 +305,10 @@ public class SwipeFragment extends Fragment implements CardStackListener {
                             profile = new Profile(dataSnapshot.getKey(), Objects.requireNonNull(dataSnapshot.child(NAME).getValue()).toString(), AgeCalculator.calculateAge(getObjectLong(dataSnapshot.child(DOB).getValue())), profileImageUrl, 20);
                         }
                         profileList.add(profile);
+                        if(profileList.isEmpty())
+                            buttonsContainer.setVisibility(View.GONE);
+                        else
+                            buttonsContainer.setVisibility(View.VISIBLE);
                         profileAdapter.notifyDataSetChanged();
                     }
                 }
@@ -342,6 +349,10 @@ public class SwipeFragment extends Fragment implements CardStackListener {
             String userId = profile.getId();
             usersDb.child(userId).child(CONNECTIONS).child(NOPE).child(currentUId).setValue("true");
         }
+        if(profileList.isEmpty())
+            buttonsContainer.setVisibility(View.GONE);
+        else
+            buttonsContainer.setVisibility(View.VISIBLE);
 
     }
 
@@ -358,11 +369,18 @@ public class SwipeFragment extends Fragment implements CardStackListener {
     @Override
     public void onCardAppeared(View view, int position) {
         currentProfile = profileList.get(position);
+        if(profileList.isEmpty())
+            buttonsContainer.setVisibility(View.GONE);
+        else
+            buttonsContainer.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onCardDisappeared(View view, int position) {
-
+        if(profileList.isEmpty())
+            buttonsContainer.setVisibility(View.GONE);
+        else
+            buttonsContainer.setVisibility(View.VISIBLE);
     }
 
     long getObjectLong(Object o) {
