@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -26,8 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.harish.tinder.R;
 import com.harish.tinder.adapter.LikesAdapter;
-import com.harish.tinder.alert.SweetAlertDialog;
-import com.harish.tinder.listeners.UserItemClickListener;
 import com.harish.tinder.model.UserObject;
 import com.harish.tinder.utils.GridSpacingItemDecoration;
 
@@ -148,7 +145,7 @@ public class LikesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        mLikesView = inflater.inflate(R.layout.fragment_courses_stagged, container, false);
+        mLikesView = inflater.inflate(R.layout.fragment_likes, container, false);
         Context mcontext = mLikesView.getContext();
         currentUserID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 

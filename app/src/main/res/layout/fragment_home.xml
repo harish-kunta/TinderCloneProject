@@ -4,17 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="80dp"
+    android:background="#ffba60"
     tools:context=".material_ui.MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/horizontal_dashboard"
+        android:paddingTop="@dimen/fab_margin"
+        android:paddingRight="@dimen/horizontal_dashboard"
+        android:weightSum="100">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_weight="50"
+            android:fontFamily="@font/bariol_bold"
+            android:text="Tinder"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="30sp"></TextView>
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:src="@drawable/refer_icon"></ImageView>
+    </LinearLayout>
     <com.yuyakaido.android.cardstackview.CardStackView
         android:id="@+id/card_stack_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/button_container"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="120dp"
         android:clipToPadding="false"
         android:padding="4dp"></com.yuyakaido.android.cardstackview.CardStackView>
 
@@ -23,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="80dp"
         android:clipChildren="false"
         android:gravity="center"
         android:visibility="gone"
