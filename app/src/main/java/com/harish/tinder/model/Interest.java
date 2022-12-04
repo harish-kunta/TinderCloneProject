@@ -29,6 +29,8 @@ public class Interest {
 
     public String toString()
     {
-        return this.name;
+        if(this.name != null)
+            return this.name;
+        return "";
     }
 }

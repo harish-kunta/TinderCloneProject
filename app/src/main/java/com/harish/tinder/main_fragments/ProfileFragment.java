@@ -159,7 +159,7 @@ public class ProfileFragment extends Fragment {
                 int age = AgeCalculator.calculateAge(dobUnix);
                 profileName.setText(firebaseDbUser.getName() + ", " + age);
                 mAboutMe.setText(firebaseDbUser.getAboutMe());
-                mInterests.setText(firebaseDbUser.getInterests().toString());
+                mInterests.setText(firebaseDbUser.getInterests() != null ? firebaseDbUser.getInterests().toString() : "");
                 mSchool.setText(firebaseDbUser.getSchoolName());
                 profileEmail.setText(firebaseDbUser.getEmail());
                 if (!DEFAULT.equals(image)) {
