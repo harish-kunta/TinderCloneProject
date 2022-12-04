@@ -26,6 +26,13 @@
 
         <EditTextPreference
             app:key="SCHOOL"
+            app:title="SCHOOL"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            app:key="LIVING IN"
+            app:title="LIVING IN"
+            app:useSimpleSummaryProvider="true"/>
 
         <ListPreference
             app:defaultValue="reply"
