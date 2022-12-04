@@ -1,6 +1,5 @@
 package com.harish.tinder.registration_input_fragments;
 
-import static com.harish.tinder.model.FirebaseConstants.INTERESTED_IN;
 import static com.harish.tinder.model.FirebaseConstants.SCHOOL_NAME;
 
 import android.os.Bundle;
@@ -9,24 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.ScrollView;
 
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.harish.tinder.R;
+import com.harish.tinder.material_ui.RegistrationInputActivity;
 import com.harish.tinder.model.FirebaseConstants;
 import com.harish.tinder.utils.StringResourceHelper;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -104,9 +99,7 @@ public class SchoolFragment extends Fragment {
                 return;
             }
             mUserDatabase.child(SCHOOL_NAME).setValue(schoolNameText).addOnCompleteListener(task -> {
-//            FragmentTransaction fr = getFragmentManager().beginTransaction();
-//            fr.replace(R.id.container,new SexualOrientationFragment());
-//            fr.commit();
+                ((RegistrationInputActivity)getActivity()).replace(new InterestsFragment());
             });
         });
         return mInterestedInView;

@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.harish.tinder.R;
 import com.harish.tinder.model.FirebaseDbUser;
 import com.harish.tinder.registration_input_fragments.HouseRulesFragment;
+import com.harish.tinder.registration_input_fragments.InterestsFragment;
 import com.harish.tinder.registration_input_fragments.SexualOrientationFragment;
 
 
@@ -62,7 +63,7 @@ public class RegistrationInputActivity extends AppCompatActivity {
 
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             setContentView(R.layout.activity_registration_input);
-            replace(new SexualOrientationFragment());
+            replace(new InterestsFragment());
 //            SmoothBottomBar bottomBar = findViewById(R.id.bottomBar);
 //
 //            bottomBar.setOnItemSelectedListener(i -> {

@@ -22,6 +22,7 @@ public class FirebaseConstants {
     public static final String SEXUAL_ORIENTATION = "sexualOrientation";
     public static final String INTERESTED_IN = "interestedIn";
     public static final String SCHOOL_NAME = "schoolName";
+    public static final String INTERESTS = "Interests";
 
     public static final String MALE = "Male";
     public static final String FEMALE = "Female";
