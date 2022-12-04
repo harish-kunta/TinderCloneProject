@@ -1,14 +1,20 @@
 package com.harish.tinder.registration_input_fragments;
 
+import static com.harish.tinder.model.FirebaseConstants.INTERESTED_IN;
 import static com.harish.tinder.model.FirebaseConstants.INTERESTS;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +26,7 @@ import com.ahamed.multiviewadapter.BaseViewHolder;
 import com.ahamed.multiviewadapter.ItemBinder;
 import com.ahamed.multiviewadapter.SimpleRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +35,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.harish.tinder.R;
+import com.harish.tinder.material_ui.RegistrationInputActivity;
+import com.harish.tinder.model.FirebaseConstants;
 import com.harish.tinder.model.Interests;
+import com.harish.tinder.utils.StringResourceHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,13 +49,17 @@ public class InterestsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private List<Interests> selectedInterests = new ArrayList<>();
 
     private RecyclerView mResultList;
     Context context;
+    Button agreeButton;
+    private LinearLayout rootLayout;
 
     private DatabaseReference mInterestsDatabase;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private DatabaseReference mUserDatabase;
     FirebaseRecyclerAdapter firebaseRecyclerAdapter;
+    private FirebaseUser mCurrentUser;
     View view;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -79,14 +93,30 @@ public class InterestsFragment extends Fragment {
         // Inflate the layout for this fragment
         context = getContext();
         view = inflater.inflate(R.layout.fragment_interests, container, false);
+        rootLayout = view.findViewById(R.id.root_layout);
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String current_uid = mCurrentUser.getUid();
+        mUserDatabase = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.USERS).child(current_uid);
+        mUserDatabase.keepSynced(true);
         mResultList = view.findViewById(R.id.result_list);
         mResultList.setHasFixedSize(true);
         mResultList.setLayoutManager(new LinearLayoutManager(context));
-
+        agreeButton = view.findViewById(R.id.agree_button);
         mInterestsDatabase = FirebaseDatabase.getInstance().getReference(INTERESTS);
         mInterestsDatabase.keepSynced(true);
         mResultList.setAdapter(firebaseRecyclerAdapter);
         getInterests();
+
+        agreeButton.setOnClickListener(v -> {
+            if (selectedInterests.size() != 5) {
+                Snackbar.make(rootLayout, StringResourceHelper.getString(getContext(), R.string.interests_not_selected), Snackbar.LENGTH_LONG).show();
+                return;
+            }
+            mUserDatabase.child(INTERESTS).setValue(selectedInterests).addOnCompleteListener(task -> {
+                //((RegistrationInputActivity)getActivity()).replace(new SchoolFragment());
+                Snackbar.make(rootLayout, "Saved!", Snackbar.LENGTH_LONG).show();
+            });
+        });
         return view;
     }
 
@@ -112,41 +142,6 @@ public class InterestsFragment extends Fragment {
 
             }
         });
-
-//        mThreadsDatabase = FirebaseDatabase.getInstance().getReference(THREADS);
-//        mThreadsDatabase.keepSynced(true);
-//        mThreadsDatabase.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                ArrayList<String> receiver = new ArrayList<>();
-//                String record = "";
-//                List<ChatThread> t = new ArrayList<>();
-//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                    try {
-//                        record = Objects.requireNonNull(ds.child(MEMBERS).child(INDEX_0).getValue()) + " " + Objects.requireNonNull(ds.child(MEMBERS).child(INDEX_1).getValue());
-//                    } catch (Exception e) {
-//                        Log.e("Record", "Exception");
-//                    }
-//                    if (record.contains(user.getUid())) {
-//                        if (Objects.requireNonNull(ds.child(MEMBERS).child(INDEX_0).getValue()).toString().equals(user.getUid())) {
-//                            record = Objects.requireNonNull(ds.child(MEMBERS).child(INDEX_1).getValue()).toString();
-//                        } else {
-//                            record = Objects.requireNonNull(ds.child(MEMBERS).child(INDEX_0).getValue()).toString();
-//                        }
-//                        receiver.add(record);
-//                        t.add(new ChatThread(record, ds.getKey()));
-//                    }
-//                }
-//                SimpleRecyclerAdapter<ChatThread, UserBinder> adapter = new SimpleRecyclerAdapter<>(new UserBinder());
-//                mResultList.setAdapter(adapter);
-//                adapter.setData(t);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
     }
 
     public class interestsBinder extends ItemBinder<Interests, interestsBinder.InterestsViewHolder> {
@@ -159,7 +154,14 @@ public class InterestsFragment extends Fragment {
         @Override
         public void bind(final InterestsViewHolder holder, final Interests item) {
             holder.interest_name.setText(item.getName());
-            // holder.relativeLayout.setOnClickListener(view -> openChatActivity(item.getEmail(), item.getName(), item.getImageUrl(), item.getUid(), item.getThreadID()));
+            holder.itemView.setOnClickListener(v -> {
+                item.setSelected(!item.isSelected());
+                holder.itemView.setBackgroundColor(item.isSelected() ? Color.CYAN : Color.WHITE);
+                if(item.isSelected())
+                    selectedInterests.add(item);
+                else
+                    selectedInterests.remove(item);
+            });
         }
 
         @Override

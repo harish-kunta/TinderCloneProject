@@ -10,9 +10,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="32dp"
-        android:layout_weight="0.7"
         android:orientation="vertical">
 
         <ImageView
@@ -36,8 +35,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="120dp"
             android:layout_marginTop="@dimen/horizontal_card"
+            android:layout_weight="0.5"
             android:layout_marginBottom="@dimen/horizontal_card"
             android:orientation="vertical">
 
@@ -45,26 +45,22 @@
                 android:id="@+id/result_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </LinearLayout>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
         <Button
             android:id="@+id/agree_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/result_list"
-            android:layout_weight="0.3"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginBottom="50dp"
             android:orientation="horizontal"
             android:text="I Agree"
             android:textSize="25sp"
             android:textStyle="bold"
             />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
