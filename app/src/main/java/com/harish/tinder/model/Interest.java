@@ -1,8 +1,11 @@
 package com.harish.tinder.model;
 
-public class Interests {
+public class Interest {
     public String name;
     private boolean isSelected = false;
+
+    public Interest() {
+    }
 
     public String getName() {
         return name;
@@ -12,7 +15,7 @@ public class Interests {
         this.name = name;
     }
 
-    public Interests(String name) {
+    public Interest(String name) {
         this.name = name;
     }
 
@@ -22,5 +25,10 @@ public class Interests {
 
     public boolean isSelected() {
         return isSelected;
+    }
+
+    public String toString()
+    {
+        return this.name;
     }
 }

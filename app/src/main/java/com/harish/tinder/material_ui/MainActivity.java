@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         replace(new ChatFragment());
                         break;
                     case 3:
-                        replace(new ProfileFragment());
+                        replace(new ProfileFragment(firebaseDbUser));
                         break;
                 }
                 return true;

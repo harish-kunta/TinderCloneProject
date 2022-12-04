@@ -19,7 +19,7 @@
     <string name="delete_account">Delete Account</string>
 
     <!-- Preference Titles -->
-    <string name="signature_title">About me</string>
+    <string name="about_me_title">About me</string>
     <string name="reply_title">Default reply action</string>
     <!-- Discover Preferences -->
     <string name="show_people_title">Only show people in this range</string>

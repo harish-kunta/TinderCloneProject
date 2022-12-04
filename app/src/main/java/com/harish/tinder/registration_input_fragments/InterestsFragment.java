@@ -1,6 +1,5 @@
 package com.harish.tinder.registration_input_fragments;
 
-import static com.harish.tinder.model.FirebaseConstants.INTERESTED_IN;
 import static com.harish.tinder.model.FirebaseConstants.INTERESTS;
 
 import android.content.Context;
@@ -13,9 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,9 +34,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.harish.tinder.R;
 import com.harish.tinder.material_ui.EnableLocationActivity;
-import com.harish.tinder.material_ui.RegistrationInputActivity;
 import com.harish.tinder.model.FirebaseConstants;
-import com.harish.tinder.model.Interests;
+import com.harish.tinder.model.Interest;
 import com.harish.tinder.utils.StringResourceHelper;
 
 import java.util.ArrayList;
@@ -51,7 +47,7 @@ public class InterestsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private List<Interests> selectedInterests = new ArrayList<>();
+    private List<Interest> selectedInterests = new ArrayList<>();
 
     private RecyclerView mResultList;
     Context context;
@@ -124,18 +120,18 @@ public class InterestsFragment extends Fragment {
     }
 
     public void getInterests() {
-        mInterestsDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        mInterestsDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<String> receiver = new ArrayList<>();
                 String record = "";
-                List<Interests> t = new ArrayList<>();
+                List<Interest> t = new ArrayList<>();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     record = ds.getValue().toString();
                     receiver.add(record);
-                    t.add(new Interests(record));
+                    t.add(new Interest(record));
                 }
-                SimpleRecyclerAdapter<Interests, interestsBinder> adapter = new SimpleRecyclerAdapter<>(new interestsBinder());
+                SimpleRecyclerAdapter<Interest, interestsBinder> adapter = new SimpleRecyclerAdapter<>(new interestsBinder());
                 mResultList.setAdapter(adapter);
                 adapter.setData(t);
             }
@@ -147,7 +143,7 @@ public class InterestsFragment extends Fragment {
         });
     }
 
-    public class interestsBinder extends ItemBinder<Interests, interestsBinder.InterestsViewHolder> {
+    public class interestsBinder extends ItemBinder<Interest, interestsBinder.InterestsViewHolder> {
 
         @Override
         public InterestsViewHolder create(LayoutInflater inflater, ViewGroup parent) {
@@ -155,7 +151,7 @@ public class InterestsFragment extends Fragment {
         }
 
         @Override
-        public void bind(final InterestsViewHolder holder, final Interests item) {
+        public void bind(final InterestsViewHolder holder, final Interest item) {
             holder.interest_name.setText(item.getName());
             holder.itemView.setOnClickListener(v -> {
                 item.setSelected(!item.isSelected());
@@ -169,10 +165,10 @@ public class InterestsFragment extends Fragment {
 
         @Override
         public boolean canBindData(Object item) {
-            return item instanceof Interests;
+            return item instanceof Interest;
         }
 
-        class InterestsViewHolder extends BaseViewHolder<Interests> {
+        class InterestsViewHolder extends BaseViewHolder<Interest> {
             TextView interest_name;
             RelativeLayout relativeLayout;
 

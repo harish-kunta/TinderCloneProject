@@ -1,5 +1,7 @@
 package com.harish.tinder.model;
 
+import java.util.List;
+
 public class FirebaseDbUser {
     public String name;
     public String email;
@@ -9,6 +11,27 @@ public class FirebaseDbUser {
     public String sex;
     public String profileImageUrlCompressed;
     public String uid;
+
+
+    public List<Interest> getInterests() {
+        return interests;
+    }
+
+    public void setInterests(List<Interest> interests) {
+        this.interests = interests;
+    }
+
+    public List<Interest> interests;
+
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
+    }
+
+    public String aboutMe;
 
     public RequestLocation getLocation() {
         return location;

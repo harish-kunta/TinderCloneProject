@@ -73,12 +73,19 @@ public class ProfileFragment extends Fragment {
     CircleImageView profilePic;
     StorageReference storageReference;
     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child(USERS);
+    FirebaseDbUser firebaseDbUser;
 
     private final int PICK_IMAGE_REQUEST = 71;
 
     public ProfileFragment() {
         // Required empty public constructor
         mAuth = FirebaseAuth.getInstance();
+    }
+
+    public ProfileFragment(FirebaseDbUser firebaseDbUser) {
+        // Required empty public constructor
+        mAuth = FirebaseAuth.getInstance();
+        this.firebaseDbUser = firebaseDbUser;
     }
 
     /**

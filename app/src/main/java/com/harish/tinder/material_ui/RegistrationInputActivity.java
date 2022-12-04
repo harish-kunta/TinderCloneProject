@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.harish.tinder.R;
 import com.harish.tinder.model.FirebaseDbUser;
 import com.harish.tinder.registration_input_fragments.HouseRulesFragment;
+import com.harish.tinder.registration_input_fragments.InterestedInFragment;
 import com.harish.tinder.registration_input_fragments.InterestsFragment;
 import com.harish.tinder.registration_input_fragments.SexualOrientationFragment;
 

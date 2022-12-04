@@ -2,15 +2,15 @@
     <PreferenceCategory app:title="@string/messages_header">
 
         <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
+            app:key="about_me_title"
+            app:title="@string/about_me_title"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
-            app:key="Email"
+            app:key="email"
             app:title="Email"
             app:useSimpleSummaryProvider="true"/>
         <EditTextPreference
-            app:key="Interests"
+            app:key="interests"
             app:title="Interests"
             app:useSimpleSummaryProvider="true"/>
 
