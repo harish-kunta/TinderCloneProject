@@ -86,4 +86,7 @@
     <string name="incorrect_username_or_password">Incorrect username or password</string>
     <string name="fcm_token_fetch_failed">Fetching FCM registration token failed</string>
     <string name="new_connection">New Connection</string>
+    <string name="title_location_permission">Location permission</string>
+    <string name="text_location_permission">Allow location access</string>
+    <string name="ok">OK</string>
 </resources>

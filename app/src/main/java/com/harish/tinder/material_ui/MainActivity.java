@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     } else if (!firebaseDbUser.isTermsAgreed()) {
-                        Intent intent = new Intent(getApplicationContext(), RegistrationInputActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), EnableLocationActivity.class);
                         startActivity(intent);
                         finish();
                     } else if (firebaseDbUser.getProfileImageUrl() == null || DEFAULT.equals(firebaseDbUser.getProfileImageUrl())) {

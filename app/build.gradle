@@ -61,6 +61,7 @@ dependencies {
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.1.1'
     implementation 'id.zelory:compressor:2.1.1'
     implementation 'com.pnikosis:materialish-progress:1.7'
+    implementation "com.google.android.gms:play-services-location:18.0.0"
 
     //API call Libraries
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
