@@ -2,7 +2,7 @@
     <PreferenceCategory app:title="@string/messages_header">
 
         <EditTextPreference
-            app:key="about_me_title"
+            app:key="aboutMe"
             app:title="@string/about_me_title"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
@@ -10,43 +10,43 @@
             app:title="Email"
             app:useSimpleSummaryProvider="true"/>
         <EditTextPreference
-            app:key="interests"
+            app:key="pinterests"
             app:title="Interests"
             app:useSimpleSummaryProvider="true"/>
 
         <EditTextPreference
-            app:key="JOB TITLE"
+            app:key="jobTitle"
             app:title="JOB TITLE"
             app:useSimpleSummaryProvider="true"/>
 
         <EditTextPreference
-            app:key="COMPANY"
+            app:key="companyName"
             app:title="COMPANY"
             app:useSimpleSummaryProvider="true"/>
 
         <EditTextPreference
-            app:key="SCHOOL"
+            app:key="schoolName"
             app:title="SCHOOL"
             app:useSimpleSummaryProvider="true"/>
 
         <EditTextPreference
-            app:key="LIVING IN"
+            app:key="livingIn"
             app:title="LIVING IN"
             app:useSimpleSummaryProvider="true"/>
 
         <ListPreference
             app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="GENDER"
+            app:entries="@array/gender_entries"
+            app:entryValues="@array/gender_values"
+            app:key="sex"
             app:title="GENDER"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
             app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="SEXUAL ORIENTATION"
+            app:entries="@array/sexual_orientation_entries"
+            app:entryValues="@array/sexual_orientation_values"
+            app:key="sexualOrientation"
             app:title="SEXUAL ORIENTATION"
             app:useSimpleSummaryProvider="true" />
 

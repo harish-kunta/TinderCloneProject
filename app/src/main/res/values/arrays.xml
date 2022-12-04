@@ -1,12 +1,35 @@
 <resources>
     <!-- Reply Preference -->
-    <string-array name="reply_entries">
-        <item>Reply</item>
-        <item>Reply to all</item>
+    <string-array name="gender_entries">
+        <item>Male</item>
+        <item>Female</item>
     </string-array>
 
-    <string-array name="reply_values">
-        <item>reply</item>
-        <item>reply_all</item>
+    <string-array name="gender_values">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+
+    <string-array name="sexual_orientation_entries">
+        <item>Straight</item>
+        <item>Gay</item>
+        <item>Lesbian</item>
+        <item>Bisexual</item>
+        <item>Asexual</item>
+        <item>Demisexual</item>
+        <item>Pansexual</item>
+        <item>Queer</item>
+    </string-array>
+
+    <string-array name="sexual_orientation_values">
+        <item>Straight</item>
+        <item>Gay</item>
+        <item>Lesbian</item>
+        <item>Bisexual</item>
+        <item>Asexual</item>
+        <item>Demisexual</item>
+        <item>Pansexual</item>
+        <item>Queer</item>
     </string-array>
 </resources>
