@@ -18,6 +18,11 @@
     <string name="share_tinder">Share Tinder</string>
     <string name="delete_account">Delete Account</string>
 
+
+    <string name="permission_denied_explanation">Permission was denied, but is needed for core
+        functionality.</string>
+    <string name="settings">Settings</string>
+
     <!-- Preference Titles -->
     <string name="about_me_title">About me</string>
     <string name="reply_title">Default reply action</string>

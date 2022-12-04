@@ -6,10 +6,6 @@
             app:title="@string/about_me_title"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
-            app:key="email"
-            app:title="Email"
-            app:useSimpleSummaryProvider="true"/>
-        <EditTextPreference
             app:key="pinterests"
             app:title="Interests"
             app:useSimpleSummaryProvider="true"/>
@@ -38,7 +34,7 @@
             app:defaultValue="reply"
             app:entries="@array/gender_entries"
             app:entryValues="@array/gender_values"
-            app:key="sex"
+            app:key="gender"
             app:title="GENDER"
             app:useSimpleSummaryProvider="true" />
 

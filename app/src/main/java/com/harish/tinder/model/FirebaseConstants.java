@@ -13,7 +13,7 @@ public class FirebaseConstants {
     public static final String EMAIL = "email";
     public static final String DEVICE_TOKEN = "deviceToken";
     public static final String ONLINE = "online";
-    public static final String SEX = "sex";
+    public static final String GENDER = "gender";
     public static final String DOB = "dob";
     public static final String PROFILE_IMAGE_URL = "profileImageUrl";
     public static final String PROFILE_IMAGE_URL_COMPRESSED = "profileImageUrlCompressed";

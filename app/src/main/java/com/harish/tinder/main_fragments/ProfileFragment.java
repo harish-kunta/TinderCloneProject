@@ -127,7 +127,7 @@ public class ProfileFragment extends Fragment {
         editProfileButton = mProfileView.findViewById(R.id.edit_profile);
         settingsButton = mProfileView.findViewById(R.id.settings);
 
-        mAboutMe = mProfileView.findViewById(R.id.about_me);
+        mAboutMe = mProfileView.findViewById(R.id.about_text);
         mInterests = mProfileView.findViewById(R.id.interested_in);
         mJob = mProfileView.findViewById(R.id.job);
         mCompany = mProfileView.findViewById(R.id.company);
@@ -154,14 +154,15 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 FirebaseDbUser firebaseDbUser = dataSnapshot.getValue(FirebaseDbUser.class);
-                String display_name = getObjectString(dataSnapshot.child(NAME).getValue());
-                String email = getObjectString(dataSnapshot.child(EMAIL).getValue());
-                long dobUnix = getObjectLong(dataSnapshot.child(DOB).getValue());
-                String image = getObjectString(dataSnapshot.child(PROFILE_IMAGE_URL).getValue());
+                long dobUnix = firebaseDbUser.getDob();
+                String image = firebaseDbUser.getProfileImageUrlCompressed();
                 int age = AgeCalculator.calculateAge(dobUnix);
                 profileName.setText(firebaseDbUser.getName() + ", " + age);
+                mAboutMe.setText(firebaseDbUser.getAboutMe());
+                mInterests.setText(firebaseDbUser.getInterests().toString());
+                mSchool.setText(firebaseDbUser.getSchoolName());
                 profileEmail.setText(firebaseDbUser.getEmail());
-                if (!DEFAULT.equals(firebaseDbUser.getProfileImageUrl())) {
+                if (!DEFAULT.equals(image)) {
                     Glide
                             .with(mProfileView.getContext())
                             .load(image)

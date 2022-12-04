@@ -11,7 +11,7 @@ import static com.harish.tinder.model.FirebaseConstants.MEMBERS;
 import static com.harish.tinder.model.FirebaseConstants.NAME;
 import static com.harish.tinder.model.FirebaseConstants.NOPE;
 import static com.harish.tinder.model.FirebaseConstants.PROFILE_IMAGE_URL;
-import static com.harish.tinder.model.FirebaseConstants.SEX;
+import static com.harish.tinder.model.FirebaseConstants.GENDER;
 import static com.harish.tinder.model.FirebaseConstants.THREADS;
 import static com.harish.tinder.model.FirebaseConstants.USERS;
 import static com.harish.tinder.model.FirebaseConstants.USER_ID;
@@ -266,8 +266,8 @@ public class SwipeFragment extends Fragment implements CardStackListener {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    if (dataSnapshot.child(SEX).getValue() != null) {
-                        userSex = Objects.requireNonNull(dataSnapshot.child(SEX).getValue()).toString();
+                    if (dataSnapshot.child(GENDER).getValue() != null) {
+                        userSex = Objects.requireNonNull(dataSnapshot.child(GENDER).getValue()).toString();
                         switch (userSex) {
                             case MALE:
                                 oppositeUserSex = FEMALE;
@@ -292,8 +292,8 @@ public class SwipeFragment extends Fragment implements CardStackListener {
         usersDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                if (dataSnapshot.child(SEX).getValue() != null) {
-                    if (dataSnapshot.exists() && !dataSnapshot.child(CONNECTIONS).child(NOPE).hasChild(currentUId) && !dataSnapshot.child(CONNECTIONS).child(YEPS).hasChild(currentUId) && Objects.requireNonNull(dataSnapshot.child(SEX).getValue()).toString().equals(oppositeUserSex)) {
+                if (dataSnapshot.child(GENDER).getValue() != null) {
+                    if (dataSnapshot.exists() && !dataSnapshot.child(CONNECTIONS).child(NOPE).hasChild(currentUId) && !dataSnapshot.child(CONNECTIONS).child(YEPS).hasChild(currentUId) && Objects.requireNonNull(dataSnapshot.child(GENDER).getValue()).toString().equals(oppositeUserSex)) {
                         String profileImageUrl = FirebaseConstants.DEFAULT;
                         if (!Objects.equals(dataSnapshot.child(PROFILE_IMAGE_URL).getValue(), FirebaseConstants.DEFAULT)) {
                             profileImageUrl = Objects.requireNonNull(dataSnapshot.child(PROFILE_IMAGE_URL).getValue()).toString();

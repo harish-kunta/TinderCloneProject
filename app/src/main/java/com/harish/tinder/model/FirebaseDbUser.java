@@ -11,67 +11,13 @@ public class FirebaseDbUser {
     public String sex;
     public String profileImageUrlCompressed;
     public String uid;
-
-
-    public List<Interest> getInterests() {
-        return interests;
-    }
-
-    public void setInterests(List<Interest> interests) {
-        this.interests = interests;
-    }
-
+    public String schoolName;
     public List<Interest> interests;
-
-    public String getAboutMe() {
-        return aboutMe;
-    }
-
-    public void setAboutMe(String aboutMe) {
-        this.aboutMe = aboutMe;
-    }
-
     public String aboutMe;
-
-    public RequestLocation getLocation() {
-        return location;
-    }
-
-    public void setLocation(RequestLocation location) {
-        this.location = location;
-    }
-
     public RequestLocation location;
-
-    public boolean isTermsAgreed() {
-        return termsAgreed;
-    }
-
-    public void setTermsAgreed(boolean termsAgreed) {
-        this.termsAgreed = termsAgreed;
-    }
-
     public boolean termsAgreed;
-
-    public String getDeviceToken() {
-        return deviceToken;
-    }
-
-    public void setDeviceToken(String deviceToken) {
-        this.deviceToken = deviceToken;
-    }
-
-    public String deviceToken;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String status;
+    public String deviceToken;
 
     public FirebaseDbUser() {
 
@@ -86,6 +32,65 @@ public class FirebaseDbUser {
         this.sex = sex;
         this.profileImageUrlCompressed = profileImageUrlCompressed;
         this.uid = uid;
+    }
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
+
+    public List<Interest> getInterests() {
+        return interests;
+    }
+
+    public void setInterests(List<Interest> interests) {
+        this.interests = interests;
+    }
+
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
+    }
+
+    public RequestLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(RequestLocation location) {
+        this.location = location;
+    }
+
+
+    public boolean isTermsAgreed() {
+        return termsAgreed;
+    }
+
+    public void setTermsAgreed(boolean termsAgreed) {
+        this.termsAgreed = termsAgreed;
+    }
+
+
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getName() {
