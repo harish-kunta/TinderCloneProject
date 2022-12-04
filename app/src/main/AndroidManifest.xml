@@ -38,6 +38,8 @@
             android:name=".material_ui.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity
+            android:name=".material_ui.RegistrationInputActivity"/>
+        <activity
             android:name=".material_ui.SplashScreenActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" >

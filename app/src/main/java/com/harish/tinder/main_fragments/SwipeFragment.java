@@ -1,4 +1,4 @@
-package com.harish.tinder.fragments;
+package com.harish.tinder.main_fragments;
 
 import static com.harish.tinder.model.FirebaseConstants.CHAT;
 import static com.harish.tinder.model.FirebaseConstants.CHAT_ID;

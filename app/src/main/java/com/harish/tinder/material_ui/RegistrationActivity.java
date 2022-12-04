@@ -60,7 +60,7 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration2);
+        setContentView(R.layout.activity_registration);
 
         mAuth = FirebaseAuth.getInstance();
         rootLayout = findViewById(R.id.root_layout);
@@ -125,7 +125,7 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                             public void onSuccess(Object o) {
                                 Snackbar.make(rootLayout, R.string.ACCOUNT_CREATED_SUCCESSFULLY, Snackbar.LENGTH_LONG).show();
                                 mRegProgress.dismiss();
-                                Intent signin = new Intent(getApplicationContext(), HouseRulesActivity.class);
+                                Intent signin = new Intent(getApplicationContext(), RegistrationInputActivity.class);
                                 signin.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(signin);
                                 finish();

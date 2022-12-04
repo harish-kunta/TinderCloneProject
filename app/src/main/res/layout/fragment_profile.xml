@@ -52,6 +52,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal">
+
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/profile_image"
                             android:layout_width="240sp"
@@ -68,16 +69,17 @@
                         <ImageButton
                             android:id="@+id/edit_profile"
                             android:layout_width="40dp"
-                            android:layout_height="0dp"
+                            android:layout_height="40dp"
                             android:layout_marginTop="16dp"
-                            android:layout_marginEnd="24dp"
                             android:background="@drawable/round_button"
                             android:padding="8dp"
                             android:src="@drawable/ic_edit_white_24dp"
+                            app:layout_constraintBottom_toTopOf="@+id/profile_image"
                             app:layout_constraintEnd_toStartOf="parent"
                             app:layout_constraintHorizontal_bias="0.23"
                             app:layout_constraintStart_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0"
                             app:tint="@color/black" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </FrameLayout>

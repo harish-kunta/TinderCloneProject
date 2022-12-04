@@ -1,4 +1,4 @@
-package com.harish.tinder.fragments;
+package com.harish.tinder.main_fragments;
 
 import static com.harish.tinder.model.FirebaseConstants.DEFAULT;
 import static com.harish.tinder.model.FirebaseConstants.DOB;

@@ -24,10 +24,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.harish.tinder.R;
-import com.harish.tinder.fragments.ChatFragment;
-import com.harish.tinder.fragments.LikesFragment;
-import com.harish.tinder.fragments.ProfileFragment;
-import com.harish.tinder.fragments.SwipeFragment;
+import com.harish.tinder.main_fragments.ChatFragment;
+import com.harish.tinder.main_fragments.LikesFragment;
+import com.harish.tinder.main_fragments.ProfileFragment;
+import com.harish.tinder.main_fragments.SwipeFragment;
 import com.harish.tinder.model.FirebaseDbUser;
 
 import me.ibrahimsn.lib.SmoothBottomBar;
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     } else if (!firebaseDbUser.isTermsAgreed()) {
-                        Intent intent = new Intent(getApplicationContext(), HouseRulesActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), RegistrationInputActivity.class);
                         startActivity(intent);
                         finish();
                     } else if (firebaseDbUser.getProfileImageUrl() == null || DEFAULT.equals(firebaseDbUser.getProfileImageUrl())) {
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            setContentView(R.layout.activity_main2);
+            setContentView(R.layout.activity_main);
             replace(new SwipeFragment());
             SmoothBottomBar bottomBar = findViewById(R.id.bottomBar);
 

@@ -1,18 +1,14 @@
-package com.harish.tinder.fragments;
+package com.harish.tinder.main_fragments;
 
 import static com.harish.tinder.model.FirebaseConstants.CHAT_ID;
 import static com.harish.tinder.model.FirebaseConstants.CONNECTIONS;
 import static com.harish.tinder.model.FirebaseConstants.DEFAULT;
 import static com.harish.tinder.model.FirebaseConstants.EMAIL;
-import static com.harish.tinder.model.FirebaseConstants.INDEX_0;
-import static com.harish.tinder.model.FirebaseConstants.INDEX_1;
 import static com.harish.tinder.model.FirebaseConstants.MATCHES;
-import static com.harish.tinder.model.FirebaseConstants.MEMBERS;
 import static com.harish.tinder.model.FirebaseConstants.MESSAGES;
 import static com.harish.tinder.model.FirebaseConstants.NAME;
 import static com.harish.tinder.model.FirebaseConstants.ONLINE;
 import static com.harish.tinder.model.FirebaseConstants.PROFILE_IMAGE_URL_COMPRESSED;
-import static com.harish.tinder.model.FirebaseConstants.THREADS;
 import static com.harish.tinder.model.FirebaseConstants.UID;
 import static com.harish.tinder.model.FirebaseConstants.USERS;
 import static com.harish.tinder.model.IntentConstants.CHAT_USER_EMAIL;
@@ -25,7 +21,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

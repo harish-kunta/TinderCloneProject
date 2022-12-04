@@ -19,6 +19,9 @@ public class FirebaseConstants {
     public static final String PROFILE_IMAGE_URL_COMPRESSED = "profileImageUrlCompressed";
     public static final String UID = "uid";
     public static final String TERMS_AGREED = "termsAgreed";
+    public static final String SEXUAL_ORIENTATION = "sexualOrientation";
+    public static final String INTERESTED_IN = "interestedIn";
+    public static final String SCHOOL_NAME = "schoolName";
 
     public static final String MALE = "Male";
     public static final String FEMALE = "Female";
