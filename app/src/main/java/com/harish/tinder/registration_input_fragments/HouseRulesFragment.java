@@ -104,7 +104,7 @@ public class HouseRulesFragment extends Fragment {
         mUserDatabase.keepSynced(true);
         agreeButton = mLikesView.findViewById(R.id.agree_button);
         agreeButton.setOnClickListener(v -> mUserDatabase.child(TERMS_AGREED).setValue(true).addOnCompleteListener(task -> {
-            ((RegistrationInputActivity)getActivity()).replace(new InterestsFragment());
+            ((RegistrationInputActivity)getActivity()).replace(new SexualOrientationFragment());
         }));
         return mLikesView;
     }

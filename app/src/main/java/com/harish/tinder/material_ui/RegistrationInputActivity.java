@@ -63,7 +63,7 @@ public class RegistrationInputActivity extends AppCompatActivity {
 
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             setContentView(R.layout.activity_registration_input);
-            replace(new InterestsFragment());
+            replace(new HouseRulesFragment());
 //            SmoothBottomBar bottomBar = findViewById(R.id.bottomBar);
 //
 //            bottomBar.setOnItemSelectedListener(i -> {

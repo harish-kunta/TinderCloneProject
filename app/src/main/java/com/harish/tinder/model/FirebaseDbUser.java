@@ -10,6 +10,16 @@ public class FirebaseDbUser {
     public String profileImageUrlCompressed;
     public String uid;
 
+    public RequestLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(RequestLocation location) {
+        this.location = location;
+    }
+
+    public RequestLocation location;
+
     public boolean isTermsAgreed() {
         return termsAgreed;
     }

@@ -4,6 +4,7 @@ import static com.harish.tinder.model.FirebaseConstants.INTERESTED_IN;
 import static com.harish.tinder.model.FirebaseConstants.INTERESTS;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -35,6 +36,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.harish.tinder.R;
+import com.harish.tinder.material_ui.EnableLocationActivity;
 import com.harish.tinder.material_ui.RegistrationInputActivity;
 import com.harish.tinder.model.FirebaseConstants;
 import com.harish.tinder.model.Interests;
@@ -113,8 +115,9 @@ public class InterestsFragment extends Fragment {
                 return;
             }
             mUserDatabase.child(INTERESTS).setValue(selectedInterests).addOnCompleteListener(task -> {
-                //((RegistrationInputActivity)getActivity()).replace(new SchoolFragment());
-                Snackbar.make(rootLayout, "Saved!", Snackbar.LENGTH_LONG).show();
+                Intent intent = new Intent(getContext(), EnableLocationActivity.class);
+                startActivity(intent);
+                getActivity().finish();
             });
         });
         return view;

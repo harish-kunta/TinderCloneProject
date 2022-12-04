@@ -61,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     } else if (!firebaseDbUser.isTermsAgreed()) {
+                        Intent intent = new Intent(getApplicationContext(), RegistrationInputActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else if (firebaseDbUser.getLocation() == null) {
                         Intent intent = new Intent(getApplicationContext(), EnableLocationActivity.class);
                         startActivity(intent);
                         finish();
