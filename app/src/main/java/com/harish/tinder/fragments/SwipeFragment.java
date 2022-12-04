@@ -305,7 +305,7 @@ public class SwipeFragment extends Fragment implements CardStackListener {
                             profile = new Profile(dataSnapshot.getKey(), Objects.requireNonNull(dataSnapshot.child(NAME).getValue()).toString(), AgeCalculator.calculateAge(getObjectLong(dataSnapshot.child(DOB).getValue())), profileImageUrl, 20);
                         }
                         profileList.add(profile);
-                        if(profileList.isEmpty())
+                        if (profileList.isEmpty())
                             buttonsContainer.setVisibility(View.GONE);
                         else
                             buttonsContainer.setVisibility(View.VISIBLE);
@@ -349,11 +349,6 @@ public class SwipeFragment extends Fragment implements CardStackListener {
             String userId = profile.getId();
             usersDb.child(userId).child(CONNECTIONS).child(NOPE).child(currentUId).setValue("true");
         }
-        if(profileList.isEmpty())
-            buttonsContainer.setVisibility(View.GONE);
-        else
-            buttonsContainer.setVisibility(View.VISIBLE);
-
     }
 
     @Override
@@ -369,7 +364,7 @@ public class SwipeFragment extends Fragment implements CardStackListener {
     @Override
     public void onCardAppeared(View view, int position) {
         currentProfile = profileList.get(position);
-        if(profileList.isEmpty())
+        if (profileList.isEmpty())
             buttonsContainer.setVisibility(View.GONE);
         else
             buttonsContainer.setVisibility(View.VISIBLE);
@@ -377,7 +372,7 @@ public class SwipeFragment extends Fragment implements CardStackListener {
 
     @Override
     public void onCardDisappeared(View view, int position) {
-        if(profileList.isEmpty())
+        if (profileList.size() <= 1)
             buttonsContainer.setVisibility(View.GONE);
         else
             buttonsContainer.setVisibility(View.VISIBLE);
