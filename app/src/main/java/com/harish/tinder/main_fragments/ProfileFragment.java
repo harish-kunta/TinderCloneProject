@@ -32,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.harish.tinder.material_ui.EditProfileActivity;
 import com.harish.tinder.material_ui.ImagePickerActivity;
 import com.harish.tinder.R;
 import com.harish.tinder.material_ui.SettingsActivity;
@@ -127,7 +128,7 @@ public class ProfileFragment extends Fragment {
         mLivingIn = mProfileView.findViewById(R.id.living_in);
 
         editProfileButton.setOnClickListener(view -> {
-            Intent intent = new Intent(getContext(), ImagePickerActivity.class);
+            Intent intent = new Intent(getContext(), EditProfileActivity.class);
             startActivity(intent);
         });
 

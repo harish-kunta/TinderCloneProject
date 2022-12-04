@@ -10,63 +10,40 @@
             app:title="Email"
             app:useSimpleSummaryProvider="true"/>
         <EditTextPreference
-            app:key="Date of Birth"
-            app:title="Date of Birth"
-            app:useSimpleSummaryProvider="true"/>
-        <EditTextPreference
-            app:key="Password"
-            app:title="password"
+            app:key="Interests"
+            app:title="Interests"
             app:useSimpleSummaryProvider="true"/>
 
+        <EditTextPreference
+            app:key="JOB TITLE"
+            app:title="JOB TITLE"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            app:key="COMPANY"
+            app:title="COMPANY"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            app:key="SCHOOL"
 
         <ListPreference
             app:defaultValue="reply"
             app:entries="@array/reply_entries"
             app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
+            app:key="GENDER"
+            app:title="GENDER"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="reply"
+            app:entries="@array/reply_entries"
+            app:entryValues="@array/reply_values"
+            app:key="SEXUAL ORIENTATION"
+            app:title="SEXUAL ORIENTATION"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
-
-    <PreferenceCategory app:title="@string/discover_header">
-
-        <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/show_people_title" />
-
-        <SwitchPreferenceCompat
-            app:dependency="sync"
-            app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory app:title="@string/legal_header">
-
-        <Preference
-            app:key="license"
-            app:title="@string/licenses_title" />
-
-        <Preference
-            app:key="terms_of_service"
-            app:title="@string/terms_of_service_title" />
-
-    </PreferenceCategory>
-
-    <Preference
-        app:key="share"
-        app:title="@string/share_tinder" />
-
-    <Preference
-        app:key="logout"
-        app:title="@string/logout" />
-
-    <Preference
-        app:key="delete_account"
-        app:title="@string/delete_account" />
 
 
 </PreferenceScreen>
