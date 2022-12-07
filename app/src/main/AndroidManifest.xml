@@ -45,13 +45,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".InterestedIn"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".material_ui.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity android:name=".material_ui.RegistrationInputActivity" />

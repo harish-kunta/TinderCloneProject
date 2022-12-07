@@ -32,10 +32,6 @@ import com.harish.tinder.views.ViewBuilderInterface;
 
 import java.util.ArrayList;
 
-
-/**
- * Created by timi on 17/11/2015.
- */
 public class ChatView extends RelativeLayout {
 
     private static final int FLAT = 0;
@@ -126,7 +122,7 @@ public class ChatView extends RelativeLayout {
     }
 
     private void setListAdapter() {
-        chatViewListAdapter = new ChatViewListAdapter(context, new ViewBuilder(), backgroundRcv, backgroundSend, bubbleBackgroundRcv,bubbleBackgroundSend,bubbleElevation);
+        chatViewListAdapter = new ChatViewListAdapter(context, new ViewBuilder(), backgroundRcv, backgroundSend, bubbleBackgroundRcv, bubbleBackgroundSend, bubbleElevation);
         chatListView.setAdapter(chatViewListAdapter);
     }
 

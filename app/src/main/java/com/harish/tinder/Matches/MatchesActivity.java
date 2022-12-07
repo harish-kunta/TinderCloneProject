@@ -49,8 +49,8 @@ public class MatchesActivity extends AppCompatActivity {
         matchDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    for(DataSnapshot match : dataSnapshot.getChildren()){
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot match : dataSnapshot.getChildren()) {
                         FetchMatchInformation(match.getKey());
                     }
                 }
@@ -68,14 +68,14 @@ public class MatchesActivity extends AppCompatActivity {
         userDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     String userId = dataSnapshot.getKey();
                     String name = "";
                     String profileImageUrl = "";
-                    if(dataSnapshot.child("name").getValue()!=null){
+                    if (dataSnapshot.child("name").getValue() != null) {
                         name = dataSnapshot.child("name").getValue().toString();
                     }
-                    if(dataSnapshot.child("profileImageUrl").getValue()!=null){
+                    if (dataSnapshot.child("profileImageUrl").getValue() != null) {
                         profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
                     }
 
@@ -95,6 +95,7 @@ public class MatchesActivity extends AppCompatActivity {
     }
 
     private ArrayList<MatchesObject> resultsMatches = new ArrayList<MatchesObject>();
+
     private List<MatchesObject> getDataSetMatches() {
         return resultsMatches;
     }

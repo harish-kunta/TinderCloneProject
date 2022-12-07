@@ -9,21 +9,16 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.harish.tinder.R;
 
 import java.util.List;
 
-/**
- * Created by manel on 10/31/2017.
- */
-
-public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolders>{
+public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolders> {
     private List<ChatObject> chatList;
     private Context context;
 
 
-    public ChatAdapter(List<ChatObject> matchesList, Context context){
+    public ChatAdapter(List<ChatObject> matchesList, Context context) {
         this.chatList = matchesList;
         this.context = context;
     }
@@ -42,11 +37,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolders>{
     @Override
     public void onBindViewHolder(ChatViewHolders holder, int position) {
         holder.mMessage.setText(chatList.get(position).getMessage());
-        if(chatList.get(position).getCurrentUser()){
+        if (chatList.get(position).getCurrentUser()) {
             holder.mMessage.setGravity(Gravity.END);
             holder.mMessage.setTextColor(Color.parseColor("#404040"));
             holder.mContainer.setBackgroundColor(Color.parseColor("#F4F4F4"));
-        }else{
+        } else {
             holder.mMessage.setGravity(Gravity.START);
             holder.mMessage.setTextColor(Color.parseColor("#FFFFFF"));
             holder.mContainer.setBackgroundColor(Color.parseColor("#2DB4C8"));

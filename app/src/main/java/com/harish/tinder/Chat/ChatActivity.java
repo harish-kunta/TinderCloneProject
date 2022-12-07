@@ -39,6 +39,7 @@ public class ChatActivity extends AppCompatActivity {
     private String currentUserID, matchId, chatId;
 
     DatabaseReference mDatabaseUser, mDatabaseChat;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +76,7 @@ public class ChatActivity extends AppCompatActivity {
     private void sendMessage() {
         String sendMessageText = mSendEditText.getText().toString();
 
-        if(!sendMessageText.isEmpty()){
+        if (!sendMessageText.isEmpty()) {
             DatabaseReference newMessageDb = mDatabaseChat.push();
 
             Map newMessage = new HashMap();
@@ -87,11 +88,11 @@ public class ChatActivity extends AppCompatActivity {
         mSendEditText.setText(null);
     }
 
-    private void getChatId(){
+    private void getChatId() {
         mDatabaseUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     chatId = dataSnapshot.getValue().toString();
                     mDatabaseChat = mDatabaseChat.child(chatId);
                     getChatMessages();
@@ -109,20 +110,20 @@ public class ChatActivity extends AppCompatActivity {
         mDatabaseChat.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     String message = null;
                     String createdByUser = null;
 
-                    if(dataSnapshot.child("text").getValue()!=null){
+                    if (dataSnapshot.child("text").getValue() != null) {
                         message = dataSnapshot.child("text").getValue().toString();
                     }
-                    if(dataSnapshot.child("createdByUser").getValue()!=null){
+                    if (dataSnapshot.child("createdByUser").getValue() != null) {
                         createdByUser = dataSnapshot.child("createdByUser").getValue().toString();
                     }
 
-                    if(message!=null && createdByUser!=null){
+                    if (message != null && createdByUser != null) {
                         Boolean currentUserBoolean = false;
-                        if(createdByUser.equals(currentUserID)){
+                        if (createdByUser.equals(currentUserID)) {
                             currentUserBoolean = true;
                         }
                         ChatObject newMessage = new ChatObject(message, currentUserBoolean);
@@ -132,15 +133,19 @@ public class ChatActivity extends AppCompatActivity {
                 }
 
             }
+
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
             }
+
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
             }
+
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -149,6 +154,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
     private ArrayList<ChatObject> resultsChat = new ArrayList<ChatObject>();
+
     private List<ChatObject> getDataSetChat() {
         return resultsChat;
     }

@@ -1,6 +1,5 @@
 package com.harish.tinder.material_ui;
 
-import static com.harish.tinder.model.FirebaseConstants.CHAT_ID;
 import static com.harish.tinder.model.FirebaseConstants.CONNECTIONS;
 import static com.harish.tinder.model.FirebaseConstants.MATCHES;
 
@@ -57,9 +56,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private FloatingActionButton mCloseProfile;
     private DatabaseReference mUsersDatabase;
     private DatabaseReference mFriendDatabase;
-    private DatabaseReference mFavouriteDatabase;
     private DatabaseReference mNotificationDatabase;
-    private DatabaseReference mRootRef;
     private FirebaseAuth mAuth;
     private DatabaseReference mUserRef;
     private MyData myData;
@@ -107,9 +104,7 @@ public class UserProfileActivity extends AppCompatActivity {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
 
-        mRootRef = FirebaseDatabase.getInstance().getReference();
         mUsersDatabase = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.USERS).child(user_id);
-        mFavouriteDatabase = FirebaseDatabase.getInstance().getReference().child("Favourites");
         mFriendDatabase = FirebaseDatabase.getInstance().getReference().child("Friends");
         mFriendDatabase.keepSynced(true);
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();

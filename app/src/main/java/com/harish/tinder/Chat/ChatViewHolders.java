@@ -8,13 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.harish.tinder.R;
 
-/**
- * Created by manel on 10/31/2017.
- */
 
-public class ChatViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener{
+public class ChatViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener {
     public TextView mMessage;
     public LinearLayout mContainer;
+
     public ChatViewHolders(View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);

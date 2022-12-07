@@ -45,6 +45,7 @@ import com.harish.tinder.R;
 import com.harish.tinder.material_ui.UserProfileActivity;
 import com.harish.tinder.adapter.ProfileAdapter;
 import com.harish.tinder.model.FirebaseConstants;
+import com.harish.tinder.model.FirebaseDbUser;
 import com.harish.tinder.model.Profile;
 import com.harish.tinder.utils.AgeCalculator;
 import com.harish.tinder.utils.ProgressDialogHelper;
@@ -80,7 +81,7 @@ public class SwipeFragment extends Fragment implements CardStackListener {
     private String mParam2;
     private View mHomeView;
     private FirebaseAuth mAuth;
-    private String userSex;
+    private String userGender;
     private String oppositeUserSex;
 
     private String currentUId;
@@ -94,10 +95,17 @@ public class SwipeFragment extends Fragment implements CardStackListener {
     private DatabaseReference usersDb;
     List<Profile> profileList;
     Profile currentProfile;
+    FirebaseDbUser firebaseDbUser;
 
     public SwipeFragment() {
         // Required empty public constructor
 
+    }
+
+    public SwipeFragment(FirebaseDbUser firebaseDbUser) {
+        // Required empty public constructor
+        mAuth = FirebaseAuth.getInstance();
+        this.firebaseDbUser = firebaseDbUser;
     }
 
     /**
@@ -179,8 +187,8 @@ public class SwipeFragment extends Fragment implements CardStackListener {
             layoutManager.setSwipeAnimationSetting(setting);
             cardStackView.swipe();
         });
-        FloatingActionButton chat = homeView.findViewById(R.id.info_button);
-        chat.setOnClickListener(v -> {
+        FloatingActionButton userProfile = homeView.findViewById(R.id.info_button);
+        userProfile.setOnClickListener(v -> {
             Profile profile = currentProfile;
             String userId = profile.getId();
             Intent intent = new Intent(getContext(), UserProfileActivity.class);
@@ -210,11 +218,9 @@ public class SwipeFragment extends Fragment implements CardStackListener {
 
     private void getFirebaseResponseData() {
         usersDb = FirebaseDatabase.getInstance().getReference().child(USERS);
-
-        mAuth = FirebaseAuth.getInstance();
         currentUId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
-        checkUserSex();
+        checkUserGender();
 
         profileList = new ArrayList<>();
 
@@ -222,12 +228,11 @@ public class SwipeFragment extends Fragment implements CardStackListener {
         if (progressDialog.isShowing())
             progressDialog.dismiss();
         cardStackView.setAdapter(profileAdapter);
-
     }
 
     private void isConnectionMatch(String userId) {
         DatabaseReference currentUserConnectionsDb = usersDb.child(currentUId).child(CONNECTIONS).child(YEPS).child(userId);
-        currentUserConnectionsDb.addListenerForSingleValueEvent(new ValueEventListener() {
+        currentUserConnectionsDb.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -258,17 +263,17 @@ public class SwipeFragment extends Fragment implements CardStackListener {
         root.child(uniqueID).child(MEMBERS).setValue(members);
     }
 
-    public void checkUserSex() {
+    public void checkUserGender() {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
         DatabaseReference userDb = usersDb.child(user.getUid());
-        userDb.addListenerForSingleValueEvent(new ValueEventListener() {
+        userDb.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     if (dataSnapshot.child(GENDER).getValue() != null) {
-                        userSex = Objects.requireNonNull(dataSnapshot.child(GENDER).getValue()).toString();
-                        switch (userSex) {
+                        userGender = Objects.requireNonNull(dataSnapshot.child(GENDER).getValue()).toString();
+                        switch (userGender) {
                             case MALE:
                                 oppositeUserSex = FEMALE;
                                 break;

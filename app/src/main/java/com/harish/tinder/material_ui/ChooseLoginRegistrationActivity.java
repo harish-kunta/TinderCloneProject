@@ -17,11 +17,12 @@ import com.harish.tinder.R;
 public class ChooseLoginRegistrationActivity extends AppCompatActivity {
     TextView customText;
     private Button mLogin, mRegister;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_login_registration);
-        customText=findViewById(R.id.agreeNContinueTV);
+        customText = findViewById(R.id.agreeNContinueTV);
         customTextView(customText);
 
         mLogin = (Button) findViewById(R.id.login);

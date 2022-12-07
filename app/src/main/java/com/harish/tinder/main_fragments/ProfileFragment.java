@@ -72,7 +72,6 @@ public class ProfileFragment extends Fragment {
     ImageView settingsButton;
     CircleImageView profilePic;
     StorageReference storageReference;
-    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child(USERS);
     FirebaseDbUser firebaseDbUser;
 
     private final int PICK_IMAGE_REQUEST = 71;
@@ -116,6 +115,7 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -147,53 +147,22 @@ public class ProfileFragment extends Fragment {
         profilePic = mProfileView.findViewById(R.id.profile_image);
         storageReference = FirebaseStorage.getInstance().getReference();
         assert user != null;
-        userRef.child(user.getUid()).child(ONLINE).setValue("true");
-        userRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            //TODO:remove this annotation
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                FirebaseDbUser firebaseDbUser = dataSnapshot.getValue(FirebaseDbUser.class);
-                long dobUnix = firebaseDbUser.getDob();
-                String image = firebaseDbUser.getProfileImageUrlCompressed();
-                int age = AgeCalculator.calculateAge(dobUnix);
-                profileName.setText(firebaseDbUser.getName() + ", " + age);
-                mAboutMe.setText(firebaseDbUser.getAboutMe());
-                mInterests.setText(firebaseDbUser.getInterests() != null ? firebaseDbUser.getInterests().toString() : "");
-                mSchool.setText(firebaseDbUser.getSchoolName());
-                profileEmail.setText(firebaseDbUser.getEmail());
-                if (!DEFAULT.equals(image)) {
-                    Glide
-                            .with(mProfileView.getContext())
-                            .load(image)
-                            .into(profilePic);
-                } else {
-                    profilePic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.ic_account_circle_white));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-
-        });
+        long dobUnix = firebaseDbUser.getDob();
+        String image = firebaseDbUser.getProfileImageUrlCompressed();
+        int age = AgeCalculator.calculateAge(dobUnix);
+        profileName.setText(firebaseDbUser.getName() + ", " + age);
+        mAboutMe.setText(firebaseDbUser.getAboutMe());
+        mInterests.setText(firebaseDbUser.getInterests() != null ? firebaseDbUser.getInterests().toString() : "");
+        mSchool.setText(firebaseDbUser.getSchoolName());
+        profileEmail.setText(firebaseDbUser.getEmail());
+        if (!DEFAULT.equals(image)) {
+            Glide
+                    .with(mProfileView.getContext())
+                    .load(image)
+                    .into(profilePic);
+        } else {
+            profilePic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.ic_account_circle_white));
+        }
         return mProfileView;
-    }
-
-    //TODO: Remove this
-    String getObjectString(Object o) {
-        if (o != null) {
-            return o.toString();
-        }
-        return "";
-    }
-
-    //TODO: Remove this
-    long getObjectLong(Object o) {
-        if (o != null) {
-            return (Long) o;
-        }
-        return -1;
     }
 }

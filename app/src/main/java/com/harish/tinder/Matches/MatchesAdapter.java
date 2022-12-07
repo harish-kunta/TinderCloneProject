@@ -12,16 +12,12 @@ import com.harish.tinder.R;
 
 import java.util.List;
 
-/**
- * Created by manel on 10/31/2017.
- */
-
-public class MatchesAdapter extends RecyclerView.Adapter<MatchesViewHolders>{
+public class MatchesAdapter extends RecyclerView.Adapter<MatchesViewHolders> {
     private List<MatchesObject> matchesList;
     private Context context;
 
 
-    public MatchesAdapter(List<MatchesObject> matchesList, Context context){
+    public MatchesAdapter(List<MatchesObject> matchesList, Context context) {
         this.matchesList = matchesList;
         this.context = context;
     }
@@ -41,7 +37,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesViewHolders>{
     public void onBindViewHolder(MatchesViewHolders holder, int position) {
         holder.mMatchId.setText(matchesList.get(position).getUserId());
         holder.mMatchName.setText(matchesList.get(position).getName());
-        if(!matchesList.get(position).getProfileImageUrl().equals("default")){
+        if (!matchesList.get(position).getProfileImageUrl().equals("default")) {
             Glide.with(context).load(matchesList.get(position).getProfileImageUrl()).into(holder.mMatchImage);
         }
     }

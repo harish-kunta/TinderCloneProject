@@ -11,13 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.harish.tinder.Chat.ChatActivity;
 import com.harish.tinder.R;
 
-/**
- * Created by manel on 10/31/2017.
- */
-
-public class MatchesViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener{
+public class MatchesViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener {
     public TextView mMatchId, mMatchName;
     public ImageView mMatchImage;
+
     public MatchesViewHolders(View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);

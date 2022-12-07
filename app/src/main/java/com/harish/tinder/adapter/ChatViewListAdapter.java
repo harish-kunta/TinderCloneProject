@@ -105,18 +105,18 @@ public class ChatViewListAdapter extends BaseAdapter {
         if (sender != null) {
             holder.setSender(sender);
         }
-        if (uri != null && !uri.isEmpty()){
+        if (uri != null && !uri.isEmpty()) {
             holder.setProfileIcon(uri);
 
         }
-        if(textMessage!=null){
+        if (textMessage != null) {
             holder.setMessage(textMessage);
             textMessage = null;
         }
-        if(imageMessage != null){
+        if (imageMessage != null) {
             holder.setImageMessage(imageMessage);
             imageMessage = null;
-        }else if(imageMessage == null){
+        } else if (imageMessage == null) {
             holder.setImageMessage(null);
         }
         return convertView;

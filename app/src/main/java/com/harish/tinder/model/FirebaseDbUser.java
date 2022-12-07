@@ -8,7 +8,7 @@ public class FirebaseDbUser {
     public int dob;
     public String online;
     public String profileImageUrl;
-    public String sex;
+    public String gender;
     public String profileImageUrlCompressed;
     public String uid;
     public String schoolName;
@@ -23,13 +23,13 @@ public class FirebaseDbUser {
 
     }
 
-    public FirebaseDbUser(String name, String email, int dob, String online, String profileImageUrl, String sex, String profileImageUrlCompressed, String uid) {
+    public FirebaseDbUser(String name, String email, int dob, String online, String profileImageUrl, String gender, String profileImageUrlCompressed, String uid) {
         this.name = name;
         this.email = email;
         this.dob = dob;
         this.online = online;
         this.profileImageUrl = profileImageUrl;
-        this.sex = sex;
+        this.gender = gender;
         this.profileImageUrlCompressed = profileImageUrlCompressed;
         this.uid = uid;
     }
@@ -133,12 +133,12 @@ public class FirebaseDbUser {
         this.profileImageUrl = profileImageUrl;
     }
 
-    public String getSex() {
-        return sex;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getProfileImageUrlCompressed() {

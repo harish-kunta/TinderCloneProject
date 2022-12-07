@@ -51,7 +51,6 @@ public class EnableLocationActivity extends AppCompatActivity {
         String current_uid = mCurrentUser.getUid();
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.USERS).child(current_uid);
         mUserDatabase.keepSynced(true);
-
     }
 
     private void fetchLastLocation() {
@@ -132,7 +131,6 @@ public class EnableLocationActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-
         if (!checkPermissions()) {
             requestPermissions();
         }

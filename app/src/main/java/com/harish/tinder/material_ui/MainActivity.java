@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         } else {
             ref = FirebaseDatabase.getInstance().getReference().child(USERS).child(firebaseUser.getUid());
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     firebaseDbUser = snapshot.getValue(FirebaseDbUser.class);
@@ -64,11 +64,13 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), RegistrationInputActivity.class);
                         startActivity(intent);
                         finish();
-                    } else if (firebaseDbUser.getLocation() == null) {
-                        Intent intent = new Intent(getApplicationContext(), EnableLocationActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else if (firebaseDbUser.getProfileImageUrl() == null || DEFAULT.equals(firebaseDbUser.getProfileImageUrl())) {
+                    }
+//                    else if (firebaseDbUser.getLocation() == null) {
+//                        Intent intent = new Intent(getApplicationContext(), EnableLocationActivity.class);
+//                        startActivity(intent);
+//                        finish();
+//                    }
+                    else if (firebaseDbUser.getProfileImageUrl() == null || DEFAULT.equals(firebaseDbUser.getProfileImageUrl())) {
                         Intent intent = new Intent(getApplicationContext(), UploadImageActivity.class);
                         startActivity(intent);
                         finish();
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             bottomBar.setOnItemSelectedListener(i -> {
                 switch (i) {
                     case 0:
-                        replace(new SwipeFragment());
+                        replace(new SwipeFragment(firebaseDbUser));
                         break;
                     case 1:
                         replace(new LikesFragment());
