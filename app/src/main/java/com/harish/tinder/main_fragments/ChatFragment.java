@@ -69,7 +69,6 @@ public class ChatFragment extends Fragment {
     private RecyclerView mResultList;
     Context context;
 
-    private DatabaseReference mThreadsDatabase;
     private DatabaseReference mUsersDatabase;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseRecyclerAdapter firebaseRecyclerAdapter;

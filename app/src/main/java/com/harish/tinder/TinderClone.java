@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.harish.tinder.model.FirebaseConstants;
 
 public class TinderClone extends Application {
     DatabaseReference ref;
@@ -22,11 +23,11 @@ public class TinderClone extends Application {
         ref = FirebaseDatabase.getInstance().getReference();
         user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null)
-            ref = ref.child("Users").child(user.getUid());
+            ref = ref.child(FirebaseConstants.USERS).child(user.getUid());
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ref.child("online").onDisconnect().setValue("false");
+                ref.child(FirebaseConstants.ONLINE).onDisconnect().setValue(false);
             }
 
             @Override
@@ -40,6 +41,6 @@ public class TinderClone extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        ref.child(user.getUid()).child("online").setValue("false");
+        ref.child(user.getUid()).child(FirebaseConstants.ONLINE).setValue(false);
     }
 }

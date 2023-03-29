@@ -104,7 +104,6 @@ public class SwipeFragment extends Fragment implements CardStackListener {
 
     public SwipeFragment(FirebaseDbUser firebaseDbUser) {
         // Required empty public constructor
-        mAuth = FirebaseAuth.getInstance();
         this.firebaseDbUser = firebaseDbUser;
     }
 
@@ -140,6 +139,7 @@ public class SwipeFragment extends Fragment implements CardStackListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        mAuth = FirebaseAuth.getInstance();
         mHomeView = inflater.inflate(R.layout.fragment_home, container, false);
         cardStackView = mHomeView.findViewById(R.id.card_stack_view);
         buttonsContainer = mHomeView.findViewById(R.id.button_container);
@@ -218,7 +218,7 @@ public class SwipeFragment extends Fragment implements CardStackListener {
 
     private void getFirebaseResponseData() {
         usersDb = FirebaseDatabase.getInstance().getReference().child(USERS);
-        currentUId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+        currentUId = mAuth.getCurrentUser().getUid();
 
         checkUserGender();
 

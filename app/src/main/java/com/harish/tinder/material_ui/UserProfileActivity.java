@@ -283,7 +283,7 @@ public class UserProfileActivity extends AppCompatActivity {
             sendToStart();
 
         } else {
-            mUserRef.child(FirebaseConstants.ONLINE).setValue("true");
+            mUserRef.child(FirebaseConstants.ONLINE).setValue(true);
 
         }
     }
@@ -293,7 +293,7 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onPause();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            mUserRef.child(FirebaseConstants.ONLINE).setValue("true");
+            mUserRef.child(FirebaseConstants.ONLINE).setValue(true);
         }
 
     }

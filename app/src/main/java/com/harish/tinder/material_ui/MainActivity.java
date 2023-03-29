@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (firebaseUser != null) {
-            if (ref != null) ref.child(ONLINE).setValue("true");
+            if (ref != null) ref.child(ONLINE).setValue(true);
         }
     }
 
@@ -142,6 +142,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (ref != null) ref.child(ONLINE).setValue("false");
+        if (ref != null) ref.child(ONLINE).setValue(false);
     }
 }
